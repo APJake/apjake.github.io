@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/my_pic_1_150.png" type="image/png">
+    <title>Aung Minn Khant</title>
+    <script src="https://kit.fontawesome.com/e36abacd70.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+    <div class="my-nav">
+        <button onclick="smoothScroll('home')" class="home nav-item btn small btn-primary-dark">Home</button>
+        <button onclick="smoothScroll('about')" class="about nav-item btn small btn-primary-dark">About</button>
+        <button onclick="smoothScroll('contact')" class="contact nav-item btn small btn-primary-dark">Contact</button>
+        <a href="page.html?r=blog" class="contact nav-item btn small btn-primary-dark">Blog</a>
+    </div>
+
+    <div class="ground">
+        <!-- <div class="my-side-bar">
+        </div> -->
+        <section id="home" class="section">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-photo"></div>
+                    <div class="profile-text-box p-20">
+                        <p class="text-pale text-primary-color-pale">Hello! It's me,</p>
+                        <h2 class="text-secondary">Aung Minn Khant</h2>
+                        <p class="text-pale text-primary-color-pale pv-10 mb-20">I am a <strong>Programmer</strong>, <strong>Web Developer</strong>, <strong>Android Developer</strong> </p>
+                        <button onclick="smoothScroll('contact')" class="btn-outline btn-secondary">Contact Me</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="section">
+            <div class="container center">
+                <div class="box vertical center">
+                    <h2 id="profile-title">About Me</h2>
+                    <hr>
+                    <div class="box horizontal mt-60 wrap center">
+                        <div id="profile-card" class="box card border primary-font vertical width-330">
+                            <img src="./img/my_pic_2_500.png" id="profile-img" alt="Aung Minn Khant" class="float profile-image">
+                            <p class="pt-10 text-pale pt-40">Name: <span class="text-secondary text-bold ph-10">Aung Minn Khant</span></p>
+                            <p class="pt-10 text-pale">Age: <span class="text-secondary text-bold my-age ph-10"></span></p>
+                            <p class="pt-10 text-pale">Post: <span class="text-secondary text-bold ph-10">Full-Stack Developer (Web, Android)</span></p>
+                            <p class="pt-10 text-pale">Country: <span class="text-secondary text-bold ph-10">Myanmar (Burmese)</span></p>
+                            <p class="pt-10 text-pale">Major: <span class="text-secondary text-bold ph-10">Computer Science</span></p>
+                            <p class="pt-10 text-pale">University: <span class="text-secondary text-bold ph-10">University of Computer Studied, Yangon (UCSY)</span></p>
+                        </div>
+                        <div id="profile-buttons" class="box horizontal p-20">
+                            <a href="about.html" class="btn btn-secondary">About More >></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="section">
+            
+            <div class="container contact">
+                <h2 id="contact-title">Contact Me</h2>
+                <div class="contact-form">
+                    <form target="_blank" action="https://docs.google.com/forms/u/3/d/e/1FAIpQLSeQTG-DONbbb2DeImRXHqk1_7uh86wGSzUK9coR4SZpLHU4hg/formResponse" method="POST" id="mG61Hd">
+                        <label for="entry.1006236692">Name</label>
+                        <input class='input' required type="text" name="entry.1006236692">
+
+                        <label for="entry.401910328">Email</label>
+                        <input class='input' required type="email" name="entry.401910328">
+
+                        <label for="entry.218930352">Message</label>
+                        <textarea class="input" name="entry.218930352" cols="30" rows="5"></textarea>
+                        <input id="submit" class="submit btn btn-secondary" type="submit" value="Send">
+                    </form>
+                </div>
+                <p>Or contact me via</p>
+                <div class="social">
+                    <a target="_blank" class="facebook" href="https://www.facebook.com/aungminnkhant.loki">
+                        <i class="fab fa-facebook-f"></i></a>
+                    <a target="_blank" class="github" href="https://www.github.com/apjake">
+                        <i class="fab fa-github"></i></a>
+                    <a target="_blank" class="telegram" href="https://t.me/AP_Jake">
+                        <i class="fas fa-paper-plane"></i></a>
+                    <a target="_blank" class="email" href="mailto:aung.amk.edu@gmail.com?subject=Contact%20from%20website">
+                        <i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="go-up btn-invisible">
+                <button onclick="smoothScroll('home')"><i class="fas fa-chevron-up icon"></i></button>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/home.js"></script>
+    
+</body>
+</html>
