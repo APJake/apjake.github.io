@@ -5,6 +5,7 @@
     font-weight: 900;
     background-color: var(--var-primary-color);
     color: var(--var-primary-font-color);
+    text-align: center;
     cursor: pointer;
     transition: all .2s;
     letter-spacing: 2px;
@@ -317,5 +318,12 @@
 @media screen and (max-width: 500px) {
     .popup.alert{
         width: 300px;
+    }
+    .blog-item{
+        max-width: 800%;
+        max-height: 80vh;
+    }
+    .img-h{
+        height: 200px;
     }
 }
