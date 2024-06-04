@@ -43,7 +43,7 @@ getImageURL = (imgurl) => {
     let img = new URL(imgurl);
     return imgurl;
   } catch (err) {
-    return `https://drive.google.com/uc?export=view&id=${imgurl}`;
+    return `https://drive.google.com/thumbnail?id=${imgurl}&sz=w1000`;
   }
 };
 getParameters = (para, def) => {
