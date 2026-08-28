@@ -43,7 +43,11 @@ export default function WorkIndex() {
                       <div className={styles.text}>
                         <h3 className={`display ${styles.name}`}>
                           {e.href ? (
-                            <a className={styles.nameLink} href={e.href} target="_blank" rel="noreferrer">
+                            <a
+                              className={styles.nameLink}
+                              href={e.href}
+                              {...(e.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                            >
                               {e.name}
                             </a>
                           ) : (

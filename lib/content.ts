@@ -44,7 +44,7 @@ export const projects: Project[] = [
     detail:
       "Led the migration from XML layouts to Jetpack Compose. Screen rendering about 30% faster, crash rate down about 20%.",
     meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · 2023 — Now"],
-    href: null,
+    href: "/work/cdg-zig/",
     shot: null,
   },
   {
@@ -89,6 +89,78 @@ export type WorkEntry = {
 
 export type WorkGroup = { title: string; note: string; entries: WorkEntry[] };
 
+export type CaseStudy = {
+  slug: string;
+  name: string;
+  tagline: string;
+  facts: { label: string; value: string }[];
+  intro: string;
+  owns: string[];
+  moves: { metric: string; metricNote: string; title: string; text: string }[];
+  beyond: string;
+  stack: { title: string; items: string[] }[];
+};
+
+/**
+ * Written strictly from the CV. Where a figure is approximate there it stays
+ * approximate here — "about 30%", not "30%".
+ */
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "cdg-zig",
+    name: "CDG Zig",
+    tagline:
+      "ComfortDelGro's taxi and bus booking app for Singapore, and the Android side of it that I own.",
+    facts: [
+      { label: "Role", value: "Senior Android Developer" },
+      { label: "Studio", value: "Codigo" },
+      { label: "Period", value: "2023 — Now" },
+      { label: "Scale", value: "1M+ downloads" },
+    ],
+    intro:
+      "CDG Zig is how people in Singapore book a ComfortDelGro taxi or bus. I own the passenger app end to end — not a slice of it, the whole Android side: what ships, how it is built, and what happens after a release goes out.",
+    owns: [
+      "Booking",
+      "Live driver tracking on Google Maps",
+      "Fare estimates",
+      "Multi-stop rides",
+      "Cashless payment",
+    ],
+    moves: [
+      {
+        metric: "~30%",
+        metricNote: "faster screen rendering",
+        title: "Moved the booking flow off XML and onto Compose",
+        text: "I led the migration and rebuilt the main booking screens along the way. The rewrite paid for itself twice: a lot of duplicated UI code disappeared with it, and the screens people touch on every single trip got quicker to draw.",
+      },
+      {
+        metric: "~20%",
+        metricNote: "fewer crashes",
+        title: "Brought the crash rate down, then kept it down",
+        text: "Unit and UI tests where they were missing, then straight through the top Crashlytics issues in order. What made it stick was the habit rather than the fixes: crash and ANR reports get checked after every release, so a regression surfaces in days instead of in store reviews.",
+      },
+      {
+        metric: "1 library",
+        metricNote: "several teams build on it",
+        title: "Pulled the shared pieces out into something reusable",
+        text: "The network layer, the shared UI components and the common utilities were all going to be rewritten by whichever team needed them next. They are an internal library now, and other project teams build on it instead of starting again. It is the part of this work that outlives my tickets.",
+      },
+    ],
+    beyond:
+      "Alongside the code: I review the team's pull requests, keep the Android coding standards, and help newer developers get their work merged.",
+    stack: [
+      { title: "Language & UI", items: ["Kotlin", "Jetpack Compose", "XML Views", "Material 3"] },
+      { title: "Platform", items: ["Google Maps SDK", "Coroutines & Flow", "ViewModel", "Navigation", "Room"] },
+      { title: "Quality", items: ["JUnit", "MockK", "Compose UI tests", "Crashlytics", "Firebase Performance"] },
+      { title: "Release", items: ["Gradle (Kotlin DSL)", "Play Console staged rollouts", "GitHub Actions"] },
+    ],
+  },
+];
+
+export function getCaseStudy(slug: string) {
+  return caseStudies.find((c) => c.slug === slug);
+}
+
 /**
  * The full index behind the homepage's three. Jar Gyi is described from its
  * own privacy policy, which is the only material that exists for it.
@@ -120,7 +192,7 @@ export const workGroups: WorkGroup[] = [
         name: "CDG Zig",
         line: "ComfortDelGro's taxi and bus booking app for Singapore. I own the passenger app end to end, led its move to Jetpack Compose, and built the internal library other project teams now reuse.",
         meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · 2023 — Now"],
-        href: null,
+        href: "/work/cdg-zig/",
       },
       {
         name: "FWD SG",

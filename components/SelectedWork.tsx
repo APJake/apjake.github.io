@@ -59,7 +59,11 @@ export default function SelectedWork() {
                   </p>
                   <h3 className={`display ${styles.name}`}>
                     {p.href ? (
-                      <a href={p.href} className={styles.nameLink} target="_blank" rel="noreferrer">
+                      <a
+                        href={p.href}
+                        className={styles.nameLink}
+                        {...(p.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                      >
                         {p.name}
                       </a>
                     ) : (
