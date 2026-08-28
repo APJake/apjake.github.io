@@ -16,7 +16,7 @@ Scope of this pass: foundations + hero only. No project cards, no experience, no
 | Portrait | Yes — duotone black→amber. Fallback variant specced without it |
 | Theme | Dark only (no light toggle in v1) |
 | Accent | Warm amber `#FFB020` |
-| Type | Bricolage Grotesque (display) / Inter (body) / JetBrains Mono (meta) — all Google Fonts |
+| Type | Bricolage Grotesque (display) / Instrument Sans (body) / JetBrains Mono (meta) — all Google Fonts |
 | Client work visuals | Real Play Store screenshots (public assets) — lands in prompt 02 |
 | Framework target | Next.js, static export to GitHub Pages |
 
@@ -78,7 +78,7 @@ Contrast: off-white on base ≈ 16:1. Amber on base ≈ 9.8:1. Both pass AAA for
 
 Faces (Google Fonts)
 - Display — **Bricolage Grotesque**, weight 800
-- Body — **Inter**, weights 400 / 500
+- Body — **Instrument Sans**, weights 400 / 500
 - Mono — **JetBrains Mono**, weight 500
 
 Scale
@@ -87,8 +87,8 @@ Scale
 | `display-xl` | clamp(3.25rem, 11vw, 10.5rem) | Bricolage 800 | 0.88 | -0.04em |
 | `display-l`  | clamp(2.5rem, 6vw, 5rem)       | Bricolage 800 | 0.95 | -0.03em |
 | `display-m`  | clamp(2rem, 4vw, 3.5rem)       | Bricolage 800 | 1.0  | -0.02em |
-| `body-l`     | 1.125rem                       | Inter 400     | 1.6  | 0        |
-| `body`       | 1rem                           | Inter 400     | 1.65 | 0        |
+| `body-l`     | 1.125rem                       | Instrument Sans 400 | 1.6  | 0  |
+| `body`       | 1rem                           | Instrument Sans 400 | 1.65 | 0  |
 | `mono-label` | 0.75rem UPPERCASE              | JetBrains 500 | 1.2  | 0.12em   |
 | `mono-meta`  | 0.8125rem                      | JetBrains 500 | 1.4  | 0.06em   |
 
@@ -223,6 +223,11 @@ photography does not.
 
 # ARTBOARD 03 — Hero, mobile
 Canvas 390 × 844, background `--bg-base`, grain overlay on, 20px side margins.
+
+> **Built as five lines, not four.** At 390px the four authored breaks force the
+> headline down to ~42px, which undersells the hero on the device recruiters most
+> use. Splitting `USEFUL` / `THINGS.` holds 56px. Longest line is then `WHO BUILDS`
+> at ~333px inside the 350px text column.
 
 Stacking order, top to bottom:
 1. **Nav**, 64px tall — `JAKE` left; `WORK` and `ABOUT` right in `mono-label` at 11px,
