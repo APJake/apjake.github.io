@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #0B0B0C; font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FFB020; text-decoration: none; }
+    a:hover { color: #FFC04D; }
+
+    .stage { position: relative; width: 390px; min-height: 3600px; background: #0B0B0C; padding: 72px 20px 96px; display: flex; flex-direction: column; }
+
+    .sechead { display: flex; flex-direction: column; gap: 16px; padding-bottom: 56px; }
+    .kicker { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent, #FFB020); }
+    .sectitle { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 44px; line-height: 0.95; letter-spacing: -0.03em; color: #F2EFE9; }
+    .secnote { font-size: 15px; line-height: 1.65; color: #A8A29A; text-wrap: pretty; }
+
+    .rule { height: 1px; background: rgba(242,239,233,0.10); flex: none; }
+
+    .entry { display: flex; flex-direction: column; gap: 18px; padding: 48px 0; }
+    .eindex { display: flex; align-items: center; gap: 12px; }
+    .eidxnum { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; color: var(--accent, #FFB020); }
+    .eidxline { height: 1px; width: 48px; background: var(--accent, #FFB020); opacity: 0.4; }
+
+    .etitle { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 40px; line-height: 1.0; letter-spacing: -0.025em; color: #F2EFE9; }
+    .edesc { font-size: 16px; line-height: 1.6; color: #A8A29A; text-wrap: pretty; }
+    .edetail { font-size: 14px; line-height: 1.6; color: #6B675F; text-wrap: pretty; }
+
+    .emeta { display: flex; flex-direction: column; gap: 9px; padding-top: 4px; }
+    .emetarow { display: flex; align-items: center; gap: 10px; }
+    .tick { width: 4px; height: 4px; background: var(--accent, #FFB020); flex: none; }
+    .emetatext { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #A8A29A; }
+
+    .edevice { display: flex; justify-content: center; padding-top: 12px; }
+    .device { position: relative; width: 220px; height: 440px; border-radius: 12px; background: #131315; border: 1px solid rgba(242,239,233,0.18); padding: 8px; }
+    .screen { position: relative; width: 100%; height: 100%; border-radius: 6px; background: #080809; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+    .brk { position: absolute; width: 14px; height: 14px; border: 1px solid var(--accent, #FFB020); opacity: 0.5; }
+    .brk.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+    .brk.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+    .brk.bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+    .brk.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+    .slotlabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #6B675F; text-align: center; }
+    .slotdim { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 9px; letter-spacing: 0.1em; color: #46433D; }
+
+    .allwork { padding-top: 48px; display: flex; }
+    .allworklink { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; padding-bottom: 10px; border-bottom: 1px solid rgba(255,176,32,0.5); min-height: 44px; }
+    .allworktext { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #F2EFE9; }
+
+    .grain { position: absolute; inset: 0; z-index: 20; pointer-events: none; mix-blend-mode: overlay;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+  </style>
+</helmet>
+
+<div class="stage" style="--accent: {{accent}}">
+
+  <div class="sechead">
+    <div class="kicker">Work</div>
+    <div class="sectitle">SELECTED<br>WORK</div>
+    <div class="secnote">Three of the things I have shipped. The rest live on the work page.</div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="entry">
+    <div class="eindex"><span class="eidxnum">01</span><span class="eidxline"></span></div>
+    <div class="etitle">CDG ZIG</div>
+    <div class="edesc">ComfortDelGro&#39;s taxi and bus booking app for Singapore. I own the passenger app end to end &#8212; booking, live driver tracking, fares, multi-stop rides and cashless payment.</div>
+    <div class="edetail">Led the migration from XML to Jetpack Compose. Rendering about 30% faster, crash rate down about 20%.</div>
+    <div class="emeta">
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">1M+ Downloads</span></div>
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Kotlin &#183; Compose &#183; Maps SDK</span></div>
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Codigo &#183; 2023 &#8212; Now</span></div>
+    </div>
+    <div class="edevice">
+      <div class="device"><div class="screen">
+        <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+        <div class="slotlabel">Play Store<br>screenshot</div>
+        <div class="slotdim">1080 &#215; 1920</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="entry">
+    <div class="eindex"><span class="eidxnum">02</span><span class="eidxline"></span></div>
+    <div class="etitle">BKK GUIDE MM</div>
+    <div class="edesc">A city guide for the Burmese community in Bangkok. One Flutter codebase across Android, iOS and web &#8212; and the backend is mine too.</div>
+    <div class="edetail">Wrote the API and MongoDB data model myself, so the app and the web version run on the same content.</div>
+    <div class="emeta">
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Android &#183; iOS &#183; Web</span></div>
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Flutter &#183; Ktor &#183; MongoDB</span></div>
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Built and run by me &#183; 2023 &#8212; Now</span></div>
+    </div>
+    <div class="edevice">
+      <div class="device"><div class="screen">
+        <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+        <div class="slotlabel">Play Store<br>screenshot</div>
+        <div class="slotdim">1080 &#215; 1920</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="entry">
+    <div class="eindex"><span class="eidxnum">03</span><span class="eidxline"></span></div>
+    <div class="etitle">SHWE NAR SIN</div>
+    <div class="edesc">A Myanmar audiobook and music app. I built the music streaming feature &#8212; free and paid playback, with telco billing.</div>
+    <div class="edetail">Freelance. One of the first products I shipped that went past a million installs.</div>
+    <div class="emeta">
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">1M+ Downloads &#183; 4.4 Rating</span></div>
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Android &#183; Kotlin</span></div>
+      <div class="emetarow"><span class="tick"></span><span class="emetatext">Freelance</span></div>
+    </div>
+    <div class="edevice">
+      <div class="device"><div class="screen">
+        <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+        <div class="slotlabel">Play Store<br>screenshot</div>
+        <div class="slotdim">1080 &#215; 1920</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="allwork">
+    <a class="allworklink" href="#work">
+      <span class="allworktext">See all work</span>
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M3 10h13M11 5l5 5-5 5" stroke="#FFB020" stroke-width="1.4" stroke-linecap="square"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="grain" style="opacity: {{grainOpacity}}"></div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FFB020","options":["#FFB020","#FF5A1F","#E4E0D6","#6EE7B7"],"section":"Theme"},"grain":{"editor":"boolean","default":true,"section":"Theme"},"$preview":{"width":390,"height":3600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#FFB020',
+      grainOpacity: this.props.grain === false ? '0' : '0.035'
+    };
+  }
+}
+</script>
+</body>
+</html>

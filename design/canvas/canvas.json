@@ -1,15 +1,18 @@
 {
   "artboards": [
-    { "file": "Main.dc.html",           "x": 0,    "y": 0,    "w": 1440, "h": 900,  "title": "Hero — Desktop" },
-    { "file": "HeroNoPortrait.dc.html", "x": 1560, "y": 0,    "w": 1440, "h": 900,  "title": "Hero — Variant B, no portrait" },
-    { "file": "Mobile.dc.html",         "x": 3120, "y": 0,    "w": 390,  "h": 844,  "title": "Hero — Mobile" },
-    { "file": "Foundations.dc.html",    "x": 0,    "y": 1080, "w": 1440, "h": 3560, "title": "Foundations" }
+    { "file": "Main.dc.html",              "x": 0,    "y": 0,    "w": 1440, "h": 900,  "title": "Hero — Desktop" },
+    { "file": "HeroNoPortrait.dc.html",    "x": 1560, "y": 0,    "w": 1440, "h": 900,  "title": "Hero — Variant B, no portrait" },
+    { "file": "Mobile.dc.html",            "x": 3120, "y": 0,    "w": 390,  "h": 844,  "title": "Hero — Mobile" },
+    { "file": "SelectedWork.dc.html",      "x": 0,    "y": 1080, "w": 1440, "h": 2900, "title": "Selected Work — Desktop" },
+    { "file": "SelectedWorkMobile.dc.html","x": 1560, "y": 1080, "w": 390,  "h": 3600, "title": "Selected Work — Mobile" },
+    { "file": "Foundations.dc.html",       "x": 0,    "y": 4800, "w": 1440, "h": 3560, "title": "Foundations" }
   ],
   "annotations": [
-    { "id": "note-hero",        "x": 0,    "y": -250, "w": 460, "text": "HERO — DESKTOP 1440x900\n\nThe one compositional move: the headline overlaps the portrait, and the portrait sits behind it. Line 4 runs 44px under the portrait's left edge; a gradient on the portrait keeps the type readable.\n\nAmber appears in exactly five places: the full stop, three proof ticks, the scroll line, the duotone, the glow." },
-    { "id": "note-variant",     "x": 1560, "y": -250, "w": 460, "text": "VARIANT B — NO PORTRAIT\n\nInsurance. If the photography isn't strong enough, this is the fallback: headline steps up to 132px, proof strip rotates onto the right margin, scroll cue goes horizontal.\n\nWorth comparing honestly — this one may be the stronger design." },
-    { "id": "note-mobile",      "x": 3120, "y": -250, "w": 390, "text": "HERO — MOBILE 390x844\n\nDEVIATION FROM SPEC: five lines, not four. At 390px the four-line break forces 42px type, which undersells the hero. Splitting USEFUL / THINGS. buys 56px.\n\nHeadline leads; the portrait never appears above it." },
-    { "id": "note-foundations", "x": 1560, "y": 1080, "w": 460, "text": "FOUNDATIONS\n\nTokens as an editorial spread rather than a swatch dump.\n\nBody face is Instrument Sans, not Inter as originally specced — Inter is the single most overused UI face and would have undercut the 'made by an engineer with taste' read. Same metrics class, so nothing else moves.\n\nThe Accent tweak above each artboard recolours the whole system live." }
+    { "id": "note-hero",        "x": 0,    "y": -250, "w": 460, "text": "HERO \u2014 DESKTOP 1440x900\n\nThe one compositional move: the headline overlaps the portrait, and the portrait sits behind it. Line 4 runs 44px under the portrait's left edge; a gradient on the portrait keeps the type readable.\n\nAmber appears in exactly five places: the full stop, three proof ticks, the scroll line, the duotone, the glow." },
+    { "id": "note-variant",     "x": 1560, "y": -250, "w": 460, "text": "VARIANT B \u2014 NO PORTRAIT\n\nInsurance. If the photography isn't strong enough, this is the fallback: headline steps up to 132px, proof strip rotates onto the right margin, scroll cue goes horizontal.\n\nWorth comparing honestly \u2014 this one may be the stronger design." },
+    { "id": "note-mobile",      "x": 3120, "y": -250, "w": 390, "text": "HERO \u2014 MOBILE 390x844\n\nDEVIATION FROM SPEC: five lines, not four. At 390px the four-line break forces 42px type, which undersells the hero. Splitting USEFUL / THINGS. buys 56px.\n\nHeadline leads; the portrait never appears above it." },
+    { "id": "note-work",        "x": 2100, "y": 1080, "w": 480, "text": "SELECTED WORK\n\nThree entries, alternating sides. Jar Gyi is NOT here \u2014 there is no material for it yet beyond a privacy policy, so CDG Zig, BKK Guide MM and Shwe Nar Sin lead instead. Say the word and Jar Gyi takes 01.\n\nThe screenshot slots are deliberate placeholders at Play Store dimensions (1080x1920), with registration brackets. Real screenshots drop straight in \u2014 no redesign, no resize. I still need the Play Store URLs.\n\nThe hover is the payoff the hero deliberately saved: frame lifts, border warms to amber, index rule extends, glow comes up. Hover a row to see it." },
+    { "id": "note-foundations", "x": 1560, "y": 4800, "w": 460, "text": "FOUNDATIONS\n\nTokens as an editorial spread rather than a swatch dump.\n\nBody face is Instrument Sans, not Inter as originally specced \u2014 Inter is the single most overused UI face and would have undercut the 'made by an engineer with taste' read. Same metrics class, so nothing else moves.\n\nThe Accent tweak above each artboard recolours the whole system live." }
   ],
   "launch": { "view": "canvas" }
 }
