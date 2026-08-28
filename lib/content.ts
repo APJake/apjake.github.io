@@ -80,6 +80,88 @@ export type Role = {
   products?: { name: string; years: string; text: string }[];
 };
 
+export type WorkEntry = {
+  name: string;
+  line: string;
+  meta: string[];
+  href: string | null;
+};
+
+export type WorkGroup = { title: string; note: string; entries: WorkEntry[] };
+
+/**
+ * The full index behind the homepage's three. Jar Gyi is described from its
+ * own privacy policy, which is the only material that exists for it.
+ */
+export const workGroups: WorkGroup[] = [
+  {
+    title: "Products I run",
+    note: "Built on my own time, and still mine to keep running.",
+    entries: [
+      {
+        name: "BKK Guide MM",
+        line: "A city guide for the Burmese community in Bangkok. One Flutter codebase across Android, iOS and web, with an API and data model I wrote myself so every surface reads the same content.",
+        meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "2023 — Now"],
+        href: null,
+      },
+      {
+        name: "Jar Gyi",
+        line: "A personal debt tracker. Everything stays on the device — Room for storage, no account, no sync, and it works with no network at all.",
+        meta: ["Android", "Kotlin · Room · Offline only", "2025 — Now"],
+        href: null,
+      },
+    ],
+  },
+  {
+    title: "Client & company work",
+    note: "Products I owned or shipped features on, for a studio or a client.",
+    entries: [
+      {
+        name: "CDG Zig",
+        line: "ComfortDelGro's taxi and bus booking app for Singapore. I own the passenger app end to end, led its move to Jetpack Compose, and built the internal library other project teams now reuse.",
+        meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · 2023 — Now"],
+        href: null,
+      },
+      {
+        name: "FWD SG",
+        line: "Life insurance on Android. Policy viewing, claims with document upload and biometric login. I also split the app into modules and cut its load time by about 25%.",
+        meta: ["100K+ Downloads · 4.7 Rating", "Kotlin", "Codigo · 2022 — 2023"],
+        href: null,
+      },
+      {
+        name: "Better HR",
+        line: "Attendance, leave and payroll for Myanmar businesses. I was the only Android developer on it — every feature, every fix and every release was mine.",
+        meta: ["100K+ Downloads", "Kotlin", "Better HR · 2022"],
+        href: null,
+      },
+      {
+        name: "Shwe Nar Sin",
+        line: "A Myanmar audiobook and music app. I built the music streaming feature, covering free and paid playback with telco billing.",
+        meta: ["1M+ Downloads · 4.4 Rating", "Android · Kotlin", "Freelance"],
+        href: null,
+      },
+      {
+        name: "AiO eSports",
+        line: "A fan app for the Myanmar eSports scene — follow teams, players and casters, vote, and donate.",
+        meta: ["Android", "Kotlin", "Freelance"],
+        href: null,
+      },
+      {
+        name: "AiO Partner",
+        line: "The companion app for the same ecosystem, letting teams manage their own profiles.",
+        meta: ["Android", "Kotlin", "Freelance"],
+        href: null,
+      },
+      {
+        name: "Hiking",
+        line: "A hiking notes app for a student client. Hive for local storage, so a trip stays saved and readable with no network.",
+        meta: ["Android · iOS", "Flutter · Hive", "Freelance · 2023"],
+        href: null,
+      },
+    ],
+  },
+];
+
 export const roles: Role[] = [
   {
     years: "2022 — Now",

@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { person } from "@/lib/content";
 import styles from "./Nav.module.css";
 
+// Absolute so the nav works from /work/ as well as the homepage.
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#experience", label: "About" },
+  { href: "/work/", label: "Work" },
+  { href: "/#experience", label: "About" },
 ];
 
 export default function Nav() {

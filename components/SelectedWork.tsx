@@ -87,7 +87,7 @@ export default function SelectedWork() {
         </ul>
 
         <p className={styles.allWork}>
-          <a className={styles.allWorkLink} href="#work">
+          <a className={styles.allWorkLink} href="/work/">
             <span className={`monoLabel ${styles.allWorkText}`}>See all work</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" className={styles.arrow}>
               <path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square" />

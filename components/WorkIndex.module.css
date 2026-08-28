@@ -1,0 +1,59 @@
+.section { padding-block: 200px 40px; }
+
+.head { display: flex; flex-direction: column; gap: 24px; padding-bottom: 120px; max-width: 900px; }
+.kicker { color: var(--amber); margin: 0; }
+.title { font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9; letter-spacing: -0.04em; }
+.note { max-width: 560px; color: var(--ink-secondary); text-wrap: pretty; }
+
+.group { padding-bottom: 96px; }
+.groupHead {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.groupTitle { color: var(--ink-primary); margin: 0; }
+.groupNote { font-size: 0.9375rem; color: var(--ink-muted); }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.item { border-bottom: 1px solid var(--line-hair); }
+
+/* Type-led on purpose: the homepage carries the device frames, this is an
+   index and should read denser than it. */
+.entry {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 32px;
+  padding-block: 48px;
+}
+
+.index { font-size: 0.8125rem; letter-spacing: 0.12em; color: var(--amber); margin: 0; padding-top: 12px; }
+
+.text { display: flex; flex-direction: column; gap: 18px; }
+
+.name {
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+.nameLink { color: inherit; }
+.nameLink:hover { color: var(--amber); }
+
+.line { color: var(--ink-secondary); max-width: 720px; text-wrap: pretty; }
+
+.meta { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 40px; color: var(--ink-muted); }
+.metaItem { display: flex; align-items: center; gap: 10px; }
+.tick { width: 4px; height: 4px; background: var(--amber); flex: none; }
+
+@media (max-width: 1024px) {
+  .section { padding-block: 144px 32px; }
+  .head { padding-bottom: 72px; }
+  .group { padding-bottom: 64px; }
+  .entry { grid-template-columns: 1fr; gap: 14px; padding-block: 36px; }
+  .index { padding-top: 0; }
+  .line { max-width: none; }
+  .meta { gap: 10px 24px; }
+}
