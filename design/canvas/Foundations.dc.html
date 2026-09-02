@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #0B0B0C; font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FFB020; text-decoration: none; }
+    a:hover { color: #FFC04D; }
+
+    .stage { position: relative; width: 1440px; min-height: 3560px; background: #0B0B0C; padding: 96px 64px; display: flex; flex-direction: column; gap: 96px; }
+
+    .disp { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; letter-spacing: -0.03em; color: #F2EFE9; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; }
+
+    /* masthead */
+    .masthead { display: flex; flex-direction: column; gap: 20px; }
+    .kicker { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent, #FFB020); }
+    .mastline { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 88px; line-height: 0.92; letter-spacing: -0.035em; color: #F2EFE9; }
+    .mastnote { font-size: 16px; line-height: 1.65; color: #A8A29A; max-width: 620px; }
+
+    /* section chrome */
+    .sec { display: flex; flex-direction: column; gap: 40px; }
+    .sechead { display: flex; align-items: center; gap: 24px; }
+    .seclabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6B675F; white-space: nowrap; }
+    .secrule { height: 1px; flex: 1 1 auto; background: rgba(242,239,233,0.10); }
+
+    /* colour */
+    .swgroup { display: flex; flex-direction: column; gap: 20px; }
+    .grouplabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #A8A29A; }
+    .swrow { display: flex; gap: 24px; }
+    .sw { display: flex; flex-direction: column; gap: 12px; width: 196px; }
+    .chip { height: 132px; }
+    .swname { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.04em; color: #F2EFE9; }
+    .swhex { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.06em; color: #6B675F; }
+    .linerow { display: flex; flex-direction: column; gap: 16px; max-width: 620px; }
+    .lineitem { display: flex; flex-direction: column; gap: 8px; }
+
+    /* type specimen */
+    .spec { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 44px 32px; align-items: baseline; }
+    .specmeta { display: flex; flex-direction: column; gap: 6px; }
+    .spectok { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.06em; color: #F2EFE9; }
+    .specdet { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; line-height: 1.5; letter-spacing: 0.04em; color: #6B675F; }
+
+    /* spacing */
+    .scale { display: flex; flex-direction: column; gap: 14px; }
+    .scalerow { display: flex; align-items: center; gap: 20px; }
+    .scalenum { width: 44px; text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.04em; color: #6B675F; }
+    .scalebar { height: 6px; background: var(--accent, #FFB020); }
+
+    /* grid */
+    .gridbox { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; height: 168px; }
+    .gridcol { background: rgba(255,176,32,0.08); border-top: 1px solid rgba(255,176,32,0.28); }
+    .caption { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.06em; color: #6B675F; }
+
+    /* motion */
+    .frames { display: flex; gap: 24px; }
+    .frame { flex: 1 1 0; display: flex; flex-direction: column; gap: 14px; }
+    .framebox { height: 150px; background: #131315; display: flex; align-items: center; padding: 0 28px; overflow: hidden; }
+    .frameword { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 60px; line-height: 0.88; letter-spacing: -0.04em; color: #F2EFE9; }
+
+    .grain { position: absolute; inset: 0; z-index: 20; pointer-events: none; mix-blend-mode: overlay; opacity: 0.03;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+  </style>
+</helmet>
+
+<div class="stage" style="--accent: {{accent}}">
+
+  <div class="masthead">
+    <div class="kicker">JAKE &#183; Portfolio Design System v0.1</div>
+    <div class="mastline">FOUNDATIONS</div>
+    <div class="mastnote">Dark editorial. Warm off-white ink on near-black, one amber accent held under three percent of any viewport. Restraint in the grid, weight in the type.</div>
+  </div>
+
+  <!-- 01 COLOUR -->
+  <div class="sec">
+    <div class="sechead"><span class="seclabel">01 &#8212; Colour</span><div class="secrule"></div></div>
+
+    <div class="swgroup">
+      <div class="grouplabel">Surfaces</div>
+      <div class="swrow">
+        <div class="sw"><div class="chip" style="background:#0B0B0C; border:1px solid rgba(242,239,233,0.18)"></div><div class="swname">--bg-base</div><div class="swhex">#0B0B0C</div></div>
+        <div class="sw"><div class="chip" style="background:#131315; border:1px solid rgba(242,239,233,0.10)"></div><div class="swname">--bg-raised</div><div class="swhex">#131315</div></div>
+        <div class="sw"><div class="chip" style="background:#080809; border:1px solid rgba(242,239,233,0.10)"></div><div class="swname">--bg-inset</div><div class="swhex">#080809</div></div>
+      </div>
+    </div>
+
+    <div class="swgroup">
+      <div class="grouplabel">Ink</div>
+      <div class="swrow">
+        <div class="sw"><div class="chip" style="background:#F2EFE9"></div><div class="swname">--ink-primary</div><div class="swhex">#F2EFE9</div></div>
+        <div class="sw"><div class="chip" style="background:#A8A29A"></div><div class="swname">--ink-secondary</div><div class="swhex">#A8A29A</div></div>
+        <div class="sw"><div class="chip" style="background:#6B675F"></div><div class="swname">--ink-muted</div><div class="swhex">#6B675F</div></div>
+      </div>
+    </div>
+
+    <div class="swgroup">
+      <div class="grouplabel">Accent &#8212; the only saturated colour in the system</div>
+      <div class="swrow">
+        <div class="sw"><div class="chip" style="background:var(--accent, #FFB020)"></div><div class="swname">--amber</div><div class="swhex">#FFB020</div></div>
+        <div class="sw"><div class="chip" style="background:#FFC04D"></div><div class="swname">--amber-bright</div><div class="swhex">#FFC04D</div></div>
+        <div class="sw"><div class="chip" style="background:#B87A12"></div><div class="swname">--amber-dim</div><div class="swhex">#B87A12</div></div>
+        <div class="sw"><div class="chip" style="background:rgba(255,176,32,0.16); border:1px solid rgba(242,239,233,0.10)"></div><div class="swname">--amber-glow</div><div class="swhex">rgba(255,176,32,.16)</div></div>
+      </div>
+    </div>
+
+    <div class="swgroup">
+      <div class="grouplabel">Lines &#8212; depth comes from these, never from shadow</div>
+      <div class="linerow">
+        <div class="lineitem"><div style="height:1px; background:rgba(242,239,233,0.10)"></div><div class="swhex">--line-hair &#8212; rgba(242,239,233,0.10)</div></div>
+        <div class="lineitem"><div style="height:1px; background:rgba(242,239,233,0.18)"></div><div class="swhex">--line-strong &#8212; rgba(242,239,233,0.18)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 TYPE -->
+  <div class="sec">
+    <div class="sechead"><span class="seclabel">02 &#8212; Typography</span><div class="secrule"></div></div>
+    <div class="spec">
+
+      <div class="specmeta"><div class="spectok">display-xl</div><div class="specdet">Bricolage 800<br>120px / 0.88<br>-0.04em</div></div>
+      <div class="disp" style="font-size:120px; line-height:0.88; letter-spacing:-0.04em">ANDROID</div>
+
+      <div class="specmeta"><div class="spectok">display-l</div><div class="specdet">Bricolage 800<br>72px / 0.95<br>-0.03em</div></div>
+      <div class="disp" style="font-size:72px; line-height:0.95; letter-spacing:-0.03em">SELECTED WORK</div>
+
+      <div class="specmeta"><div class="spectok">display-m</div><div class="specdet">Bricolage 800<br>48px / 1.0<br>-0.02em</div></div>
+      <div class="disp" style="font-size:48px; line-height:1; letter-spacing:-0.02em">CDG ZIG</div>
+
+      <div class="specmeta"><div class="spectok">body-l</div><div class="specdet">Instrument Sans 400<br>18px / 1.6</div></div>
+      <div style="font-size:18px; line-height:1.6; color:#F2EFE9; max-width:640px; text-wrap:pretty">Led the move from XML layouts to Jetpack Compose, rebuilding the booking screens and cutting render time by about thirty percent.</div>
+
+      <div class="specmeta"><div class="spectok">body</div><div class="specdet">Instrument Sans 400<br>16px / 1.65<br>max 68ch</div></div>
+      <div style="font-size:16px; line-height:1.65; color:#A8A29A; max-width:600px; text-wrap:pretty">Body copy never runs wider than sixty-eight characters. Supporting text sits at ink-secondary so the display line always wins the page.</div>
+
+      <div class="specmeta"><div class="spectok">mono-label</div><div class="specdet">JetBrains 500<br>12px / 0.12em<br>uppercase</div></div>
+      <div class="mono" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#A8A29A">Selected Work &#183; 2M+ Downloads</div>
+
+      <div class="specmeta"><div class="spectok">mono-meta</div><div class="specdet">JetBrains 500<br>13px / 0.06em</div></div>
+      <div class="mono" style="font-size:13px; letter-spacing:0.06em; color:#A8A29A">KOTLIN <span style="color:#6B675F">&#183;</span> COMPOSE <span style="color:#6B675F">&#183;</span> FLUTTER</div>
+
+    </div>
+  </div>
+
+  <!-- 03 SPACING -->
+  <div class="sec">
+    <div class="sechead"><span class="seclabel">03 &#8212; Spacing scale, 4px base</span><div class="secrule"></div></div>
+    <div class="scale">
+      <div class="scalerow"><div class="scalenum">4</div><div class="scalebar" style="width:4px"></div></div>
+      <div class="scalerow"><div class="scalenum">8</div><div class="scalebar" style="width:8px"></div></div>
+      <div class="scalerow"><div class="scalenum">12</div><div class="scalebar" style="width:12px"></div></div>
+      <div class="scalerow"><div class="scalenum">16</div><div class="scalebar" style="width:16px"></div></div>
+      <div class="scalerow"><div class="scalenum">24</div><div class="scalebar" style="width:24px"></div></div>
+      <div class="scalerow"><div class="scalenum">32</div><div class="scalebar" style="width:32px"></div></div>
+      <div class="scalerow"><div class="scalenum">48</div><div class="scalebar" style="width:48px"></div></div>
+      <div class="scalerow"><div class="scalenum">64</div><div class="scalebar" style="width:64px"></div></div>
+      <div class="scalerow"><div class="scalenum">96</div><div class="scalebar" style="width:96px"></div></div>
+      <div class="scalerow"><div class="scalenum">128</div><div class="scalebar" style="width:128px"></div></div>
+      <div class="scalerow"><div class="scalenum">160</div><div class="scalebar" style="width:160px"></div></div>
+      <div class="scalerow"><div class="scalenum">200</div><div class="scalebar" style="width:200px"></div></div>
+    </div>
+  </div>
+
+  <!-- 04 GRID -->
+  <div class="sec">
+    <div class="sechead"><span class="seclabel">04 &#8212; Grid</span><div class="secrule"></div></div>
+    <div class="gridbox">
+      <div class="gridcol"></div><div class="gridcol"></div><div class="gridcol"></div><div class="gridcol"></div>
+      <div class="gridcol"></div><div class="gridcol"></div><div class="gridcol"></div><div class="gridcol"></div>
+      <div class="gridcol"></div><div class="gridcol"></div><div class="gridcol"></div><div class="gridcol"></div>
+    </div>
+    <div class="caption">12 columns &#183; 1440 max &#183; 64px margins &#183; 24px gutters &#183; column 87.33px. Hero content occupies 1&#8211;7; the portrait occupies 8&#8211;12 and bleeds off the right edge.</div>
+  </div>
+
+  <!-- 05 MOTION -->
+  <div class="sec">
+    <div class="sechead"><span class="seclabel">05 &#8212; Motion &#8212; the line reveal</span><div class="secrule"></div></div>
+    <div class="frames">
+      <div class="frame">
+        <div class="framebox"><span class="frameword" style="clip-path: inset(0 0 100% 0)">ANDROID</span></div>
+        <div class="caption">0ms &#183; clip-path inset(0 0 104% 0)</div>
+      </div>
+      <div class="frame">
+        <div class="framebox"><span class="frameword" style="clip-path: inset(0 0 46% 0); transform: translateY(0.06em)">ANDROID</span></div>
+        <div class="caption">240ms &#183; mask sweeping upward</div>
+      </div>
+      <div class="frame">
+        <div class="framebox"><span class="frameword">ANDROID</span></div>
+        <div class="caption">700ms &#183; settled &#183; cubic-bezier(.22, 1, .36, 1)</div>
+      </div>
+    </div>
+    <div class="caption">Four lines, 80ms stagger. Supporting elements follow at 400ms. No opacity-only fades, no slide-ins, no bounce. Everything collapses to instant under prefers-reduced-motion.</div>
+  </div>
+
+  <div class="grain"></div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FFB020","options":["#FFB020","#FF5A1F","#E4E0D6","#6EE7B7"],"section":"Theme"},"$preview":{"width":1440,"height":3560}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FFB020' };
+  }
+}
+</script>
+</body>
+</html>

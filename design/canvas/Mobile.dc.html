@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #0B0B0C; font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FFB020; text-decoration: none; }
+    a:hover { color: #FFC04D; }
+
+    .stage { position: relative; width: 390px; height: 844px; overflow: hidden; background: #0B0B0C; display: flex; flex-direction: column; }
+
+    .nav { height: 64px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; flex: none; }
+    .wordmark { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: #F2EFE9; }
+    .navlinks { display: flex; gap: 24px; align-items: center; }
+    .navlink { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #A8A29A; text-decoration: none; }
+
+    .headline { padding: 52px 20px 0; display: flex; flex-direction: column; flex: none; }
+    .hl { display: block; font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 56px; line-height: 0.88; letter-spacing: -0.04em; color: #F2EFE9; white-space: nowrap;
+          animation: dcLineUp 700ms cubic-bezier(.22,1,.36,1) both; }
+    .dot { color: var(--accent, #FFB020); }
+
+    .discipline { padding: 24px 20px 0; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.06em; color: #A8A29A;
+                  animation: dcFadeUp 400ms cubic-bezier(.22,1,.36,1) 400ms both; }
+    .mid { color: #6B675F; }
+
+    .spacer { flex: none; height: 44px; }
+
+    .portrait { position: relative; isolation: isolate; flex: 1 1 auto; min-height: 0; overflow: hidden; animation: dcTone 900ms cubic-bezier(.22,1,.36,1) both; }
+    .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; filter: grayscale(1) contrast(1.28) brightness(0.78); }
+    .tone  { position: absolute; inset: 0; background: var(--accent, #FFB020); mix-blend-mode: color; opacity: 0.5; }
+    .warm  { position: absolute; inset: 0; background: var(--accent, #FFB020); mix-blend-mode: overlay; opacity: 0.2; }
+    .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,0) 34%, rgba(11,11,12,0.86) 74%, #0B0B0C 100%); }
+
+    .proof { position: absolute; left: 20px; right: 20px; bottom: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 3;
+             animation: dcFadeUp 400ms cubic-bezier(.22,1,.36,1) 500ms both; }
+    .proofrow { display: flex; align-items: center; gap: 28px; }
+    .pitem { display: flex; align-items: center; gap: 9px; }
+    .tick { width: 4px; height: 4px; background: var(--accent, #FFB020); flex: none; }
+    .plabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #A8A29A; }
+
+    .grain { position: absolute; inset: 0; z-index: 20; pointer-events: none; mix-blend-mode: overlay;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+
+    @keyframes dcLineUp { from { clip-path: inset(0 0 104% 0); transform: translateY(0.14em); } to { clip-path: inset(-30% -12% -22% 0); transform: translateY(0); } }
+    @keyframes dcFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes dcTone   { from { opacity: 0; filter: brightness(0.2); } to { opacity: 1; filter: none; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hl, .discipline, .proof, .portrait { animation: none !important; clip-path: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+    }
+  </style>
+</helmet>
+
+<div class="stage" style="--accent: {{accent}}">
+
+  <div class="nav">
+    <div class="wordmark">JAKE</div>
+    <div class="navlinks">
+      <a class="navlink" href="#work">Work</a>
+      <a class="navlink" href="#about">About</a>
+    </div>
+  </div>
+
+  <div class="headline">
+    <span class="hl" style="animation-delay: 0ms">ANDROID</span>
+    <span class="hl" style="animation-delay: 60ms">ENGINEER</span>
+    <span class="hl" style="animation-delay: 120ms">WHO BUILDS</span>
+    <span class="hl" style="animation-delay: 180ms">USEFUL</span>
+    <span class="hl" style="animation-delay: 240ms">THINGS<span class="dot">.</span></span>
+  </div>
+
+  <div class="discipline">KOTLIN <span class="mid">&#183;</span> COMPOSE <span class="mid">&#183;</span> FLUTTER</div>
+
+  <div class="spacer"></div>
+
+  <div class="portrait">
+    <img src="portrait.jpg" alt="Aung Min Khant">
+    <div class="tone"></div>
+    <div class="warm"></div>
+    <div class="scrim"></div>
+    <div class="proof">
+      <div class="proofrow">
+        <div class="pitem"><span class="tick"></span><span class="plabel">2M+ Downloads</span></div>
+      </div>
+      <div class="proofrow">
+        <div class="pitem"><span class="tick"></span><span class="plabel">4 Yrs</span></div>
+        <div class="pitem"><span class="tick"></span><span class="plabel">Da Nang, VN</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grain" style="opacity: {{grainOpacity}}"></div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FFB020","options":["#FFB020","#FF5A1F","#E4E0D6","#6EE7B7"],"section":"Theme"},"grain":{"editor":"boolean","default":true,"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#FFB020',
+      grainOpacity: this.props.grain === false ? '0' : '0.035'
+    };
+  }
+}
+</script>
+</body>
+</html>

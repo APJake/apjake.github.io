@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #0B0B0C; font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FFB020; text-decoration: none; }
+    a:hover { color: #FFC04D; }
+
+    .stage { position: relative; width: 1440px; min-height: 2900px; background: #0B0B0C; padding: 128px 64px 120px; display: flex; flex-direction: column; }
+
+    /* ---- section header ---- */
+    .sechead { display: flex; flex-direction: column; gap: 24px; padding-bottom: 88px; }
+    .kicker { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent, #FFB020); }
+    .sectitle { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 72px; line-height: 0.95; letter-spacing: -0.03em; color: #F2EFE9; }
+    .secnote { font-size: 16px; line-height: 1.65; color: #A8A29A; max-width: 520px; text-wrap: pretty; }
+
+    /* ---- entry ---- */
+    .rule { height: 1px; background: rgba(242,239,233,0.10); flex: none; }
+    .entry { display: flex; align-items: center; gap: 88px; padding: 72px 0; }
+    .entry.flip { flex-direction: row-reverse; }
+    .etext { width: 500px; flex: none; display: flex; flex-direction: column; gap: 22px; }
+    .edevice { flex: 1 1 auto; display: flex; justify-content: flex-end; }
+    .entry.flip .edevice { justify-content: flex-start; }
+
+    .eindex { display: flex; align-items: center; gap: 14px; }
+    .eidxnum { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 13px; letter-spacing: 0.12em; color: var(--accent, #FFB020); }
+    .eidxline { height: 1px; width: 40px; background: var(--accent, #FFB020); opacity: 0.4; transition: width 400ms cubic-bezier(.22,1,.36,1), opacity 400ms cubic-bezier(.22,1,.36,1); }
+    .entry:hover .eidxline { width: 88px; opacity: 1; }
+
+    .etitle { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 60px; line-height: 1.0; letter-spacing: -0.025em; color: #F2EFE9; }
+    .edesc { font-size: 18px; line-height: 1.6; color: #A8A29A; max-width: 460px; text-wrap: pretty; }
+    .edetail { font-size: 15px; line-height: 1.6; color: #6B675F; max-width: 460px; text-wrap: pretty; }
+
+    .emeta { display: flex; flex-direction: column; gap: 10px; padding-top: 8px; }
+    .emetarow { display: flex; align-items: center; gap: 12px; }
+    .tick { width: 4px; height: 4px; background: var(--accent, #FFB020); flex: none; }
+    .emetatext { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #A8A29A; }
+
+    /* ---- device frame + screenshot slot ---- */
+    .device { position: relative; width: 288px; height: 576px; border-radius: 12px; background: #131315; border: 1px solid rgba(242,239,233,0.18); padding: 9px;
+              transition: transform 400ms cubic-bezier(.22,1,.36,1), border-color 400ms cubic-bezier(.22,1,.36,1); }
+    .entry:hover .device { transform: translateY(-10px); border-color: rgba(255,176,32,0.45); }
+    .screen { position: relative; width: 100%; height: 100%; border-radius: 6px; background: #080809; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+    .slotglow { position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, var(--accent, #FFB020) 0%, rgba(255,176,32,0) 70%); opacity: 0; transition: opacity 400ms cubic-bezier(.22,1,.36,1); }
+    .entry:hover .slotglow { opacity: 0.1; }
+    .brk { position: absolute; width: 18px; height: 18px; border: 1px solid var(--accent, #FFB020); opacity: 0.5; }
+    .brk.tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+    .brk.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
+    .brk.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
+    .brk.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+    .slotlabel { position: relative; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6B675F; text-align: center; }
+    .slotdim { position: relative; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 10px; letter-spacing: 0.1em; color: #46433D; }
+
+    /* ---- footer link ---- */
+    .allwork { padding-top: 88px; display: flex; }
+    .allworklink { position: relative; display: inline-flex; align-items: center; gap: 14px; text-decoration: none; padding-bottom: 12px; }
+    .allworktext { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #F2EFE9; }
+    .allworklink::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent, #FFB020); transform: scaleX(0); transform-origin: left center; transition: transform 400ms cubic-bezier(.22,1,.36,1); }
+    .allworklink:hover::after { transform: scaleX(1); }
+    .arrow { display: block; transition: transform 400ms cubic-bezier(.22,1,.36,1); }
+    .allworklink:hover .arrow { transform: translateX(8px); }
+
+    .grain { position: absolute; inset: 0; z-index: 20; pointer-events: none; mix-blend-mode: overlay;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .device, .eidxline, .arrow, .allworklink::after, .slotglow { transition: none !important; }
+    }
+  </style>
+</helmet>
+
+<div class="stage" style="--accent: {{accent}}">
+
+  <div class="sechead">
+    <div class="kicker">Work</div>
+    <div class="sectitle">SELECTED WORK</div>
+    <div class="secnote">Three of the things I have shipped. The rest &#8212; insurance, HR, eSports, a hiking notebook &#8212; live on the work page.</div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- 01 -->
+  <div class="entry">
+    <div class="etext">
+      <div class="eindex"><span class="eidxnum">01</span><span class="eidxline"></span></div>
+      <div class="etitle">CDG ZIG</div>
+      <div class="edesc">ComfortDelGro&#39;s taxi and bus booking app for Singapore. I own the passenger app end to end &#8212; booking, live driver tracking, fare estimates, multi-stop rides and cashless payment.</div>
+      <div class="edetail">Led the migration from XML layouts to Jetpack Compose. Screen rendering about 30% faster, crash rate down about 20%.</div>
+      <div class="emeta">
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">1M+ Downloads</span></div>
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Kotlin &#183; Compose &#183; Maps SDK</span></div>
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Codigo &#183; 2023 &#8212; Now</span></div>
+      </div>
+    </div>
+    <div class="edevice">
+      <div class="device">
+        <div class="screen">
+          <div class="slotglow"></div>
+          <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+          <div class="slotlabel">Play Store<br>screenshot</div>
+          <div class="slotdim">1080 &#215; 1920</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- 02 -->
+  <div class="entry flip">
+    <div class="etext">
+      <div class="eindex"><span class="eidxnum">02</span><span class="eidxline"></span></div>
+      <div class="etitle">BKK GUIDE MM</div>
+      <div class="edesc">A city guide for the Burmese community in Bangkok. One Flutter codebase across Android, iOS and web &#8212; and the backend is mine too.</div>
+      <div class="edetail">Wrote the API and MongoDB data model myself, so the app and the web version run on the same content. Burmese and English throughout.</div>
+      <div class="emeta">
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Android &#183; iOS &#183; Web</span></div>
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Flutter &#183; Ktor &#183; MongoDB</span></div>
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Built and run by me &#183; 2023 &#8212; Now</span></div>
+      </div>
+    </div>
+    <div class="edevice">
+      <div class="device">
+        <div class="screen">
+          <div class="slotglow"></div>
+          <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+          <div class="slotlabel">Play Store<br>screenshot</div>
+          <div class="slotdim">1080 &#215; 1920</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- 03 -->
+  <div class="entry">
+    <div class="etext">
+      <div class="eindex"><span class="eidxnum">03</span><span class="eidxline"></span></div>
+      <div class="etitle">SHWE NAR SIN</div>
+      <div class="edesc">A Myanmar audiobook and music app. I built the music streaming feature &#8212; free and paid playback, with telco billing.</div>
+      <div class="edetail">Freelance. One of the first products I shipped that went past a million installs.</div>
+      <div class="emeta">
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">1M+ Downloads &#183; 4.4 Rating</span></div>
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Android &#183; Kotlin</span></div>
+        <div class="emetarow"><span class="tick"></span><span class="emetatext">Freelance</span></div>
+      </div>
+    </div>
+    <div class="edevice">
+      <div class="device">
+        <div class="screen">
+          <div class="slotglow"></div>
+          <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
+          <div class="slotlabel">Play Store<br>screenshot</div>
+          <div class="slotdim">1080 &#215; 1920</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="allwork">
+    <a class="allworklink" href="#work">
+      <span class="allworktext">See all work</span>
+      <svg class="arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M3 10h13M11 5l5 5-5 5" stroke="#FFB020" stroke-width="1.4" stroke-linecap="square"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="grain" style="opacity: {{grainOpacity}}"></div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FFB020","options":["#FFB020","#FF5A1F","#E4E0D6","#6EE7B7"],"section":"Theme"},"grain":{"editor":"boolean","default":true,"section":"Theme"},"$preview":{"width":1440,"height":2900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#FFB020',
+      grainOpacity: this.props.grain === false ? '0' : '0.035'
+    };
+  }
+}
+</script>
+</body>
+</html>

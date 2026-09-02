@@ -1,0 +1,75 @@
+.section { position: relative; padding-block: 160px 48px; overflow: hidden; isolation: isolate; }
+
+.glow {
+  position: absolute;
+  left: 50%;
+  bottom: -420px;
+  translate: -50% 0;
+  width: 1100px;
+  height: 700px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.14;
+  background: radial-gradient(ellipse at 50% 50%, var(--amber) 0%, rgba(255, 176, 32, 0) 65%);
+}
+
+.inner { display: flex; flex-direction: column; }
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+.line { display: block; white-space: nowrap; }
+.dot { color: var(--amber); }
+
+.note { margin-top: 32px; max-width: 520px; color: var(--ink-secondary); text-wrap: pretty; }
+
+.channels {
+  list-style: none;
+  margin: 72px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px 24px;
+}
+.channel { display: flex; flex-direction: column; gap: 10px; }
+.channelLabel { color: var(--ink-muted); }
+.channelLink {
+  font-size: 1.0625rem;
+  color: var(--ink-primary);
+  width: fit-content;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line-hair);
+  transition: color var(--dur-micro) var(--ease), border-color var(--dur-micro) var(--ease);
+  overflow-wrap: anywhere;
+}
+.channelLink:hover { color: var(--amber); border-bottom-color: var(--amber); }
+
+.colophon { margin-top: 128px; }
+.colophonRow {
+  padding-top: 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.wordmark {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.colophonMeta { color: var(--ink-muted); }
+
+@media (max-width: 1024px) {
+  .section { padding-block: 112px 40px; }
+  .channels { margin-top: 56px; }
+  .colophon { margin-top: 88px; }
+}

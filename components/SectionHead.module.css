@@ -1,0 +1,9 @@
+.head { display: flex; flex-direction: column; gap: 24px; padding-bottom: 88px; }
+.kicker { color: var(--amber); margin: 0; }
+.title { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+.note { max-width: 560px; color: var(--ink-secondary); text-wrap: pretty; }
+
+@media (max-width: 640px) {
+  .head { gap: 16px; padding-bottom: 56px; }
+  .note { font-size: 0.9375rem; }
+}

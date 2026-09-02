@@ -1,0 +1,121 @@
+.section { padding-block: 128px 120px; }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.item { margin: 0; }
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 88px;
+  padding-block: 72px;
+}
+.flip { flex-direction: row-reverse; }
+
+.text { width: 500px; flex: none; display: flex; flex-direction: column; gap: 22px; }
+
+.deviceWrap { flex: 1 1 auto; display: flex; justify-content: flex-end; }
+.flip .deviceWrap { justify-content: flex-start; }
+
+.index { display: flex; align-items: center; gap: 14px; margin: 0; }
+.indexNum { font-size: 0.8125rem; letter-spacing: 0.12em; color: var(--amber); }
+.indexLine {
+  height: 1px; width: 40px; background: var(--amber); opacity: 0.4;
+  transition: width var(--dur-element) var(--ease), opacity var(--dur-element) var(--ease);
+}
+.entry:hover .indexLine { width: 88px; opacity: 1; }
+
+.name { font-size: clamp(2.25rem, 4vw, 3.75rem); line-height: 1; letter-spacing: -0.025em; text-transform: uppercase; }
+.nameLink { color: inherit; }
+.nameLink:hover { color: var(--amber); }
+
+.desc { font-size: 1.125rem; line-height: 1.6; color: var(--ink-secondary); max-width: 460px; text-wrap: pretty; }
+.detail { font-size: 0.9375rem; color: var(--ink-muted); max-width: 460px; text-wrap: pretty; }
+
+.meta { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; color: var(--ink-secondary); }
+.metaRow { display: flex; align-items: center; gap: 12px; }
+.tick { width: 4px; height: 4px; background: var(--amber); flex: none; }
+
+/* ---- device ---- */
+
+.device {
+  position: relative;
+  width: 288px;
+  height: 576px;
+  border-radius: 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  padding: 9px;
+  transition: transform var(--dur-element) var(--ease), border-color var(--dur-element) var(--ease);
+}
+.entry:hover .device { transform: translateY(-10px); border-color: rgba(255, 176, 32, 0.45); }
+
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  background: var(--bg-inset);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.shot { width: 100%; height: 100%; object-fit: cover; }
+
+.glow {
+  position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(circle at 50% 45%, var(--amber) 0%, rgba(255,176,32,0) 70%);
+  transition: opacity var(--dur-element) var(--ease);
+}
+.entry:hover .glow { opacity: 0.1; }
+
+.bracket { position: absolute; width: 18px; height: 18px; border: 1px solid var(--amber); opacity: 0.5; }
+.tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
+.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
+.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+
+.slotLabel { position: relative; margin: 0; color: var(--ink-muted); text-align: center; }
+.slotDim { position: relative; margin: 0; font-size: 0.625rem; letter-spacing: 0.1em; color: var(--ink-faint); }
+
+/* ---- all work ---- */
+
+.allWork { margin: 88px 0 0; }
+.allWorkLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 12px;
+  color: var(--amber);
+}
+.allWorkText { color: var(--ink-primary); }
+.allWorkLink::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--amber); transform: scaleX(0); transform-origin: left center;
+  transition: transform var(--dur-element) var(--ease);
+}
+.allWorkLink:hover::after { transform: scaleX(1); }
+.arrow { transition: transform var(--dur-element) var(--ease); }
+.allWorkLink:hover .arrow { transform: translateX(8px); }
+
+/* ---- narrow ---- */
+
+@media (max-width: 1024px) {
+  .section { padding-block: 96px 88px; }
+  .entry, .flip { flex-direction: column; align-items: flex-start; gap: 32px; padding-block: 48px; }
+  .text { width: 100%; gap: 18px; }
+  .deviceWrap, .flip .deviceWrap { width: 100%; justify-content: center; }
+  .desc, .detail { max-width: none; }
+  .device { width: 220px; height: 440px; }
+  .allWork { margin-top: 48px; }
+  /* Hover lift is pointless on touch; the tap target is the card itself. */
+  .entry:hover .device { transform: none; }
+}
+
+@media (max-width: 640px) {
+  .desc { font-size: 1rem; }
+  .detail { font-size: 0.875rem; }
+}

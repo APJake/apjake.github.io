@@ -1,0 +1,81 @@
+.section { padding-block: 128px 120px; }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.item { margin: 0; }
+
+.row {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 56px;
+  padding-block: 64px;
+}
+
+.years { display: flex; flex-direction: column; gap: 8px; }
+.yearMain { font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-primary); margin: 0; }
+.yearNote { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin: 0; }
+
+/* The spine: one hairline with an amber tick at each join, so the nested
+   products read as belonging to the role rather than standing beside it. */
+.body {
+  position: relative;
+  border-left: 1px solid var(--line-hair);
+  padding-left: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.body::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 14px;
+  width: 5px;
+  height: 5px;
+  background: var(--amber);
+}
+
+.company { font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1; letter-spacing: -0.025em; text-transform: uppercase; }
+.role { font-size: 1.125rem; line-height: 1.5; color: var(--ink-secondary); }
+.place { color: var(--ink-muted); }
+.detail { color: var(--ink-secondary); max-width: 720px; text-wrap: pretty; }
+
+.products { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; }
+.product {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 40px;
+  padding-block: 24px;
+  border-top: 1px solid var(--line-hair);
+  align-items: start;
+}
+.productHead { display: flex; flex-direction: column; gap: 7px; }
+.productName { color: var(--ink-primary); margin: 0; }
+.productYears { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin: 0; }
+.productText { font-size: 0.9375rem; color: var(--ink-secondary); max-width: 640px; text-wrap: pretty; }
+
+.recognition {
+  list-style: none;
+  margin: 88px 0 0;
+  padding-top: 40px;
+  border-top: 1px solid var(--line-strong);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 72px;
+  color: var(--ink-secondary);
+}
+.recogItem { display: flex; align-items: center; gap: 12px; }
+.tick { width: 4px; height: 4px; background: var(--amber); flex: none; }
+
+@media (max-width: 1024px) {
+  .section { padding-block: 96px 88px; }
+  .row { grid-template-columns: 1fr; gap: 14px; padding-block: 40px; }
+  .years { flex-direction: row; align-items: center; gap: 12px; }
+  .body { border-left: 0; padding-left: 0; }
+  .body::before { display: none; }
+  .products { border-left: 1px solid var(--line-hair); padding-left: 20px; margin-top: 10px; }
+  .product { grid-template-columns: 1fr; gap: 10px; padding-block: 20px; border-top: 0; }
+  .product + .product { border-top: 1px solid var(--line-hair); }
+  .productHead { flex-direction: row; align-items: baseline; gap: 12px; }
+  .detail, .productText { max-width: none; }
+  .recognition { margin-top: 56px; flex-direction: column; gap: 16px; }
+}
