@@ -1,0 +1,119 @@
+/* ---------------------------------------------------------------
+   JAKE — design tokens. Mirrors design/01-design-system-and-hero.md
+   Dark only: no light theme in v1.
+   --------------------------------------------------------------- */
+:root {
+  /* surfaces */
+  --bg-base: #0b0b0c;
+  --bg-raised: #131315;
+  --bg-inset: #080809;
+
+  /* ink */
+  --ink-primary: #f2efe9;   /* 16.0:1 */
+  --ink-secondary: #a8a29a; /*  8.0:1 */
+  --ink-muted: #8b867d;     /*  5.3:1 — lowest value allowed to carry copy */
+  --ink-faint: #6b675f;     /*  3.4:1 — decorative only: middots, slot dims */
+
+  /* accent — the only saturated colour in the system */
+  --amber: #ffb020;
+  --amber-bright: #ffc04d;
+  --amber-dim: #b87a12;
+  --amber-glow: rgba(255, 176, 32, 0.16);
+
+  /* lines — depth comes from these, never from shadow */
+  --line-hair: rgba(242, 239, 233, 0.1);
+  --line-strong: rgba(242, 239, 233, 0.18);
+
+  /* motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-micro: 200ms;
+  --dur-element: 400ms;
+  --dur-entrance: 700ms;
+
+  /* layout */
+  --page-max: 1440px;
+  --margin: 64px;
+  --gutter: 24px;
+}
+
+@media (max-width: 1024px) { :root { --margin: 32px; } }
+@media (max-width: 640px)  { :root { --margin: 20px; --gutter: 16px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-base);
+  color: var(--ink-primary);
+  font-family: var(--font-body), "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a { color: var(--amber); text-decoration: none; }
+a:hover { color: var(--amber-bright); }
+
+::selection { background: var(--amber); color: var(--bg-base); }
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+h1, h2, h3, p, figure { margin: 0; }
+
+/* Shared primitives ------------------------------------------------ */
+
+.shell {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding-inline: var(--margin);
+}
+
+.display {
+  font-family: var(--font-display), "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+  font-weight: 500;
+}
+
+.monoLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rule { height: 1px; background: var(--line-hair); border: 0; margin: 0; }
+
+/* Scroll reveal. Elements start hidden only when JS + motion are on;
+   without either they are simply visible. */
+.reveal { opacity: 0; transform: translateY(16px); }
+.reveal.isIn {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-entrance) var(--ease), transform var(--dur-entrance) var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

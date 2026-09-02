@@ -1,0 +1,218 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 176px;
+  padding-bottom: 64px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ---- portrait ------------------------------------------------------ */
+
+.portrait {
+  position: absolute;
+  right: 0;
+  top: 140px;
+  /* Clears the scroll cue, which sits 64px off the floor and is 79px tall. */
+  bottom: 180px;
+  width: 480px;
+  margin: 0;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  animation: toneIn 900ms var(--ease) both;
+}
+
+/* Absolute so the image never contributes intrinsic height — the figure is
+   sized by its container, not by the photo. */
+.portraitImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 26%;
+  filter: grayscale(1) contrast(1.35) brightness(0.72);
+}
+
+/* Duotone: the greyscale image is tinted toward amber, with the midtones held
+   back so the face stays readable rather than going flat monochrome. */
+.tone  { position: absolute; inset: 0; background: var(--amber); mix-blend-mode: color; opacity: 0.38; }
+.warm  { position: absolute; inset: 0; background: var(--amber); mix-blend-mode: overlay; opacity: 0.12; }
+.fadeLeft {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--bg-base) 0%, rgba(11,11,12,0.78) 20%, rgba(11,11,12,0) 54%);
+}
+.fadeBottom {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(11,11,12,0) 52%, var(--bg-base) 100%);
+}
+
+.glow {
+  position: absolute;
+  right: -120px;
+  top: 60px;
+  width: 860px;
+  height: 860px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background: radial-gradient(circle at 50% 50%, var(--amber) 0%, rgba(255,176,32,0) 62%);
+}
+
+/* ---- headline ------------------------------------------------------ */
+
+.content { position: relative; z-index: 3; }
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 8.4vw, 7.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+.line {
+  display: block;
+  white-space: nowrap;
+  animation: lineUp var(--dur-entrance) var(--ease) both;
+}
+
+.word { white-space: nowrap; }
+.dot { color: var(--amber); }
+
+.disciplines {
+  margin-top: 32px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+  animation: fadeUp var(--dur-element) var(--ease) 420ms both;
+}
+.mid { color: var(--ink-muted); }
+
+/* ---- proof strip + scroll cue -------------------------------------- */
+
+.proofShell {
+  position: relative;
+  z-index: 4;
+  margin-top: auto;
+  padding-top: 96px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.proof {
+  width: min(756px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeUp var(--dur-element) var(--ease) 520ms both;
+}
+
+.proofRow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--ink-secondary);
+}
+
+.proofItem { display: flex; align-items: center; gap: 10px; }
+.tick { width: 4px; height: 4px; background: var(--amber); flex: none; }
+
+.cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--ink-muted);
+  animation: fadeUp var(--dur-element) var(--ease) 620ms both;
+}
+.cueTrack { position: relative; width: 1px; height: 48px; background: var(--line-hair); overflow: hidden; }
+.cueFill {
+  position: absolute; left: 0; top: 0; width: 1px; height: 16px;
+  background: var(--amber);
+  animation: cue 1800ms cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+/* ---- motion -------------------------------------------------------- */
+
+@keyframes lineUp {
+  from { clip-path: inset(0 0 104% 0); transform: translateY(0.14em); }
+  to   { clip-path: inset(-30% -12% -22% 0); transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes toneIn {
+  from { opacity: 0; filter: brightness(0.2); }
+  to   { opacity: 1; filter: none; }
+}
+@keyframes cue {
+  0%   { transform: translateY(-16px); }
+  100% { transform: translateY(48px); }
+}
+
+/* ---- narrow ---------------------------------------------------------
+   Below 1024 the portrait stops being a right-hand plane and becomes a
+   full-bleed band under the headline. The headline always leads. */
+
+@media (max-width: 1024px) {
+  .hero {
+    min-height: 100svh;
+    justify-content: flex-start;
+    padding-top: 64px;
+    padding-bottom: 0;
+  }
+  .glow { display: none; }
+
+  .portrait {
+    position: relative;
+    order: 3;
+    aspect-ratio: auto;
+    inset: auto;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 300px;
+    margin-top: 44px;
+  }
+  .fadeLeft { display: none; }
+  .fadeBottom {
+    background: linear-gradient(180deg, rgba(11,11,12,0) 34%, rgba(11,11,12,0.86) 74%, var(--bg-base) 100%);
+  }
+
+  .content { order: 1; padding-top: 52px; }
+  .disciplines { margin-top: 24px; }
+
+  .proofShell {
+    order: 4;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    margin-top: 0;
+    padding-top: 0;
+    align-items: flex-end;
+  }
+  .proof { gap: 12px; }
+  .proof .rule { display: none; }
+  .proofRow { flex-wrap: wrap; justify-content: flex-start; gap: 12px 28px; }
+  .cue { display: none; }
+}
+
+/* The last headline line splits in two when it can no longer fit. */
+@media (max-width: 600px) {
+  .lineLast { display: flex; flex-direction: column; }
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #0B0B0C; font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FFB020; text-decoration: none; }
+    a:hover { color: #FFC04D; }
+
+    .stage { position: relative; width: 1440px; min-height: 2050px; background: #0B0B0C; padding: 128px 64px 120px; display: flex; flex-direction: column; }
+
+    .sechead { display: flex; flex-direction: column; gap: 24px; padding-bottom: 88px; }
+    .kicker { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent, #FFB020); }
+    .sectitle { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 72px; line-height: 0.95; letter-spacing: -0.03em; color: #F2EFE9; }
+    .secnote { font-size: 16px; line-height: 1.65; color: #A8A29A; max-width: 560px; text-wrap: pretty; }
+
+    .rule { height: 1px; background: rgba(242,239,233,0.10); flex: none; }
+
+    /* ---- timeline row ---- */
+    .row { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 56px; padding: 64px 0; }
+    .years { display: flex; flex-direction: column; gap: 8px; }
+    .yearmain { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #F2EFE9; }
+    .yearsub { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #46433D; }
+
+    .body { position: relative; border-left: 1px solid rgba(242,239,233,0.10); padding-left: 56px; display: flex; flex-direction: column; gap: 18px; }
+    .body::before { content: ''; position: absolute; left: -3px; top: 14px; width: 5px; height: 5px; background: var(--accent, #FFB020); }
+
+    .company { font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 48px; line-height: 1.0; letter-spacing: -0.025em; color: #F2EFE9; }
+    .role { font-size: 18px; line-height: 1.5; color: #A8A29A; }
+    .place { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6B675F; }
+    .detail { font-size: 16px; line-height: 1.65; color: #A8A29A; max-width: 720px; text-wrap: pretty; }
+
+    /* ---- nested products ---- */
+    .subs { display: flex; flex-direction: column; margin-top: 14px; }
+    .sub { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 40px; padding: 24px 0; border-top: 1px solid rgba(242,239,233,0.10); align-items: start; }
+    .subhead { display: flex; flex-direction: column; gap: 7px; }
+    .subname { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #F2EFE9; }
+    .subyears { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #46433D; }
+    .subtext { font-size: 15px; line-height: 1.65; color: #A8A29A; max-width: 640px; text-wrap: pretty; }
+
+    /* ---- recognition strip ---- */
+    .recog { margin-top: 88px; padding-top: 40px; border-top: 1px solid rgba(242,239,233,0.18); display: flex; gap: 72px; flex-wrap: wrap; }
+    .recogitem { display: flex; align-items: center; gap: 12px; }
+    .tick { width: 4px; height: 4px; background: var(--accent, #FFB020); flex: none; }
+    .recogtext { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #A8A29A; }
+
+    .grain { position: absolute; inset: 0; z-index: 20; pointer-events: none; mix-blend-mode: overlay;
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+  </style>
+</helmet>
+
+<div class="stage" style="--accent: {{accent}}">
+
+  <div class="sechead">
+    <div class="kicker">Experience</div>
+    <div class="sectitle">WHERE I&#39;VE BUILT</div>
+    <div class="secnote">Four years full time, freelance since 2019. Mostly owning the Android side of a product end to end &#8212; architecture, features, testing and releases.</div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- CODIGO -->
+  <div class="row">
+    <div class="years">
+      <div class="yearmain">2022 &#8212; Now</div>
+      <div class="yearsub">Current</div>
+    </div>
+    <div class="body">
+      <div class="company">CODIGO</div>
+      <div class="role">Senior Android Developer</div>
+      <div class="place">Singapore product studio &#183; remote from Da Nang</div>
+      <div class="subs">
+        <div class="sub">
+          <div class="subhead">
+            <div class="subname">CDG Zig</div>
+            <div class="subyears">2023 &#8212; Now</div>
+          </div>
+          <div class="subtext">Own the passenger app end to end. Led the migration from XML to Jetpack Compose, and built the internal Android library &#8212; network layer, shared UI, common utilities &#8212; that other project teams now reuse instead of rebuilding.</div>
+        </div>
+        <div class="sub">
+          <div class="subhead">
+            <div class="subname">FWD SG</div>
+            <div class="subyears">2022 &#8212; 2023</div>
+          </div>
+          <div class="subtext">Policy viewing, claims with document upload, biometric login. Split a single-module app into multiple modules so the team could work in parallel, and cut app load time by about 25%.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- BETTER HR -->
+  <div class="row">
+    <div class="years">
+      <div class="yearmain">2022</div>
+      <div class="yearsub">Yangon</div>
+    </div>
+    <div class="body">
+      <div class="company">BETTER HR</div>
+      <div class="role">Mid-Senior Android Developer</div>
+      <div class="place">Yangon, Myanmar &#183; 100K+ downloads</div>
+      <div class="detail">The only Android developer on the product &#8212; features, fixes and every Play Store release were mine. Set up Git Flow and a proper release process, which got releases out about 25% faster, and shipped something new nearly every week across attendance, leave and payroll.</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- FREELANCE -->
+  <div class="row">
+    <div class="years">
+      <div class="yearmain">Since 2019</div>
+      <div class="yearsub">Ongoing</div>
+    </div>
+    <div class="body">
+      <div class="company">FREELANCE</div>
+      <div class="role">Android &amp; Flutter</div>
+      <div class="place">Myanmar &#183; Thailand &#183; Vietnam</div>
+      <div class="detail">Shwe Nar Sin, AiO eSports and AiO Partner for clients &#8212; plus the products I build and still run myself. This is where most of what I know about shipping actually came from.</div>
+    </div>
+  </div>
+
+  <div class="recog">
+    <div class="recogitem"><span class="tick"></span><span class="recogtext">ICPC 2019 Champion &#183; Regional &amp; National</span></div>
+    <div class="recogitem"><span class="tick"></span><span class="recogtext">People&#39;s Choice &#183; Hackathon Yangon 2018</span></div>
+    <div class="recogitem"><span class="tick"></span><span class="recogtext">Computer Science &#183; UCS Yangon</span></div>
+  </div>
+
+  <div class="grain" style="opacity: {{grainOpacity}}"></div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FFB020","options":["#FFB020","#FF5A1F","#E4E0D6","#6EE7B7"],"section":"Theme"},"grain":{"editor":"boolean","default":true,"section":"Theme"},"$preview":{"width":1440,"height":2050}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#FFB020',
+      grainOpacity: this.props.grain === false ? '0' : '0.035'
+    };
+  }
+}
+</script>
+</body>
+</html>
