@@ -1,0 +1,93 @@
+.section { padding-block: 200px 40px; }
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 80px;
+  max-width: 900px;
+}
+.kicker { color: var(--amber); margin: 0; }
+.title { font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9; letter-spacing: -0.04em; }
+.note { max-width: 560px; color: var(--ink-secondary); text-wrap: pretty; }
+
+.empty { color: var(--ink-muted); padding-block: 80px; }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.item { }
+
+/* Each entry is a 16:9 cover on the left, text on the right. Stacks on
+   narrow viewports. */
+.entry {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 56px;
+  align-items: center;
+  padding-block: 56px;
+}
+
+.coverWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  transition: border-color var(--dur-element) var(--ease), transform var(--dur-element) var(--ease);
+}
+.coverWrap:hover {
+  border-color: rgba(255, 176, 32, 0.45);
+  transform: translateY(-4px);
+}
+.cover { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.text { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+
+.meta { color: var(--ink-muted); display: flex; align-items: center; gap: 14px; margin: 0; }
+.metaDot { width: 3px; height: 3px; background: var(--ink-faint); border-radius: 50%; }
+
+.name {
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+.nameLink { color: inherit; }
+.nameLink:hover { color: var(--amber); }
+
+.desc { color: var(--ink-secondary); text-wrap: pretty; max-width: 560px; }
+
+.cta { margin: 0; }
+.ctaLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  color: var(--amber);
+}
+.ctaText { color: var(--ink-primary); }
+.ctaLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-element) var(--ease);
+}
+.ctaLink:hover::after { transform: scaleX(1); }
+.arrow { transition: transform var(--dur-element) var(--ease); }
+.ctaLink:hover .arrow { transform: translateX(6px); }
+
+@media (max-width: 1024px) {
+  .section { padding-block: 144px 32px; }
+  .head { padding-bottom: 56px; }
+  .entry { grid-template-columns: 1fr; gap: 24px; padding-block: 40px; }
+  .name { font-size: clamp(1.625rem, 5vw, 2.25rem); }
+}

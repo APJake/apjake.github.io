@@ -6,7 +6,7 @@
 export const person = {
   wordmark: "JAKE",
   name: "Aung Min Khant",
-  role: "Android Engineer",
+  role: "Senior Mobile Developer",
   location: "Da Nang, Vietnam",
   email: "apjake.me@gmail.com",
   github: "https://github.com/apjake",
@@ -35,38 +35,166 @@ export type Project = {
   shot: string | null;
 };
 
+/**
+ * Single source of truth for product facts. The three arrays below
+ * (`projects`, `workGroups`, `caseStudies`) carry overlapping products but
+ * have different shapes. They all read from this map so a fact stays in
+ * sync across the homepage, the work page, and the case study.
+ */
+export type ProductFacts = {
+  slug: string;
+  name: string;
+  oneLiner: string;
+  period: string;
+  company: string;
+  downloads: string;
+  platforms?: string;
+  stack: string;
+  /** External link target (Play Store, official site, or GitHub). */
+  href: string | null;
+  /** Local path under /public, e.g. "/shots/cdg-zig.webp". */
+  screenshot?: string;
+};
+
+export const productFacts: Record<string, ProductFacts> = {
+  "cdg-zig": {
+    slug: "cdg-zig",
+    name: "CDG Zig",
+    oneLiner:
+      "ComfortDelGro's taxi and bus booking app for Singapore. Behind the passenger app — booking, live driver tracking, fare estimates, multi-stop rides and cashless payment.",
+    period: "Oct 2023 – Present",
+    company: "Codigo",
+    downloads: "1M+ Downloads",
+    stack: "Kotlin · Compose · Maps SDK",
+    href: "https://play.google.com/store/apps/details?id=com.codigo.comfort",
+    screenshot: "/shots/cdg-zig.webp",
+  },
+  "gogoopo": {
+    slug: "gogoopo",
+    name: "GoGooPo",
+    oneLiner:
+      "A city guide for the Burmese community in Bangkok. One Flutter codebase across Android, iOS and web, with an API and data model I wrote myself so every surface reads the same content.",
+    period: "Dec 2023 – Present",
+    company: "Built and run by me",
+    downloads: "",
+    platforms: "Android · iOS · Web",
+    stack: "Flutter · Ktor · MongoDB",
+    href: "https://gogoopo.com/",
+    // No screenshot yet — GoGooPo has no Play Store listing, and the gogoopo.com
+    // hero asset is a 1360x1020 logo, not a phone capture. Falls back to the
+    // placeholder bracket frame until a portrait screenshot is available.
+  },
+  "shwe-nar-sin": {
+    slug: "shwe-nar-sin",
+    name: "Shwe Nar Sin",
+    oneLiner:
+      "A Myanmar audiobook and music app. I built the music streaming feature — free and paid playback, with telco billing.",
+    period: "Freelance",
+    company: "Freelance",
+    downloads: "1M+ Downloads · 4.4 Rating",
+    stack: "Android · Kotlin",
+    href: "https://play.google.com/store/apps/details?id=com.bit.shwenarsin",
+    screenshot: "/shots/shwe-nar-sin.webp",
+  },
+  "jar-gyi": {
+    slug: "jar-gyi",
+    name: "Jar Gyi",
+    oneLiner:
+      "A personal debt tracker. Everything stays on the device — Room for storage, no account, no sync, and it works with no network at all.",
+    period: "2025 — Now",
+    company: "Built and run by me",
+    downloads: "",
+    platforms: "Android",
+    stack: "Kotlin · Room · Offline only",
+    href: "https://play.google.com/store/apps/details?id=com.apjake.akywesayin",
+  },
+  "fwd-sg": {
+    slug: "fwd-sg",
+    name: "FWD SG",
+    oneLiner:
+      "Life insurance on Android. Policy viewing, claims with document upload and biometric login. I also split the app into modules and cut its load time by about 25%.",
+    period: "Oct 2022 – Oct 2023",
+    company: "Codigo",
+    downloads: "100K+ Downloads · 4.7 Rating",
+    stack: "Kotlin",
+    href: "https://play.google.com/store/apps/details?id=com.fwd.sg",
+  },
+  "better-hr": {
+    slug: "better-hr",
+    name: "Better HR",
+    oneLiner:
+      "Attendance, leave and payroll for Myanmar businesses. I was the only Android developer on it — every feature, every fix and every release was mine.",
+    period: "Jun 2022 – Dec 2022",
+    company: "Better HR",
+    downloads: "100K+ Downloads",
+    stack: "Kotlin",
+    href: "https://play.google.com/store/apps/details?id=co.nexlabs.betterhr",
+  },
+  "aio-esports": {
+    slug: "aio-esports",
+    name: "AiO eSports",
+    oneLiner:
+      "A fan app for the Myanmar eSports scene — follow teams, players and casters, vote, and donate.",
+    period: "Freelance",
+    company: "Freelance",
+    downloads: "",
+    stack: "Android · Kotlin",
+    href: "https://play.google.com/store/apps/details?id=com.confident.aiogaming",
+  },
+  "aio-partner": {
+    slug: "aio-partner",
+    name: "AiO Partner",
+    oneLiner:
+      "The companion app for the same ecosystem, letting teams manage their own profiles.",
+    period: "Freelance",
+    company: "Freelance",
+    downloads: "",
+    stack: "Android · Kotlin",
+    href: "https://play.google.com/store/apps/details?id=mm.com.allinone.partner",
+  },
+  "hiking": {
+    slug: "hiking",
+    name: "Hiking",
+    oneLiner:
+      "A hiking notes app for a student client. Hive for local storage, so a trip stays saved and readable with no network.",
+    period: "Nov 2023",
+    company: "Freelance",
+    downloads: "",
+    platforms: "Android · iOS",
+    stack: "Flutter · Hive",
+    href: "https://github.com/APJake/android-hiking-notes-app",
+  },
+};
+
 export const projects: Project[] = [
   {
     index: "01",
-    name: "CDG Zig",
-    description:
-      "ComfortDelGro's taxi and bus booking app for Singapore. I own the passenger app end to end — booking, live driver tracking, fare estimates, multi-stop rides and cashless payment.",
+    name: productFacts["cdg-zig"].name,
+    description: productFacts["cdg-zig"].oneLiner,
     detail:
       "Led the migration from XML layouts to Jetpack Compose. Screen rendering about 30% faster, crash rate down about 20%.",
-    meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · 2023 — Now"],
+    meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · Oct 2023 – Present"],
     href: "/work/cdg-zig/",
-    shot: null,
+    shot: productFacts["cdg-zig"].screenshot ?? null,
   },
   {
     index: "02",
-    name: "BKK Guide MM",
-    description:
-      "A city guide for the Burmese community in Bangkok. One Flutter codebase across Android, iOS and web — and the backend is mine too.",
+    name: productFacts["gogoopo"].name,
+    description: productFacts["gogoopo"].oneLiner,
     detail:
       "Wrote the API and MongoDB data model myself, so the app and the web version run on the same content. Burmese and English throughout.",
-    meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "Built and run by me · 2023 — Now"],
-    href: null,
-    shot: null,
+    meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "Built and run by me · Dec 2023 – Present"],
+    href: productFacts["gogoopo"].href,
+    shot: productFacts["gogoopo"].screenshot ?? null,
   },
   {
     index: "03",
-    name: "Shwe Nar Sin",
-    description:
-      "A Myanmar audiobook and music app. I built the music streaming feature — free and paid playback, with telco billing.",
+    name: productFacts["shwe-nar-sin"].name,
+    description: productFacts["shwe-nar-sin"].oneLiner,
     detail: "Freelance. One of the first products I shipped that went past a million installs.",
     meta: ["1M+ Downloads · 4.4 Rating", "Android · Kotlin", "Freelance"],
-    href: null,
-    shot: null,
+    href: productFacts["shwe-nar-sin"].href,
+    shot: productFacts["shwe-nar-sin"].screenshot ?? null,
   },
 ];
 
@@ -110,15 +238,15 @@ export const caseStudies: CaseStudy[] = [
     slug: "cdg-zig",
     name: "CDG Zig",
     tagline:
-      "ComfortDelGro's taxi and bus booking app for Singapore, and the Android side of it that I own.",
+      "ComfortDelGro's taxi and bus booking app for Singapore, and the Android side of it I run.",
     facts: [
       { label: "Role", value: "Senior Android Developer" },
       { label: "Studio", value: "Codigo" },
-      { label: "Period", value: "2023 — Now" },
+      { label: "Period", value: "Oct 2023 – Present" },
       { label: "Scale", value: "1M+ downloads" },
     ],
     intro:
-      "CDG Zig is how people in Singapore book a ComfortDelGro taxi or bus. I own the passenger app end to end — not a slice of it, the whole Android side: what ships, how it is built, and what happens after a release goes out.",
+      "CDG Zig is how people in Singapore book a ComfortDelGro taxi or bus. I run the Android side — architecture, features, testing and releases — and care about leaving code the next developer can work with.",
     owns: [
       "Booking",
       "Live driver tracking on Google Maps",
@@ -171,64 +299,65 @@ export const workGroups: WorkGroup[] = [
     note: "Built on my own time, and still mine to keep running.",
     entries: [
       {
-        name: "BKK Guide MM",
-        line: "A city guide for the Burmese community in Bangkok. One Flutter codebase across Android, iOS and web, with an API and data model I wrote myself so every surface reads the same content.",
-        meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "2023 — Now"],
-        href: null,
+        name: productFacts["gogoopo"].name,
+        line: productFacts["gogoopo"].oneLiner,
+        meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "Dec 2023 – Present"],
+        href: productFacts["gogoopo"].href,
       },
       {
-        name: "Jar Gyi",
-        line: "A personal debt tracker. Everything stays on the device — Room for storage, no account, no sync, and it works with no network at all.",
+        name: productFacts["jar-gyi"].name,
+        line: productFacts["jar-gyi"].oneLiner,
         meta: ["Android", "Kotlin · Room · Offline only", "2025 — Now"],
-        href: null,
+        href: productFacts["jar-gyi"].href,
       },
     ],
   },
   {
     title: "Client & company work",
-    note: "Products I owned or shipped features on, for a studio or a client.",
+    note: "Products I shipped on, for a studio or a client.",
     entries: [
       {
-        name: "CDG Zig",
-        line: "ComfortDelGro's taxi and bus booking app for Singapore. I own the passenger app end to end, led its move to Jetpack Compose, and built the internal library other project teams now reuse.",
-        meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · 2023 — Now"],
+        name: productFacts["cdg-zig"].name,
+        line:
+          "ComfortDelGro's taxi and bus booking app for Singapore. Behind the passenger app — led the move to Jetpack Compose, and built the internal library other project teams now reuse.",
+        meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · Oct 2023 – Present"],
         href: "/work/cdg-zig/",
       },
       {
-        name: "FWD SG",
-        line: "Life insurance on Android. Policy viewing, claims with document upload and biometric login. I also split the app into modules and cut its load time by about 25%.",
-        meta: ["100K+ Downloads · 4.7 Rating", "Kotlin", "Codigo · 2022 — 2023"],
-        href: null,
+        name: productFacts["fwd-sg"].name,
+        line: productFacts["fwd-sg"].oneLiner,
+        meta: ["100K+ Downloads · 4.7 Rating", "Kotlin", "Codigo · Oct 2022 – Oct 2023"],
+        href: productFacts["fwd-sg"].href,
       },
       {
-        name: "Better HR",
-        line: "Attendance, leave and payroll for Myanmar businesses. I was the only Android developer on it — every feature, every fix and every release was mine.",
-        meta: ["100K+ Downloads", "Kotlin", "Better HR · 2022"],
-        href: null,
+        name: productFacts["better-hr"].name,
+        line: productFacts["better-hr"].oneLiner,
+        meta: ["100K+ Downloads", "Kotlin", "Better HR · Jun 2022 – Dec 2022"],
+        href: productFacts["better-hr"].href,
       },
       {
-        name: "Shwe Nar Sin",
-        line: "A Myanmar audiobook and music app. I built the music streaming feature, covering free and paid playback with telco billing.",
+        name: productFacts["shwe-nar-sin"].name,
+        line: productFacts["shwe-nar-sin"].oneLiner,
         meta: ["1M+ Downloads · 4.4 Rating", "Android · Kotlin", "Freelance"],
-        href: null,
+        href: productFacts["shwe-nar-sin"].href,
       },
       {
-        name: "AiO eSports",
-        line: "A fan app for the Myanmar eSports scene — follow teams, players and casters, vote, and donate.",
+        name: productFacts["aio-esports"].name,
+        line: productFacts["aio-esports"].oneLiner,
         meta: ["Android", "Kotlin", "Freelance"],
-        href: null,
+        href: productFacts["aio-esports"].href,
       },
       {
-        name: "AiO Partner",
-        line: "The companion app for the same ecosystem, letting teams manage their own profiles.",
+        name: productFacts["aio-partner"].name,
+        line: productFacts["aio-partner"].oneLiner,
         meta: ["Android", "Kotlin", "Freelance"],
-        href: null,
+        href: productFacts["aio-partner"].href,
       },
       {
-        name: "Hiking",
-        line: "A hiking notes app for a student client. Hive for local storage, so a trip stays saved and readable with no network.",
-        meta: ["Android · iOS", "Flutter · Hive", "Freelance · 2023"],
-        href: null,
+        name: productFacts["hiking"].name,
+        line: productFacts["hiking"].oneLiner,
+        meta: ["Android · iOS", "Flutter · Hive", "Freelance · Nov 2023"],
+        href: productFacts["hiking"].href,
       },
     ],
   },
@@ -236,7 +365,7 @@ export const workGroups: WorkGroup[] = [
 
 export const roles: Role[] = [
   {
-    years: "2022 — Now",
+    years: "Oct 2022 – Present",
     yearsNote: "Current",
     company: "Codigo",
     role: "Senior Android Developer",
@@ -244,18 +373,18 @@ export const roles: Role[] = [
     products: [
       {
         name: "CDG Zig",
-        years: "2023 — Now",
-        text: "Own the passenger app end to end. Led the migration from XML to Jetpack Compose, and built the internal Android library — network layer, shared UI, common utilities — that other project teams now reuse instead of rebuilding.",
+        years: "Oct 2023 – Present",
+        text: "Run the passenger app end to end. Led the migration from XML to Jetpack Compose, and built the internal Android library — network layer, shared UI, common utilities — that other project teams now reuse instead of rebuilding.",
       },
       {
         name: "FWD SG",
-        years: "2022 — 2023",
+        years: "Oct 2022 – Oct 2023",
         text: "Policy viewing, claims with document upload, biometric login. Split a single-module app into multiple modules so the team could work in parallel, and cut app load time by about 25%.",
       },
     ],
   },
   {
-    years: "2022",
+    years: "Jun 2022 – Dec 2022",
     yearsNote: "Yangon",
     company: "Better HR",
     role: "Mid-Senior Android Developer",
@@ -276,9 +405,19 @@ export const roles: Role[] = [
 
 export const recognition = [
   "ICPC 2019 Champion · Regional & National",
-  "People's Choice · Hackathon Yangon 2018",
+  "People's Choice · Hackathon Yangon 2018 · Dinger",
   "Computer Science · UCS Yangon",
 ];
+
+/**
+ * Derived totals. Anything that needs to say "nine products" or "2M+ downloads"
+ * in JSX reads from here so the copy can never silently desync if the arrays
+ * grow or the metric changes.
+ */
+export const totals = {
+  products: workGroups.reduce((n, g) => n + g.entries.length, 0),
+  downloads: "2M+",
+};
 
 export const library = {
   label: "The thing I am most pleased with",

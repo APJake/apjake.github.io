@@ -1,4 +1,4 @@
-import { workGroups } from "@/lib/content";
+import { totals, workGroups } from "@/lib/content";
 import Reveal from "./Reveal";
 import styles from "./WorkIndex.module.css";
 
@@ -17,8 +17,8 @@ export default function WorkIndex() {
             I&apos;VE SHIPPED
           </h1>
           <p className={styles.note}>
-            Nine products across Android and Flutter, for a Singapore studio, for clients in
-            Myanmar and Thailand, and for myself. Together they have passed two million
+            {totals.products} products across Android and Flutter, for a Singapore studio, for clients in
+            Myanmar and Thailand, and for myself. Together they have passed {totals.downloads}{" "}
             downloads on Google Play.
           </p>
         </header>
