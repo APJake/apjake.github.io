@@ -28,7 +28,7 @@ export default function Nav() {
       </a>
       <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <div className={`shell ${styles.inner}`}>
-          <a className={styles.wordmark} href="#main" aria-label={`${person.name} — home`}>
+          <a className={styles.wordmark} href="/" aria-label={`${person.name} — home`}>
             {person.wordmark}
           </a>
           <nav className={styles.links} aria-label="Sections">
