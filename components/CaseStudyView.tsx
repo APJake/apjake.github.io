@@ -19,9 +19,40 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
               </div>
             ))}
           </dl>
+
+          {study.links.length > 0 && (
+            <div className={styles.links} aria-label="External links">
+              {study.links.map((l) => (
+                <a
+                  key={l.href}
+                  className={styles.link}
+                  href={l.href}
+                  {...(l.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                >
+                  <span className={`monoLabel ${styles.linkText}`}>{l.label}</span>
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true" className={styles.linkArrow}>
+                    <path d="M5 15L15 5M8 5h7v7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          )}
         </header>
 
         <hr className="rule" />
+
+        {study.gallery && study.gallery.length > 0 && (
+          <Reveal>
+            <figure className={styles.gallery} aria-label="Screenshots">
+              {study.gallery.map((src) => (
+                <a key={src} href={src} target="_blank" rel="noreferrer" className={styles.shotLink}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt={`${study.name} on Android`} className={styles.shot} loading="lazy" />
+                </a>
+              ))}
+            </figure>
+          </Reveal>
+        )}
 
         <Reveal>
           <section className={styles.intro} aria-label="Overview">

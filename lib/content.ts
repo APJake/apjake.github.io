@@ -176,7 +176,7 @@ export const projects: Project[] = [
     detail:
       "Personal debt tracker. Room for local storage, no account, no network — every entry stays on the device.",
     meta: ["Android", "Kotlin · Room · Offline only", "Built and run by me · 2025 — Now"],
-    href: productFacts["jar-gyi"].href,
+    href: "/work/jar-gyi/",
     shot: productFacts["jar-gyi"].screenshot ?? null,
   },
   {
@@ -195,7 +195,7 @@ export const projects: Project[] = [
     description: productFacts["better-hr"].oneLiner,
     detail: "Sole Android developer — every feature, every fix and every release was mine.",
     meta: ["100K+ Downloads", "Kotlin", "Better HR · Jun 2022 – Dec 2022"],
-    href: productFacts["better-hr"].href,
+    href: "/work/better-hr/",
     shot: productFacts["better-hr"].screenshot ?? null,
   },
   {
@@ -204,7 +204,7 @@ export const projects: Project[] = [
     description: productFacts["shwe-nar-sin"].oneLiner,
     detail: "Freelance. One of the first products I shipped that went past a million installs.",
     meta: ["1M+ Downloads · 4.4 Rating", "Android · Kotlin", "Freelance"],
-    href: productFacts["shwe-nar-sin"].href,
+    href: "/work/shwe-nar-sin/",
     shot: productFacts["shwe-nar-sin"].screenshot ?? null,
   },
 ];
@@ -238,6 +238,10 @@ export type CaseStudy = {
   moves: { metric: string; metricNote: string; title: string; text: string }[];
   beyond: string;
   stack: { title: string; items: string[] }[];
+  /** External links — Play Store, official site, or source repo. At least one required. */
+  links: { label: string; href: string }[];
+  /** Optional gallery of paths under /public, e.g. ["/shots/cdg-zig.webp"]. */
+  gallery?: string[];
 };
 
 /**
@@ -293,6 +297,348 @@ export const caseStudies: CaseStudy[] = [
       { title: "Quality", items: ["JUnit", "MockK", "Compose UI tests", "Crashlytics", "Firebase Performance"] },
       { title: "Release", items: ["Gradle (Kotlin DSL)", "Play Console staged rollouts", "GitHub Actions"] },
     ],
+    links: [{ label: "Open in Play Store", href: productFacts["cdg-zig"].href! }],
+    gallery: productFacts["cdg-zig"].screenshot ? [productFacts["cdg-zig"].screenshot] : undefined,
+  },
+  {
+    slug: "gogoopo",
+    name: "GoGooPo",
+    tagline: "A city guide for the Burmese community in Bangkok, in one Flutter codebase across Android, iOS and web.",
+    facts: [
+      { label: "Role", value: "Built and run by me" },
+      { label: "Studio", value: "Solo" },
+      { label: "Period", value: "Dec 2023 – Present" },
+      { label: "Scale", value: "Android · iOS · Web" },
+    ],
+    intro:
+      "GoGooPo is a city guide I built and still run for Burmese people living in Bangkok. One Flutter codebase serves the Android app, the iOS app and the web version, and I wrote the backend API and the MongoDB data model myself so every surface reads the same content.",
+    owns: [
+      "Flutter app (Android, iOS, Web)",
+      "Ktor backend API",
+      "MongoDB data model",
+      "Firebase Remote Config",
+      "Burmese & English localization",
+    ],
+    moves: [
+      {
+        metric: "3 platforms",
+        metricNote: "1 Flutter codebase",
+        title: "One codebase, three surfaces",
+        text: "The same Dart ships to Android, iOS and the web. The layout was designed to reflow cleanly between phone and browser so I never had to maintain a parallel build.",
+      },
+      {
+        metric: "1 model",
+        metricNote: "MongoDB, all surfaces",
+        title: "Wrote the data model and the API myself",
+        text: "The backend and the MongoDB data model are mine, which means the app, the web and any future client read the same content without a translation layer in between.",
+      },
+      {
+        metric: "0 rebuilds",
+        metricNote: "for content changes",
+        title: "Remote Config for live edits",
+        text: "Firebase Remote Config handles the copy, the feature flags and the settings that change more often than the release cadence. Shipping a string change no longer needs a build.",
+      },
+    ],
+    beyond: "Alongside the code: I keep the Burmese and English translations in sync and answer the support inbox myself.",
+    stack: [
+      { title: "Language & UI", items: ["Flutter", "Dart", "Responsive layouts"] },
+      { title: "State & data", items: ["Provider", "MongoDB driver", "freezed"] },
+      { title: "Backend", items: ["Ktor", "REST API", "Firebase Auth", "Firebase Remote Config"] },
+    ],
+    links: [{ label: "Open gogoopo.com", href: productFacts["gogoopo"].href! }],
+  },
+  {
+    slug: "shwe-nar-sin",
+    name: "Shwe Nar Sin",
+    tagline: "A Myanmar audiobook and music app. I built the music streaming feature — free and paid, with telco billing.",
+    facts: [
+      { label: "Role", value: "Freelance Android Developer" },
+      { label: "Studio", value: "Freelance" },
+      { label: "Period", value: "Freelance" },
+      { label: "Scale", value: "1M+ downloads · 4.4★" },
+    ],
+    intro:
+      "Shwe Nar Sin is a Myanmar audiobook and music app with over a million downloads on Google Play. My part was the music streaming feature, with both free and paid playback and telco billing integrated for the Myanmar carriers.",
+    owns: ["Music streaming player", "Free / paid playback", "Telco billing integration"],
+    moves: [
+      {
+        metric: "1M+",
+        metricNote: "downloads",
+        title: "Music for over a million installs",
+        text: "The music feature shipped into an app that has passed a million downloads on Google Play with a 4.4 star rating. It is one of the first products I shipped that reached that scale.",
+      },
+      {
+        metric: "2 modes",
+        metricNote: "free and paid",
+        title: "Free and paid, with telco billing on the paid side",
+        text: "The player handles the free stream and the paid stream as different code paths, with the carrier-billing flow on the paid side. The billing edge cases (interrupted streams, retries) were the part that ate the most time.",
+      },
+      {
+        metric: "Android",
+        metricNote: "native Kotlin",
+        title: "Native Android, no Flutter",
+        text: "Before GoGooPo this was a Kotlin project, and the player talks to the platform media APIs directly. That was the right call for tight audio control and reliable background playback.",
+      },
+    ],
+    beyond: "A freelance project for a Myanmar client — my main contribution was the music feature end to end, from the player to the billing callback.",
+    stack: [
+      { title: "Language & platform", items: ["Kotlin", "Android Media APIs", "Foreground services"] },
+      { title: "Streaming", items: ["HTTP streaming", "ExoPlayer-era playback", "Background audio"] },
+      { title: "Billing", items: ["Telco carrier billing", "In-app callback handling"] },
+    ],
+    links: [{ label: "Open in Play Store", href: productFacts["shwe-nar-sin"].href! }],
+    gallery: productFacts["shwe-nar-sin"].screenshot ? [productFacts["shwe-nar-sin"].screenshot] : undefined,
+  },
+  {
+    slug: "jar-gyi",
+    name: "Jar Gyi",
+    tagline: "A personal debt tracker that keeps every record on the device. No account, no network, no surprises.",
+    facts: [
+      { label: "Role", value: "Built and run by me" },
+      { label: "Studio", value: "Solo" },
+      { label: "Period", value: "2025 — Now" },
+      { label: "Scale", value: "Android" },
+    ],
+    intro:
+      "Jar Gyi is a small debt-tracker I built for myself, then put on the Play Store. Everything you enter stays in the app's Room database on the device — there is no account, no server, and no network call carrying debt data anywhere.",
+    owns: ["Debt record CRUD", "Local Room storage", "Offline-only operation", "Optional notifications for due dates"],
+    moves: [
+      {
+        metric: "0 bytes",
+        metricNote: "leave the device",
+        title: "Privacy by construction",
+        text: "There is no server in the architecture. The Room database, the export, the notifications — they all read and write on the device. The privacy policy I published with the listing is short because the data flow is short.",
+      },
+      {
+        metric: "1 store",
+        metricNote: "Room, no sync",
+        title: "Single source of truth, on the device",
+        text: "All debt records live in one Room database. No cloud mirror, no conflict resolution, no migration story. If you uninstall, the data is gone — that is intentional and it is in the policy.",
+      },
+      {
+        metric: "0 required",
+        metricNote: "permissions",
+        title: "Crash reporting only, no ads, no tracking",
+        text: "Firebase Crashlytics is on because the app has to keep working, but the policy is explicit: no debt data is sent, no ads are served, and Storage and Notifications are opt-in. Most features run with no permissions granted.",
+      },
+    ],
+    beyond: "The privacy policy is the spec — every behaviour on this page is something the policy already promises.",
+    stack: [
+      { title: "Language & UI", items: ["Kotlin", "Jetpack Compose", "Material 3"] },
+      { title: "Storage", items: ["Room", "Android internal storage"] },
+      { title: "Operations", items: ["WorkManager (exports)", "Notifications (opt-in)"] },
+      { title: "Reliability", items: ["Firebase Crashlytics (anonymised)"] },
+    ],
+    links: [{ label: "Open in Play Store", href: productFacts["jar-gyi"].href! }],
+    gallery: productFacts["jar-gyi"].screenshot ? [productFacts["jar-gyi"].screenshot] : undefined,
+  },
+  {
+    slug: "fwd-sg",
+    name: "FWD SG",
+    tagline: "FWD's life insurance app for Singapore, and the Android side I owned through its biggest rewrite.",
+    facts: [
+      { label: "Role", value: "Senior Android Developer" },
+      { label: "Studio", value: "Codigo" },
+      { label: "Period", value: "Oct 2022 – Oct 2023" },
+      { label: "Scale", value: "100K+ downloads · 4.7★" },
+    ],
+    intro:
+      "FWD SG is the life insurance app for Singapore. I owned the Android side for a year, building the policy and claims features, splitting the app into modules, and cutting load time along the way.",
+    owns: ["Policy viewing", "Claims with document upload", "Biometric login", "Multi-module split", "Startup performance"],
+    moves: [
+      {
+        metric: "100K+",
+        metricNote: "downloads · 4.7★",
+        title: "100K+ installs, 4.7-star app",
+        text: "FWD SG is one of the bigger apps in the portfolio by Play Store reach — 100K+ downloads, 4.7 star average. The features I built are the ones people use most on the app.",
+      },
+      {
+        metric: "~25%",
+        metricNote: "faster cold start",
+        title: "Cut app load time by about 25%",
+        text: "Deprecated libraries were the obvious weight, but the real wins were the slow startup code paths. Replaced the worst offenders and the app got to its first screen about 25% faster.",
+      },
+      {
+        metric: "1 → many",
+        metricNote: "modules",
+        title: "Split a monolith so the team could move in parallel",
+        text: "FWD SG started life as a single-module app, and parallel work was painful. I split it into modules by feature, which let the team merge into different surfaces at the same time without colliding.",
+      },
+    ],
+    beyond: "I worked under the Codigo banner for both CDG Zig and FWD SG; FWD SG is the earlier of the two.",
+    stack: [
+      { title: "Language & UI", items: ["Kotlin", "XML Views", "Material 3"] },
+      { title: "Architecture", items: ["Multi-module Gradle", "MVVM", "Hilt"] },
+      { title: "Quality", items: ["JUnit", "MockK", "Espresso", "Crashlytics"] },
+      { title: "Security", items: ["Biometric login", "Certificate pinning", "Encrypted local storage"] },
+    ],
+    links: [{ label: "Open in Play Store", href: productFacts["fwd-sg"].href! }],
+  },
+  {
+    slug: "better-hr",
+    name: "Better HR",
+    tagline: "Attendance, leave and payroll for Myanmar businesses, and the only Android seat on the project.",
+    facts: [
+      { label: "Role", value: "Mid-Senior Android Developer" },
+      { label: "Studio", value: "Better HR" },
+      { label: "Period", value: "Jun 2022 – Dec 2022" },
+      { label: "Scale", value: "100K+ downloads" },
+    ],
+    intro:
+      "Better HR is an attendance, leave and payroll app for Myanmar businesses with 100K+ downloads. I was the only Android developer on the product — every feature, every fix, and every Play Store release was mine.",
+    owns: ["Attendance tracking", "Leave management", "Payroll flows", "Release pipeline", "Git Flow setup"],
+    moves: [
+      {
+        metric: "1",
+        metricNote: "Android seat",
+        title: "The only Android developer on the product",
+        text: "Better HR's Android side had a single seat. Every feature, every bug fix and every release — mine. The cost of that was context-switching across the whole app; the upside was full ownership of the code that shipped.",
+      },
+      {
+        metric: "~25%",
+        metricNote: "faster releases",
+        title: "Set up Git Flow and a proper release process",
+        text: "Releases were ad-hoc when I arrived. I introduced Git Flow, replaced the deprecated libraries, and got a release cadence in place. Releases went out about 25% faster after the cleanup.",
+      },
+      {
+        metric: "Weekly",
+        metricNote: "feature cadence",
+        title: "Shipped a new feature nearly every week",
+        text: "Across attendance, leave and payroll I worked with the product team to ship something new almost every week. That pace was the test that the new release process actually held.",
+      },
+    ],
+    beyond: "A solo Android role in Yangon — the first job where I owned the whole client-side of a product.",
+    stack: [
+      { title: "Language & UI", items: ["Kotlin", "XML Views", "Material 3"] },
+      { title: "Architecture", items: ["MVVM", "Modularisation", "Hilt"] },
+      { title: "Build & release", items: ["Git Flow", "Play Console staged rollouts", "Gradle"] },
+      { title: "Reliability", items: ["Crashlytics", "JUnit", "Espresso"] },
+    ],
+    links: [{ label: "Open in Play Store", href: productFacts["better-hr"].href! }],
+    gallery: productFacts["better-hr"].screenshot ? [productFacts["better-hr"].screenshot] : undefined,
+  },
+  {
+    slug: "aio-esports",
+    name: "AiO eSports",
+    tagline: "A fan app for the Myanmar eSports scene — follow teams, players and casters, vote, and donate.",
+    facts: [
+      { label: "Role", value: "Freelance Android Developer" },
+      { label: "Studio", value: "Freelance" },
+      { label: "Period", value: "Freelance" },
+      { label: "Scale", value: "Android" },
+    ],
+    intro:
+      "AiO eSports is a fan app for the Myanmar eSports scene. It lets the community follow teams, players and casters, vote on matches, and donate to the people they support.",
+    owns: ["Team & player profiles", "Voting", "Donation flow", "Caster directory"],
+    moves: [
+      {
+        metric: "1 scene",
+        metricNote: "Myanmar eSports",
+        title: "Built for the local community",
+        text: "The app is shaped around the teams, players and casters that exist in the Myanmar eSports scene specifically — the profile model, the vote surfaces and the donation flow are all built around that audience.",
+      },
+      {
+        metric: "4 surfaces",
+        metricNote: "teams · players · casters · fans",
+        title: "Follow, vote, donate — the three core actions",
+        text: "Three of the four entities (team, player, caster) are first-class content types with their own profile pages. Fans are the people who take the fourth action: follow, vote or donate.",
+      },
+      {
+        metric: "1 store",
+        metricNote: "Android",
+        title: "Native Android, no Flutter",
+        text: "Shipped as a native Android app, before Flutter was part of my stack. The donation flow went through Play's billing APIs.",
+      },
+    ],
+    beyond: "A freelance project for a Myanmar client; the companion app, AiO Partner, lets the teams themselves manage their profiles.",
+    stack: [
+      { title: "Language & UI", items: ["Kotlin", "Android Views"] },
+      { title: "Backend integration", items: ["REST client", "Play Billing (donations)"] },
+      { title: "Reliability", items: ["Crashlytics", "Play Console staged rollouts"] },
+    ],
+    links: [{ label: "Open in Play Store", href: productFacts["aio-esports"].href! }],
+  },
+  {
+    slug: "aio-partner",
+    name: "AiO Partner",
+    tagline: "The companion app for the AiO ecosystem — teams and talent manage their own profiles from the same backend.",
+    facts: [
+      { label: "Role", value: "Freelance Android Developer" },
+      { label: "Studio", value: "Freelance" },
+      { label: "Period", value: "Freelance" },
+      { label: "Scale", value: "Android" },
+    ],
+    intro:
+      "AiO Partner is the companion app to AiO eSports, built for the teams and the talent on the other side of the fan flow. Same backend, different audience.",
+    owns: ["Team self-service", "Talent self-service", "Profile editing", "Content publishing"],
+    moves: [
+      {
+        metric: "1 model",
+        metricNote: "shared with the fan app",
+        title: "Reuses the same backend as AiO eSports",
+        text: "The same content model that powers the fan app's profile pages drives this one in reverse — teams and talent write to it, fans read from it. Auth and roles are what separates the two clients.",
+      },
+      {
+        metric: "2 audiences",
+        metricNote: "teams · talent",
+        title: "Teams and talent in one app",
+        text: "Two user kinds, one app. Teams manage rosters and updates; casters and players manage their individual profiles. The same app is the right tool because the underlying actions are the same.",
+      },
+      {
+        metric: "1 store",
+        metricNote: "Android",
+        title: "Native Android, no Flutter",
+        text: "Shipped as a native Android app alongside AiO eSports. Shared patterns, shared tooling, shared release process.",
+      },
+    ],
+    beyond: "Same freelance engagement as AiO eSports; the two apps were always designed to ship together.",
+    stack: [
+      { title: "Language & UI", items: ["Kotlin", "Android Views"] },
+      { title: "Backend integration", items: ["REST client", "Shared auth"] },
+      { title: "Reliability", items: ["Crashlytics", "Play Console staged rollouts"] },
+    ],
+    links: [{ label: "Open in Play Store", href: productFacts["aio-partner"].href! }],
+  },
+  {
+    slug: "hiking",
+    name: "Hiking",
+    tagline: "A hiking-notes app for a student client. Hive keeps every trip saved and readable with no network.",
+    facts: [
+      { label: "Role", value: "Freelance Flutter Developer" },
+      { label: "Studio", value: "Freelance (student client)" },
+      { label: "Period", value: "Nov 2023" },
+      { label: "Scale", value: "Android · iOS" },
+    ],
+    intro:
+      "Hiking is a small Flutter app I built for a student client — a place to write down hiking trips and read them back later. Hive stores everything locally, so the app works in the places the network does not.",
+    owns: ["Trip notes editor", "Hive local storage", "Offline-first reading"],
+    moves: [
+      {
+        metric: "0",
+        metricNote: "network calls",
+        title: "Offline by design",
+        text: "Hive is the database, the API does not exist. Every trip you write is on the device; the app is fully usable in the field, on the trail, with no signal.",
+      },
+      {
+        metric: "1 store",
+        metricNote: "Hive (NoSQL)",
+        title: "Lightweight local storage for a small app",
+        text: "Hive was the right size for this product — a small, typed, on-device store. No schema migrations, no backend, no sync code to maintain.",
+      },
+      {
+        metric: "2 platforms",
+        metricNote: "Android · iOS",
+        title: "One Flutter codebase, two stores",
+        text: "Shipped to Android and iOS from one Flutter codebase, and submitted to both stores. The student client got a real cross-platform delivery, not a port.",
+      },
+    ],
+    beyond: "A small freelance engagement for a student — a good reminder that 'small' still gets the full release treatment.",
+    stack: [
+      { title: "Language & UI", items: ["Flutter", "Dart"] },
+      { title: "State & data", items: ["Hive", "Provider"] },
+      { title: "Release", items: ["Play Console", "App Store Connect", "Flutter build pipeline"] },
+    ],
+    links: [{ label: "View on GitHub", href: productFacts["hiking"].href! }],
   },
 ];
 
@@ -313,13 +659,13 @@ export const workGroups: WorkGroup[] = [
         name: productFacts["gogoopo"].name,
         line: productFacts["gogoopo"].oneLiner,
         meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "Dec 2023 – Present"],
-        href: productFacts["gogoopo"].href,
+        href: "/work/gogoopo/",
       },
       {
         name: productFacts["jar-gyi"].name,
         line: productFacts["jar-gyi"].oneLiner,
         meta: ["Android", "Kotlin · Room · Offline only", "2025 — Now"],
-        href: productFacts["jar-gyi"].href,
+        href: "/work/jar-gyi/",
       },
     ],
   },
@@ -338,37 +684,37 @@ export const workGroups: WorkGroup[] = [
         name: productFacts["fwd-sg"].name,
         line: productFacts["fwd-sg"].oneLiner,
         meta: ["100K+ Downloads · 4.7 Rating", "Kotlin", "Codigo · Oct 2022 – Oct 2023"],
-        href: productFacts["fwd-sg"].href,
+        href: "/work/fwd-sg/",
       },
       {
         name: productFacts["better-hr"].name,
         line: productFacts["better-hr"].oneLiner,
         meta: ["100K+ Downloads", "Kotlin", "Better HR · Jun 2022 – Dec 2022"],
-        href: productFacts["better-hr"].href,
+        href: "/work/better-hr/",
       },
       {
         name: productFacts["shwe-nar-sin"].name,
         line: productFacts["shwe-nar-sin"].oneLiner,
         meta: ["1M+ Downloads · 4.4 Rating", "Android · Kotlin", "Freelance"],
-        href: productFacts["shwe-nar-sin"].href,
+        href: "/work/shwe-nar-sin/",
       },
       {
         name: productFacts["aio-esports"].name,
         line: productFacts["aio-esports"].oneLiner,
         meta: ["Android", "Kotlin", "Freelance"],
-        href: productFacts["aio-esports"].href,
+        href: "/work/aio-esports/",
       },
       {
         name: productFacts["aio-partner"].name,
         line: productFacts["aio-partner"].oneLiner,
         meta: ["Android", "Kotlin", "Freelance"],
-        href: productFacts["aio-partner"].href,
+        href: "/work/aio-partner/",
       },
       {
         name: productFacts["hiking"].name,
         line: productFacts["hiking"].oneLiner,
         meta: ["Android · iOS", "Flutter · Hive", "Freelance · Nov 2023"],
-        href: productFacts["hiking"].href,
+        href: "/work/hiking/",
       },
     ],
   },
