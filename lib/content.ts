@@ -107,6 +107,7 @@ export const productFacts: Record<string, ProductFacts> = {
     platforms: "Android",
     stack: "Kotlin · Room · Offline only",
     href: "https://play.google.com/store/apps/details?id=com.apjake.akywesayin",
+    screenshot: "/shots/jar-gyi.webp",
   },
   "fwd-sg": {
     slug: "fwd-sg",
@@ -129,6 +130,7 @@ export const productFacts: Record<string, ProductFacts> = {
     downloads: "100K+ Downloads",
     stack: "Kotlin",
     href: "https://play.google.com/store/apps/details?id=co.nexlabs.betterhr",
+    screenshot: "/shots/better-hr.webp",
   },
   "aio-esports": {
     slug: "aio-esports",
@@ -169,26 +171,35 @@ export const productFacts: Record<string, ProductFacts> = {
 export const projects: Project[] = [
   {
     index: "01",
+    name: productFacts["jar-gyi"].name,
+    description: productFacts["jar-gyi"].oneLiner,
+    detail:
+      "Personal debt tracker. Room for local storage, no account, no network — every entry stays on the device.",
+    meta: ["Android", "Kotlin · Room · Offline only", "Built and run by me · 2025 — Now"],
+    href: productFacts["jar-gyi"].href,
+    shot: productFacts["jar-gyi"].screenshot ?? null,
+  },
+  {
+    index: "02",
     name: productFacts["cdg-zig"].name,
     description: productFacts["cdg-zig"].oneLiner,
     detail:
-      "Led the migration from XML layouts to Jetpack Compose. Screen rendering about 30% faster, crash rate down about 20%.",
+      "Integrated the in-app chat as a shared internal library used by both the passenger and driver apps.",
     meta: ["1M+ Downloads", "Kotlin · Compose · Maps SDK", "Codigo · Oct 2023 – Present"],
     href: "/work/cdg-zig/",
     shot: productFacts["cdg-zig"].screenshot ?? null,
   },
   {
-    index: "02",
-    name: productFacts["gogoopo"].name,
-    description: productFacts["gogoopo"].oneLiner,
-    detail:
-      "Wrote the API and MongoDB data model myself, so the app and the web version run on the same content. Burmese and English throughout.",
-    meta: ["Android · iOS · Web", "Flutter · Ktor · MongoDB", "Built and run by me · Dec 2023 – Present"],
-    href: productFacts["gogoopo"].href,
-    shot: productFacts["gogoopo"].screenshot ?? null,
+    index: "03",
+    name: productFacts["better-hr"].name,
+    description: productFacts["better-hr"].oneLiner,
+    detail: "Sole Android developer — every feature, every fix and every release was mine.",
+    meta: ["100K+ Downloads", "Kotlin", "Better HR · Jun 2022 – Dec 2022"],
+    href: productFacts["better-hr"].href,
+    shot: productFacts["better-hr"].screenshot ?? null,
   },
   {
-    index: "03",
+    index: "04",
     name: productFacts["shwe-nar-sin"].name,
     description: productFacts["shwe-nar-sin"].oneLiner,
     detail: "Freelance. One of the first products I shipped that went past a million installs.",

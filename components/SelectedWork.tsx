@@ -42,7 +42,7 @@ export default function SelectedWork() {
           <SectionHead
             kicker="Work"
             title="SELECTED WORK"
-            note={`${projects.length} of the things I have shipped. The rest — insurance, HR, eSports, a hiking notebook — live on the work page.`}
+            note={`${projects.length} of the things I have shipped. The rest — GoGooPo, insurance, eSports, a partner app, a hiking notebook — live on the work page.`}
           />
         </div>
 
