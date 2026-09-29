@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
-import { db, ensureUser, isConfigured } from "./firebase";
+import { db, ensureUser } from "./firebase";
+import { isConfigured } from "./config";
 import type { Board } from "./board";
 
 export type BoardState =
@@ -20,7 +21,7 @@ export function useBoard(id: string | null): BoardState {
     }
     setState({ status: "loading" });
     return onValue(
-      ref(db(), `boards/${id}`),
+      ref(db(), `scoreboard/boards/${id}`),
       (snap) => setState(snap.exists() ? { status: "ready", board: snap.val() as Board } : { status: "missing" }),
       (err) => setState({ status: "error", message: err.message }),
     );

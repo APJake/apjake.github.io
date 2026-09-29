@@ -5,7 +5,7 @@ import styles from "./Hero.module.css";
 
 export default function Hero() {
   return (
-    <section className={styles.hero} aria-labelledby="hero-heading">
+    <section className={styles.hero} aria-labelledby="hero-heading" data-track-section="hero">
       <div className={styles.glow} aria-hidden="true" />
 
       <figure className={styles.portrait}>
@@ -19,8 +19,6 @@ export default function Hero() {
         />
         <span className={styles.tone} aria-hidden="true" />
         <span className={styles.warm} aria-hidden="true" />
-        <span className={styles.fadeLeft} aria-hidden="true" />
-        <span className={styles.fadeBottom} aria-hidden="true" />
       </figure>
 
       <div className={`shell ${styles.content}`}>

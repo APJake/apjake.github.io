@@ -16,6 +16,7 @@ import {
 import { APP_PATH } from "@/lib/scoreboard/config";
 import { spacedRoom } from "@/lib/scoreboard/format";
 import { rememberMine } from "@/lib/scoreboard/local";
+import { track } from "@/lib/analytics";
 import BoardSettings from "./BoardSettings";
 import EditableName from "./EditableName";
 import ScoreInput from "./ScoreInput";
@@ -65,9 +66,11 @@ export default function CreateBoard() {
     setError(null);
     try {
       const res = await createBoard({ roomCode: codes.room, passcode: codes.pass, settings, players });
+      track("ktb_board_create", { players: players.length, match_by_match: settings.matchByMatch });
       rememberMine({ id: res.id, roomCode: res.roomCode, passcode: res.passcode, title: settings.title, createdAt: Date.now() });
-      router.push(`${APP_PATH}manage/?id=${res.id}`);
+      router.push(`${APP_PATH}manage/?board=${res.id}`);
     } catch (e) {
+      track("ktb_board_create_failed", { reason: (e as { code?: string }).code ?? (e as Error).name });
       setError((e as Error).message || "Couldn't create the scoreboard. Check your connection and try again.");
       setBusy(false);
     }

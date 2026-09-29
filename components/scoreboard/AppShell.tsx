@@ -1,21 +1,27 @@
+import ConsentSettings from "@/components/ConsentSettings";
 import { APP_PATH, isConfigured } from "@/lib/scoreboard/config";
 import styles from "./Scoreboard.module.css";
-
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.app}>
       <header className={styles.bar}>
         <div className={styles.barInner}>
+          <a
+            className={`monoLabel ${styles.barLink}`}
+            href="/apps/"
+            data-track="cta_click"
+            data-track-cta="back_to_apps"
+            data-track-app="kyauk-thin-bone"
+          >
+            ← Apps
+          </a>
           <a className={styles.brand} href={APP_PATH}>
             <span className={styles.brandMark} aria-hidden="true" />
             <span className={styles.brandName}>Kyauk Thin Bone</span>
             <span className={styles.brandMm} lang="my">
               ကျောက်သင်ပုန်း
             </span>
-          </a>
-          <a className={`monoLabel ${styles.barLink}`} href="/">
-            JAKE
           </a>
         </div>
       </header>
@@ -32,6 +38,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         )}
       </main>
+      <footer className={styles.foot}>
+        <ConsentSettings />
+      </footer>
     </div>
   );
 }

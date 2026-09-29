@@ -11,7 +11,7 @@ import styles from "./Scoreboard.module.css";
 
 /** Read-only scoreboard for viewers, always ranked by total score. */
 export default function BoardView() {
-  const id = useSearchParams().get("id");
+  const id = useSearchParams().get("board");
   const state = useBoard(id);
   const now = useServerNow();
 

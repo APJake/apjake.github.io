@@ -2,7 +2,7 @@ import { get, increment, ref, remove, serverTimestamp, set, update } from "fireb
 import { db, ensureUser } from "./firebase";
 
 /*
- * Data layout (see database.rules.json):
+ * Data layout, all under scoreboard/ (see database.rules.json):
  *
  *   rooms/{roomCode}            { owner }         claims the 6-digit code; never readable
  *   access/{roomCode}/{pass}    boardId           readable only by someone who knows both
@@ -86,7 +86,7 @@ export function nextPlayerName(names: string[]) {
 export const isRoomCode = (s: string) => /^[0-9]{6}$/.test(s);
 export const isPasscode = (s: string) => /^[0-9]{4}$/.test(s);
 
-const boardPath = (id: string) => `boards/${id}`;
+const boardPath = (id: string) => `scoreboard/boards/${id}`;
 
 function isPermissionDenied(err: unknown) {
   return String((err as { code?: string; message?: string })?.code ?? (err as Error)?.message ?? "")
@@ -111,7 +111,7 @@ export async function createBoard(input: {
   let roomCode = input.roomCode;
   for (let attempt = 0; ; attempt++) {
     try {
-      await set(ref(database, `rooms/${roomCode}`), { owner: user.uid });
+      await set(ref(database, `scoreboard/rooms/${roomCode}`), { owner: user.uid });
       break;
     } catch (err) {
       if (!isPermissionDenied(err) || attempt >= 7) throw err;
@@ -143,14 +143,14 @@ export async function createBoard(input: {
     updatedAt: serverTimestamp(),
     players,
   });
-  await set(ref(database, `access/${roomCode}/${input.passcode}`), id);
+  await set(ref(database, `scoreboard/access/${roomCode}/${input.passcode}`), id);
 
   return { id, roomCode, passcode: input.passcode };
 }
 
 /** Resolves a room code + passcode to a board id, or null if they don't match. */
 export async function lookupBoard(roomCode: string, passcode: string): Promise<string | null> {
-  const snap = await get(ref(db(), `access/${roomCode}/${passcode}`));
+  const snap = await get(ref(db(), `scoreboard/access/${roomCode}/${passcode}`));
   return snap.exists() ? (snap.val() as string) : null;
 }
 

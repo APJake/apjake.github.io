@@ -11,8 +11,8 @@ next-env.d.ts
 # misc
 .DS_Store
 
-# local env (see .env.example)
+# env
 .env*.local
 
-# firebase emulator logs
+# firebase emulator
 *-debug.log

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { APP_PATH } from "@/lib/scoreboard/config";
 import { spacedRoom } from "@/lib/scoreboard/format";
+import { track } from "@/lib/analytics";
 import styles from "./Scoreboard.module.css";
 
 /** Room code, passcode and the public link that skips the passcode. */
@@ -11,9 +12,10 @@ export default function ShareCard({ id, roomCode, passcode }: { id: string; room
   const [copied, setCopied] = useState<string | null>(null);
   useEffect(() => setOrigin(window.location.origin), []);
 
-  const link = `${origin}${APP_PATH}view/?id=${id}`;
+  const link = `${origin}${APP_PATH}view/?board=${id}`;
 
   const copy = async (what: string, text: string) => {
+    track("ktb_share", { what, method: "copy" });
     try {
       await navigator.clipboard.writeText(text);
       setCopied(what);
@@ -27,6 +29,7 @@ export default function ShareCard({ id, roomCode, passcode }: { id: string; room
     if (navigator.share) {
       try {
         await navigator.share({ title: "Kyauk Thin Bone", url: link });
+        track("ktb_share", { what: "link", method: "share_sheet" });
         return;
       } catch {
         // Cancelled or unsupported target: fall through to copy.
@@ -55,7 +58,7 @@ export default function ShareCard({ id, roomCode, passcode }: { id: string; room
             {copied === "link" ? "Copied" : "Share"}
           </button>
         </div>
-        <a className={styles.smallLink} href={`${APP_PATH}view/?id=${id}`} target="_blank" rel="noopener">
+        <a className={styles.smallLink} href={`${APP_PATH}view/?board=${id}`} target="_blank" rel="noopener">
           Open viewer ↗
         </a>
       </div>

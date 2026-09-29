@@ -5,7 +5,7 @@ import styles from "./WhatIBuild.module.css";
 
 export default function WhatIBuild() {
   return (
-    <section id="build" className={styles.section} aria-labelledby="build-heading">
+    <section id="build" className={styles.section} aria-labelledby="build-heading" data-track-section="what_i_build">
       <div className="shell">
         <div id="build-heading">
           <SectionHead kicker="What I build" title="THE WORK ITSELF" />

@@ -21,6 +21,7 @@ import {
 import { APP_PATH } from "@/lib/scoreboard/config";
 import { useBoard, useServerNow, useUid } from "@/lib/scoreboard/hooks";
 import { rememberMine } from "@/lib/scoreboard/local";
+import { track } from "@/lib/analytics";
 import BoardSettings from "./BoardSettings";
 import { BoardMessage } from "./BoardMessage";
 import MatchHistory from "./MatchHistory";
@@ -30,7 +31,7 @@ import styles from "./Scoreboard.module.css";
 
 /** The creator's screen: every control, live. */
 export default function BoardManage() {
-  const id = useSearchParams().get("id");
+  const id = useSearchParams().get("board");
   const state = useBoard(id);
   const uid = useUid();
   const now = useServerNow();
@@ -55,7 +56,7 @@ export default function BoardManage() {
         <p className="monoLabel">View only</p>
         <p>Only the browser that created this scoreboard can edit it.</p>
         <p>
-          <a href={`${APP_PATH}view/?id=${id}`}>Open the scoreboard →</a>
+          <a href={`${APP_PATH}view/?board=${id}`}>Open the scoreboard →</a>
         </p>
       </div>
     );
@@ -84,6 +85,7 @@ export default function BoardManage() {
   const onSaveMatch = async () => {
     setSaving(true);
     await run(saveMatch(id, board));
+    track("ktb_match_save", { match: (board.matchCount ?? 0) + 1, players: players.length });
     setSaving(false);
   };
 

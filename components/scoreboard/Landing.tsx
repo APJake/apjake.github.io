@@ -54,7 +54,7 @@ export default function Landing() {
           <ul className={styles.mine}>
             {mine.map((b) => (
               <li key={b.id} className={styles.mineRow}>
-                <a href={`${APP_PATH}manage/?id=${b.id}`} className={styles.mineLink}>
+                <a href={`${APP_PATH}manage/?board=${b.id}`} className={styles.mineLink}>
                   <span className={styles.mineTitle}>{b.title || "Untitled scoreboard"}</span>
                   <span className={`mono ${styles.meta}`}>
                     {spacedRoom(b.roomCode)} · {b.passcode}
