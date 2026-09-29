@@ -20,7 +20,9 @@ export default function History({ rounds, uid }: Props) {
               <summary className={styles.historySummary}>
                 <span className="monoLabel">Round {h.round}</span>
                 <span className={styles.muted}>
-                  {winner && winner.ms !== null ? `🥇 ${winner.name} · ${formatMs(winner.ms)}` : "Nobody tapped"}
+                  {winner && typeof winner.ms === "number"
+                    ? `🥇 ${winner.name} · ${formatMs(winner.ms)}`
+                    : "Nobody tapped"}
                 </span>
               </summary>
               <Results results={h.results} uid={uid} />

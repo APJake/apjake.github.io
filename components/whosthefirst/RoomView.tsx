@@ -19,7 +19,7 @@ import {
   TAP_WINDOW_MS,
   type RoomErrorCode,
 } from "@/lib/whosthefirst/room";
-import { asList } from "@/lib/whosthefirst/ranking";
+import { readResults } from "@/lib/whosthefirst/ranking";
 import type { Room, Session } from "@/lib/whosthefirst/types";
 import { errorText } from "./Lobby";
 import RoomHeader from "./RoomHeader";
@@ -185,7 +185,7 @@ export default function RoomView({ session, uid, onExit }: Props) {
   if (!room || !game) return <p className={`monoLabel ${styles.loading}`}>Opening room…</p>;
 
   const history = Object.entries(room.history ?? {})
-    .map(([n, h]) => ({ round: Number(n), endedAt: h.endedAt, results: asList(h.results) }))
+    .map(([n, h]) => ({ round: Number(n), endedAt: h.endedAt, results: readResults(h.results) }))
     .sort((a, b) => b.round - a.round);
   const current = phase === "result" ? history.find((h) => h.round === round) : undefined;
 

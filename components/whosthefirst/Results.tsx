@@ -5,26 +5,29 @@ import styles from "./WhosTheFirst.module.css";
 type Props = { results: RoundResult[]; uid: string };
 
 export default function Results({ results, uid }: Props) {
-  const first = results.find((r) => r.ms !== null)?.ms ?? 0;
+  const first = results.find((r) => typeof r.ms === "number")?.ms ?? 0;
   return (
     <ol className={styles.results}>
-      {results.map((r, i) => (
-        <li key={r.uid} className={`${styles.resultRow} ${i === 0 && r.ms !== null ? styles.winner : ""}`}>
-          <span className={styles.place}>{r.ms === null ? "—" : place(i)}</span>
-          <span className={styles.resultName}>
-            {r.name}
-            {r.uid === uid && <span className={`monoLabel ${styles.you}`}>You</span>}
-          </span>
-          {r.ms === null ? (
-            <span className={`mono ${styles.muted} ${styles.resultTime}`}>No tap</span>
-          ) : (
-            <>
-              <span className={`mono ${styles.resultTime}`}>{formatMs(r.ms)}</span>
-              <span className={`mono ${styles.resultDiff}`}>{formatDiff(r.ms, first)}</span>
-            </>
-          )}
-        </li>
-      ))}
+      {results.map((r, i) => {
+        const ms = typeof r.ms === "number" ? r.ms : null;
+        return (
+          <li key={r.uid} className={`${styles.resultRow} ${i === 0 && ms !== null ? styles.winner : ""}`}>
+            <span className={styles.place}>{ms === null ? "—" : place(i)}</span>
+            <span className={styles.resultName}>
+              {r.name}
+              {r.uid === uid && <span className={`monoLabel ${styles.you}`}>You</span>}
+            </span>
+            {ms === null ? (
+              <span className={`mono ${styles.muted} ${styles.resultTime}`}>No tap</span>
+            ) : (
+              <>
+                <span className={`mono ${styles.resultTime}`}>{formatMs(ms)}</span>
+                <span className={`mono ${styles.resultDiff}`}>{formatDiff(ms, first)}</span>
+              </>
+            )}
+          </li>
+        );
+      })}
     </ol>
   );
 }
