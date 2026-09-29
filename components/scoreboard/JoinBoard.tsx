@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { isPasscode, isRoomCode, lookupBoard } from "@/lib/scoreboard/board";
+import { errorMessage, isPasscode, isRoomCode, lookupBoard } from "@/lib/scoreboard/board";
 import { APP_PATH } from "@/lib/scoreboard/config";
 import { track } from "@/lib/analytics";
 import styles from "./Scoreboard.module.css";
@@ -34,7 +34,7 @@ export default function JoinBoard() {
       setError("No scoreboard matches that room code and passcode.");
     } catch (err) {
       track("ktb_board_join_failed", { reason: (err as { code?: string }).code ?? (err as Error).name });
-      setError((err as Error).message || "Couldn't reach the server. Check your connection.");
+      setError(errorMessage(err, "Couldn't reach the server. Check your connection."));
     }
     setBusy(false);
   };

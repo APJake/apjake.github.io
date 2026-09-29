@@ -6,6 +6,7 @@ import {
   MAX_PLAYERS,
   MIN_PLAYERS,
   createBoard,
+  errorMessage,
   newId,
   newPasscode,
   newRoomCode,
@@ -71,7 +72,7 @@ export default function CreateBoard() {
       router.push(`${APP_PATH}manage/?board=${res.id}`);
     } catch (e) {
       track("ktb_board_create_failed", { reason: (e as { code?: string }).code ?? (e as Error).name });
-      setError((e as Error).message || "Couldn't create the scoreboard. Check your connection and try again.");
+      setError(errorMessage(e, "Couldn't create the scoreboard. Check your connection and try again."));
       setBusy(false);
     }
   };

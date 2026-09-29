@@ -7,6 +7,7 @@ import {
   MIN_PLAYERS,
   addPlayer,
   addScore,
+  errorMessage,
   matchesNewestFirst,
   nextPlayerName,
   playersInOrder,
@@ -62,7 +63,7 @@ export default function BoardManage() {
     );
   }
 
-  const run = (p: Promise<unknown>) => p.catch((e: Error) => setError(e.message || "Couldn't save. Check your connection."));
+  const run = (p: Promise<unknown>) => p.catch((e: unknown) => setError(errorMessage(e, "Couldn't save. Check your connection.")));
 
   const players = playersInOrder(board);
   const settings: Settings = {
