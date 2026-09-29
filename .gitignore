@@ -10,3 +10,9 @@ next-env.d.ts
 
 # misc
 .DS_Store
+
+# env
+.env*.local
+
+# firebase emulator
+*-debug.log
