@@ -1,0 +1,49 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "rooms": {
+      "$room": {
+        ".read": false,
+        ".write": "auth != null && !data.exists() && newData.child('owner').val() === auth.uid",
+        ".validate": "$room.matches(/^[1-9][0-9]{5}$/) && newData.hasChildren(['owner'])"
+      }
+    },
+
+    "access": {
+      "$room": {
+        "$pass": {
+          ".read": true,
+          ".write": "auth != null && !data.exists() && root.child('rooms').child($room).child('owner').val() === auth.uid",
+          ".validate": "$pass.matches(/^[0-9]{4}$/) && newData.isString() && root.child('boards').child(newData.val()).child('owner').val() === auth.uid"
+        }
+      }
+    },
+
+    "boards": {
+      "$id": {
+        ".read": true,
+        ".write": "auth != null && (data.exists() ? data.child('owner').val() === auth.uid : newData.child('owner').val() === auth.uid)",
+        ".validate": "$id.matches(/^[A-Za-z0-9]{20}$/) && newData.hasChildren(['owner', 'roomCode', 'passcode'])",
+        "owner": { ".validate": "!data.exists() || newData.val() === data.val()" },
+        "roomCode": { ".validate": "!data.exists() || newData.val() === data.val()" },
+        "passcode": { ".validate": "!data.exists() || newData.val() === data.val()" },
+        "title": { ".validate": "newData.isString() && newData.val().length <= 80" },
+        "description": { ".validate": "newData.isString() && newData.val().length <= 280" },
+        "defaultScore": { ".validate": "newData.isNumber()" },
+        "step": { ".validate": "newData.isNumber()" },
+        "matchByMatch": { ".validate": "newData.isBoolean()" },
+        "players": {
+          "$pid": {
+            ".validate": "newData.hasChildren(['name', 'score'])",
+            "name": { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 40" },
+            "score": { ".validate": "newData.isNumber()" },
+            "current": { ".validate": "newData.isNumber()" },
+            "start": { ".validate": "newData.isNumber()" }
+          }
+        }
+      }
+    }
+  }
+}

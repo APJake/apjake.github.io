@@ -54,3 +54,40 @@ switch to Actions-based deploys. Both copies exist deliberately during the
 transition — once Pages is serving from the workflow, the root `policies/`
 directory (and the other legacy files: `index.html`, `page.html`, `test.html`,
 `css/`, `js/`, `img/`) can be removed.
+
+## Kyauk Thin Bone (`/kyauk-thin-bone/`)
+
+A live scoreboard mini app (ကျောက်သင်ပုန်း, "scoreboard"). Firebase Realtime
+Database for live data, Firebase anonymous auth to identify the creator.
+
+| Route | What it is |
+| --- | --- |
+| `/kyauk-thin-bone/` | Landing: Create / View, plus boards created on this device |
+| `/kyauk-thin-bone/create/` | Setup: codes, title, description, default score, preset button, match toggle, players |
+| `/kyauk-thin-bone/manage/?id=…` | Creator screen: scoring, settings, Save Match, history |
+| `/kyauk-thin-bone/join/` | Room code + passcode → viewer |
+| `/kyauk-thin-bone/view/?id=…` | Read-only viewer; this URL is the public share link |
+
+Code lives in `components/scoreboard/` and `lib/scoreboard/`. The board id is
+in the query string because a static export can't have per-board routes.
+
+**Access model** (`database.rules.json`): `rooms/{code}` claims a room code and
+is never readable; `access/{code}/{passcode}` maps to the board id and can only
+be read by someone who knows both; `boards/{id}` is readable by anyone holding
+the 20-character id (the share link) and writable only by the anonymous uid
+that created it. The creator can edit only from the browser that created the
+board.
+
+**One-time setup:**
+
+1. Create a Firebase project; enable **Realtime Database** and
+   **Authentication → Anonymous**.
+2. Deploy the rules: `npx firebase-tools deploy --only database --project <id>`.
+3. Add a web app and copy its config into repository variables (Settings →
+   Secrets and variables → Actions → *Variables*) using the names in
+   `.env.example`. For local dev, put them in `.env.local`.
+
+Without the variables the site still builds; the app shows a "not configured"
+notice. To run against local emulators:
+`npx firebase-tools emulators:start --only database,auth --project demo-ktb`
+with `NEXT_PUBLIC_FIREBASE_EMULATOR_HOST=127.0.0.1`.
