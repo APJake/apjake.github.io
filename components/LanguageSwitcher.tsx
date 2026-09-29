@@ -32,6 +32,14 @@ export default function LanguageSwitcher({
               className={`${styles.pill} ${active ? styles.active : ""}`}
               aria-current={active ? "true" : undefined}
               aria-label={FULL[lang]}
+              {...(active
+                ? {}
+                : {
+                    "data-track": "blog_language_switch",
+                    "data-track-blog-id": blog.id,
+                    "data-track-from": current,
+                    "data-track-to": lang,
+                  })}
             >
               {LABELS[lang]}
             </Link>

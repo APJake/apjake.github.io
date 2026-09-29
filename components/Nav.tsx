@@ -28,12 +28,19 @@ export default function Nav() {
       </a>
       <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <div className={`shell ${styles.inner}`}>
-          <a className={styles.wordmark} href="/" aria-label={`${person.name} — home`}>
+          <a className={styles.wordmark} href="/"
+            aria-label={`${person.name} — home`}
+            data-track="nav_click"
+            data-track-label="Home"
+          >
             {person.wordmark}
           </a>
           <nav className={styles.links} aria-label="Sections">
             {links.map((l) => (
-              <a key={l.href} className={`monoLabel ${styles.link}`} href={l.href}>
+              <a key={l.href} className={`monoLabel ${styles.link}`} href={l.href}
+                data-track="nav_click"
+                data-track-label={l.label}
+              >
                 {l.label}
               </a>
             ))}

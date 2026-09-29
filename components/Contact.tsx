@@ -1,5 +1,6 @@
 import { contact, person } from "@/lib/content";
 import Reveal from "./Reveal";
+import ConsentSettings from "./ConsentSettings";
 import styles from "./Contact.module.css";
 
 const channels = [
@@ -11,7 +12,7 @@ const channels = [
 
 export default function Contact() {
   return (
-    <footer id="contact" className={styles.section} aria-labelledby="contact-heading">
+    <footer id="contact" className={styles.section} aria-labelledby="contact-heading" data-track-section="contact">
       <div className={styles.glow} aria-hidden="true" />
 
       <div className={`shell ${styles.inner}`}>
@@ -44,6 +45,8 @@ export default function Contact() {
                 <a
                   className={styles.channelLink}
                   href={c.href}
+                  data-track="contact_click"
+                  data-track-channel={c.label.toLowerCase()}
                   {...(c.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
                 >
                   {c.value}
@@ -60,6 +63,7 @@ export default function Contact() {
             <span className={`monoLabel ${styles.colophonMeta}`}>
               {person.name} · {person.location}
             </span>
+            <ConsentSettings />
           </div>
         </div>
       </div>

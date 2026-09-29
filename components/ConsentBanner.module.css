@@ -1,0 +1,56 @@
+/* Compact card, bottom right. On phones it spans the bottom edge but stays
+   short, so it never hides much of the page (or the whosthefirst tap pad). */
+.banner {
+  position: fixed;
+  right: var(--margin);
+  bottom: 24px;
+  z-index: 60;
+  width: min(400px, calc(100vw - 2 * var(--margin)));
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+  animation: rise var(--dur-element) var(--ease) both;
+}
+
+.title { color: var(--ink-secondary); }
+
+.text {
+  color: var(--ink-primary);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.status { color: var(--ink-muted); }
+
+.actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+.decline, .accept {
+  min-height: 40px;
+  padding: 0 18px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background var(--dur-micro) var(--ease), border-color var(--dur-micro) var(--ease),
+    color var(--dur-micro) var(--ease);
+}
+.decline { background: transparent; color: var(--ink-secondary); border: 1px solid var(--line-strong); }
+.decline:hover { color: var(--ink-primary); border-color: var(--ink-secondary); }
+.accept { background: var(--amber); color: var(--bg-base); border: 1px solid var(--amber); }
+.accept:hover { background: var(--amber-bright); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .banner { left: var(--margin); right: var(--margin); bottom: 16px; width: auto; padding: 16px; }
+  .actions > * { flex: 1; }
+}

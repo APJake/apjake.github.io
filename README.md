@@ -77,6 +77,71 @@ then build with `NEXT_PUBLIC_FIREBASE_EMULATOR=1`,
 `NEXT_PUBLIC_FIREBASE_PROJECT_ID=demo-wtf` and
 `NEXT_PUBLIC_FIREBASE_DATABASE_URL=http://127.0.0.1:9000?ns=demo-wtf-default-rtdb`.
 
+## Analytics
+
+Firebase Analytics (GA4 underneath) runs on every page, `/apps/*` included,
+but only after the visitor accepts the consent banner. Until then nothing
+loads: the SDK is imported on demand, so visitors who decline never download
+it. "Analytics settings" in the footer (and under the whosthefirst app)
+reopens the banner; declining later turns collection off.
+
+- `lib/analytics.ts` — consent, SDK loading, `track(name, params)`.
+- `components/Analytics.tsx` — mounted in the root layout: page views, click
+  tracking, section views and blog read depth.
+- `components/ConsentBanner.tsx`, `components/ConsentSettings.tsx` — the UI.
+- `lib/firebaseApp.ts` — the one Firebase app shared with the mini apps.
+
+**Tracking a click** needs no client code. Add data attributes to any element:
+`data-track="cta_click" data-track-cta="see_all_work"` sends `cta_click` with
+`cta: "see_all_work"` (`data-track-content-id` becomes `content_id`). Client
+components can also call `track()` directly.
+
+**Never send personal data.** No names, room codes, passcodes or uids. The
+`room` query param is stripped from `page_location` and `page_referrer`.
+
+| Event | Where | Params |
+| --- | --- | --- |
+| `page_view` | every route, including client-side navigation | page_path, page_title |
+| `nav_click` | nav links, wordmark | label |
+| `contact_click` | footer channels | channel |
+| `select_content` | project names, blog cards, app cards | content_type (`project` / `blog_post` / `app`), content_id, placement |
+| `cta_click` | See all work, All work, All posts, ← Apps | cta |
+| `case_study_link`, `screenshot_open` | case study pages | case_study, label |
+| `blog_language_switch` | blog language pills | blog_id, from, to |
+| `section_view` | homepage sections | section |
+| `blog_read_progress` | blog posts, at 25/50/75/100% | blog_id, language, percent |
+| `wtf_connect_failed` | whosthefirst sign-in failed | — |
+| `wtf_room_create`, `wtf_room_create_failed` | Create room | reason |
+| `wtf_room_join`, `wtf_room_join_failed` | Enter room | via (`invite_link` / `manual`), reason |
+| `wtf_invite_copy` | Copy invite | — |
+| `wtf_ready` | Ready toggle | ready, players |
+| `wtf_round_start` | GO shown (once per round) | round, players |
+| `wtf_tap` | player's tap | round, reaction_ms, value |
+| `wtf_round_result` | round ends (once per round) | round, players, place, tapped |
+| `wtf_room_leave`, `wtf_room_ended` | Leave; room expired or join refused | rounds_played, reason |
+| `wtf_error_boundary` | whosthefirst error screen | action, error_name |
+
+GA4 enhanced measurement adds outbound clicks and file downloads on its own.
+
+**Setup (one time):**
+
+1. Firebase console → Project settings → Integrations → enable **Google
+   Analytics**, then copy the web app's `measurementId` (`G-…`).
+2. Add it as the repository variable `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+   next to the other `NEXT_PUBLIC_FIREBASE_*` variables. Analytics stays off
+   until it and the API key, project ID and app ID are all set.
+3. Google Analytics → Admin → Data streams → your web stream → Enhanced
+   measurement → turn **off** "Page changes based on browser history events".
+   The site sends `page_view` itself, so leaving it on double counts.
+4. Optional: Admin → Custom definitions → register the params you want to
+   report on (e.g. `content_id`, `channel`, `section`, `percent` as
+   dimensions; `reaction_ms` as a metric in milliseconds).
+
+**Testing locally:** put the config in `.env.local`, run `npm run dev`, accept
+the banner, and watch Google Analytics → Admin → DebugView. In dev every
+event is sent with `debug_mode` and also logged to the console as
+`[analytics]`.
+
 ## Design system
 
 Defined once as custom properties in `app/globals.css` and mirrored in

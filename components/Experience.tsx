@@ -5,7 +5,7 @@ import styles from "./Experience.module.css";
 
 export default function Experience() {
   return (
-    <section id="experience" className={styles.section} aria-labelledby="exp-heading">
+    <section id="experience" className={styles.section} aria-labelledby="exp-heading" data-track-section="experience">
       <div className="shell">
         <div id="exp-heading">
           <SectionHead

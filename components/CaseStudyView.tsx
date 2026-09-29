@@ -27,6 +27,9 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
                   key={l.href}
                   className={styles.link}
                   href={l.href}
+                  data-track="case_study_link"
+                  data-track-case-study={study.slug}
+                  data-track-label={l.label}
                   {...(l.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
                 >
                   <span className={`monoLabel ${styles.linkText}`}>{l.label}</span>
@@ -45,7 +48,15 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
           <Reveal>
             <figure className={styles.gallery} aria-label="Screenshots">
               {study.gallery.map((src) => (
-                <a key={src} href={src} target="_blank" rel="noreferrer" className={styles.shotLink}>
+                <a
+                  key={src}
+                  href={src}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.shotLink}
+                  data-track="screenshot_open"
+                  data-track-case-study={study.slug}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={src} alt={`${study.name} on Android`} className={styles.shot} loading="lazy" />
                 </a>
@@ -116,7 +127,7 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
         </section>
 
         <p className={styles.back}>
-          <a className={styles.backLink} href="/work/">
+          <a className={styles.backLink} href="/work/" data-track="cta_click" data-track-cta="all_work">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" className={styles.arrow}>
               <path d="M17 10H4M9 15l-5-5 5-5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square" />
             </svg>

@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { onValue, ref } from "firebase/database";
+import { track } from "@/lib/analytics";
 import { getDb, serverNow } from "@/lib/whosthefirst/firebase";
 import {
   COUNTDOWN_MS,
@@ -145,6 +146,38 @@ export default function RoomView({ session, uid, onExit }: Props) {
     return () => clearTimeout(t);
   }, [phase, startAt, firstTapAt, everyoneTapped, key, code, round]);
 
+  // Analytics, once per round. Only counts and timings: never names or codes.
+  const trackedGo = useRef(0);
+  useEffect(() => {
+    if (!isGo || !me || trackedGo.current === round) return;
+    trackedGo.current = round;
+    track("wtf_round_start", { app: "whosthefirst", round, players: count });
+  }, [isGo, me, round, count]);
+
+  const trackedResult = useRef(0);
+  const roundHistory = room?.history?.[round];
+  useEffect(() => {
+    if (phase !== "result" || !roundHistory || trackedResult.current === round) return;
+    const results = readResults(roundHistory.results);
+    const i = results.findIndex((r) => r.uid === uid);
+    if (i < 0) return;
+    trackedResult.current = round;
+    const tappedIn = results[i].ms !== null;
+    track("wtf_round_result", {
+      app: "whosthefirst",
+      round,
+      players: results.length,
+      place: tappedIn ? i + 1 : undefined,
+      tapped: tappedIn,
+    });
+  }, [phase, roundHistory, round, uid]);
+
+  useEffect(() => {
+    if ((gone || joinError) && !leaving.current) {
+      track("wtf_room_ended", { app: "whosthefirst", reason: joinError ?? "expired" });
+    }
+  }, [gone, joinError]);
+
   const tapped = myTap?.round === round || Boolean(roundTaps[uid]);
   const canTap = isGo && Boolean(me) && !tapped;
 
@@ -153,6 +186,7 @@ export default function RoomView({ session, uid, onExit }: Props) {
     const ms = Math.round(Math.max(0, stamp - goAt.current) * 1000) / 1000;
     const r = round;
     setMyTap({ round: r, ms });
+    track("wtf_tap", { app: "whosthefirst", round: r, reaction_ms: ms, value: ms });
     setTapFailed(false);
     started.current
       .then(() => submitTap(key, r, uid, me!.name, ms))
@@ -161,6 +195,7 @@ export default function RoomView({ session, uid, onExit }: Props) {
 
   const leave = async () => {
     leaving.current = true;
+    track("wtf_room_leave", { app: "whosthefirst", rounds_played: round });
     try {
       await leaveRoom(key, code, uid);
     } catch {
@@ -239,7 +274,10 @@ export default function RoomView({ session, uid, onExit }: Props) {
               phase={phase!}
               count={count}
               waiting={Object.values(players).filter((p) => !p.ready).length}
-              onToggle={() => setReady(key, code, uid, !me.ready).catch(() => {})}
+              onToggle={() => {
+                track("wtf_ready", { app: "whosthefirst", ready: !me.ready, players: count });
+                setReady(key, code, uid, !me.ready).catch(() => {});
+              }}
             />
           )}
           <PlayerList players={players} uid={uid} />

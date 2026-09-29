@@ -36,7 +36,7 @@ function Shot({ src, name }: { src: string | null; name: string }) {
 
 export default function SelectedWork() {
   return (
-    <section id="work" className={styles.section} aria-labelledby="work-heading">
+    <section id="work" className={styles.section} aria-labelledby="work-heading" data-track-section="work">
       <div className="shell">
         <div id="work-heading">
           <SectionHead
@@ -62,6 +62,9 @@ export default function SelectedWork() {
                       <a
                         href={p.href}
                         className={styles.nameLink}
+                        data-track="select_content"
+                        data-track-content-type="project"
+                        data-track-content-id={p.name}
                         {...(p.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
                       >
                         {p.name}
@@ -91,7 +94,7 @@ export default function SelectedWork() {
         </ul>
 
         <p className={styles.allWork}>
-          <a className={styles.allWorkLink} href="/work/">
+          <a className={styles.allWorkLink} href="/work/" data-track="cta_click" data-track-cta="see_all_work">
             <span className={`monoLabel ${styles.allWorkText}`}>See all work</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" className={styles.arrow}>
               <path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square" />

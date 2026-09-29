@@ -46,6 +46,9 @@ export default function WorkIndex() {
                             <a
                               className={styles.nameLink}
                               href={e.href}
+                              data-track="select_content"
+                              data-track-content-type="project"
+                              data-track-content-id={e.name}
                               {...(e.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
                             >
                               {e.name}
