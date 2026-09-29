@@ -37,8 +37,10 @@ export default function BoardView() {
             <span className={styles.rankName}>{p.name}</span>
             {board.matchByMatch ? (
               <span className={styles.rankScore}>
-                <span className={`${styles.rankBig} ${p.current ? styles.bigLive : ""}`}>{signed(p.current)}</span>
-                <span className={styles.rankSmall}>Total {num(p.score)}</span>
+                <span className={styles.rankBig}>{num(p.score)}</span>
+                <span className={`${styles.rankSmall} ${p.current ? styles.smallLive : ""}`}>
+                  This match {signed(p.current)}
+                </span>
               </span>
             ) : (
               <span className={styles.rankScore}>

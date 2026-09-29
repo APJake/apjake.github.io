@@ -88,10 +88,18 @@ export const isPasscode = (s: string) => /^[0-9]{4}$/.test(s);
 
 const boardPath = (id: string) => `scoreboard/boards/${id}`;
 
-function isPermissionDenied(err: unknown) {
+export function isPermissionDenied(err: unknown) {
   return String((err as { code?: string; message?: string })?.code ?? (err as Error)?.message ?? "")
     .toUpperCase()
     .includes("PERMISSION_DENIED");
+}
+
+/** User-facing text for a failed database call. */
+export function errorMessage(err: unknown, fallback: string): string {
+  if (isPermissionDenied(err)) {
+    return "The scoreboard server refused the request. Its database rules may not be published yet.";
+  }
+  return (err as Error)?.message || fallback;
 }
 
 /**
@@ -114,7 +122,9 @@ export async function createBoard(input: {
       await set(ref(database, `scoreboard/rooms/${roomCode}`), { owner: user.uid });
       break;
     } catch (err) {
-      if (!isPermissionDenied(err) || attempt >= 7) throw err;
+      // A taken code and missing rules both look like PERMISSION_DENIED. With
+      // 900,000 codes, three collisions in a row means it's the rules.
+      if (!isPermissionDenied(err) || attempt >= 2) throw err;
       roomCode = newRoomCode();
     }
   }
