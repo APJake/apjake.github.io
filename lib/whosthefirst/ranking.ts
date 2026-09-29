@@ -29,6 +29,20 @@ export function formatDiff(ms: number, first: number): string {
   return d === 0 ? "0.000s" : `+${d.toFixed(3)}s`;
 }
 
+/**
+ * Reads stored round results. RTDB drops null fields, so a player who never
+ * tapped comes back without `ms` at all; map that back to `null`.
+ */
+export function readResults(v: unknown): RoundResult[] {
+  return asList(v as RoundResult[] | Record<string, RoundResult> | null)
+    .filter((r) => r && typeof r.uid === "string")
+    .map((r) => ({
+      uid: r.uid,
+      name: typeof r.name === "string" ? r.name : "?",
+      ms: typeof r.ms === "number" ? r.ms : null,
+    }));
+}
+
 /** RTDB can hand arrays back as objects; normalise either shape. */
 export function asList<T>(v: T[] | Record<string, T> | null | undefined): T[] {
   if (!v) return [];

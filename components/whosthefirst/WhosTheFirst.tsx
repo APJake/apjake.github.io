@@ -8,7 +8,7 @@ import Lobby from "./Lobby";
 import RoomView from "./RoomView";
 import styles from "./WhosTheFirst.module.css";
 
-const SESSION_KEY = "wtf:session";
+export const SESSION_KEY = "wtf:session";
 
 function readSession(): Session | null {
   try {
