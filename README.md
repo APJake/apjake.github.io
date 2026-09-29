@@ -57,7 +57,10 @@ server: clients drive the room state machine
    variables below take.
 2. Authentication → Sign-in method → enable **Anonymous**.
 3. Realtime Database → create a database.
-4. Deploy the rules: `npx firebase-tools deploy --only database --project <id>`.
+4. Publish the database rules: Firebase console → **Realtime Database → Rules**,
+   replace the contents with `database.rules.json` from this repo, then
+   **Publish**. (Or `npx firebase-tools deploy --only database --project <id>`.)
+   Repeat whenever `database.rules.json` changes.
 5. GitHub → Settings → Secrets and variables → Actions → **Variables**: add
    `NEXT_PUBLIC_FIREBASE_API_KEY`, `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`,
    `NEXT_PUBLIC_FIREBASE_DATABASE_URL`, `NEXT_PUBLIC_FIREBASE_PROJECT_ID` and
