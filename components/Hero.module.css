@@ -35,20 +35,24 @@
   height: 100%;
   object-fit: cover;
   object-position: 50% 26%;
-  filter: grayscale(1) contrast(1.35) brightness(0.72);
+  filter: grayscale(1) contrast(1.15) brightness(0.9);
 }
 
 /* Duotone: the greyscale image is tinted toward amber, with the midtones held
    back so the face stays readable rather than going flat monochrome. */
 .tone  { position: absolute; inset: 0; background: var(--amber); mix-blend-mode: color; opacity: 0.38; }
 .warm  { position: absolute; inset: 0; background: var(--amber); mix-blend-mode: overlay; opacity: 0.12; }
-.fadeLeft {
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, var(--bg-base) 0%, rgba(11,11,12,0.78) 20%, rgba(11,11,12,0) 54%);
-}
-.fadeBottom {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(11,11,12,0) 52%, var(--bg-base) 100%);
+/* The photo sits on pure black, darker than the page and the glow, so the
+   edges are dissolved with a mask rather than painted over with --bg-base. */
+.portrait {
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.22) 20%, #000 54%),
+    linear-gradient(180deg, transparent 0%, #000 16%, #000 52%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.22) 20%, #000 54%),
+    linear-gradient(180deg, transparent 0%, #000 16%, #000 52%, transparent 100%);
+  mask-composite: intersect;
 }
 
 .glow {
@@ -187,10 +191,8 @@
     flex: 1 1 auto;
     min-height: 300px;
     margin-top: 44px;
-  }
-  .fadeLeft { display: none; }
-  .fadeBottom {
-    background: linear-gradient(180deg, rgba(11,11,12,0) 34%, rgba(11,11,12,0.86) 74%, var(--bg-base) 100%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 34%, rgba(0,0,0,0.14) 74%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 34%, rgba(0,0,0,0.14) 74%, transparent 100%);
   }
 
   .content { order: 1; padding-top: 52px; }
