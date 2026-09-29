@@ -77,6 +77,33 @@ then build with `NEXT_PUBLIC_FIREBASE_EMULATOR=1`,
 `NEXT_PUBLIC_FIREBASE_PROJECT_ID=demo-wtf` and
 `NEXT_PUBLIC_FIREBASE_DATABASE_URL=http://127.0.0.1:9000?ns=demo-wtf-default-rtdb`.
 
+### Kyauk Thin Bone (`/apps/kyauk-thin-bone/`)
+
+A live scoreboard (ကျောက်သင်ပုန်း, "scoreboard") for 1–20 players, on the same
+Firebase project, setup and emulator instructions as Who's the first. Code is
+in `lib/scoreboard/` and `components/scoreboard/`.
+
+| Route | What it is |
+| --- | --- |
+| `/apps/kyauk-thin-bone/` | Create / View, plus boards created on this device |
+| `/apps/kyauk-thin-bone/create/` | Setup: codes, title, description, default score, preset button, match toggle, players |
+| `/apps/kyauk-thin-bone/manage/?board=…` | Creator: scoring, settings, Save Match, history |
+| `/apps/kyauk-thin-bone/join/` | Room code + passcode → viewer |
+| `/apps/kyauk-thin-bone/view/?board=…` | Read-only viewer; this URL is the share link |
+
+- **Data** lives under `scoreboard/` in the database. `rooms/{code}` reserves
+  the 6-digit code and is never readable; `access/{code}/{passcode}` holds the
+  board id and can only be read by someone who knows both;
+  `boards/{id}` is readable by anyone with the 20-character id (the share
+  link) and writable only by the uid that created it.
+- **Creator identity** is an anonymous account in its own named Firebase app
+  with local persistence, so it survives closing the tab (whosthefirst uses
+  per-tab sessions on the default app). The creator can edit only from the
+  browser that made the board.
+- **Match by match** keeps unsaved points in each player's `current`. Save
+  Match writes the match to history and moves `current` into `score` in one
+  multi-path update using server-side `increment()`.
+
 ## Analytics
 
 Firebase Analytics (GA4 underneath) runs on every page, `/apps/*` included,
@@ -97,7 +124,8 @@ reopens the banner; declining later turns collection off.
 components can also call `track()` directly.
 
 **Never send personal data.** No names, room codes, passcodes or uids. The
-`room` query param is stripped from `page_location` and `page_referrer`.
+`room` and `board` query params are stripped from `page_location` and
+`page_referrer`.
 
 | Event | Where | Params |
 | --- | --- | --- |
@@ -120,6 +148,10 @@ components can also call `track()` directly.
 | `wtf_round_result` | round ends (once per round) | round, players, place, tapped |
 | `wtf_room_leave`, `wtf_room_ended` | Leave; room expired or join refused | rounds_played, reason |
 | `wtf_error_boundary` | whosthefirst error screen | action, error_name |
+| `ktb_board_create`, `ktb_board_create_failed` | Kyauk Thin Bone: Start scoring | players, match_by_match, reason |
+| `ktb_board_join`, `ktb_board_join_failed` | Room code + passcode lookup | reason |
+| `ktb_share` | Copy code / passcode / link, share sheet | what, method |
+| `ktb_match_save` | Save match | match, players |
 
 GA4 enhanced measurement adds outbound clicks and file downloads on its own.
 

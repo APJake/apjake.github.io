@@ -24,8 +24,11 @@ const CONSENT_KEY = "analytics-consent";
 /** Dispatched on `window` to reopen the consent banner. */
 export const CONSENT_OPEN_EVENT = "analytics-consent:open";
 const MAX_QUEUE = 50;
-/** Query params that must never reach analytics (whosthefirst invite links carry the room code). */
-const PRIVATE_PARAMS = ["room"];
+/**
+ * Query params that must never reach analytics: whosthefirst invite links
+ * carry the room code, and a Kyauk Thin Bone `board` id is itself the read key.
+ */
+const PRIVATE_PARAMS = ["room", "board"];
 
 type Sdk = {
   log: (name: string, params: EventParams) => void;

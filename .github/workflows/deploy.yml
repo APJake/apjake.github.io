@@ -29,7 +29,7 @@ jobs:
       - run: npm ci
 
       # next build runs the TypeScript check and writes the static site to out/.
-      # The Firebase web config (Analytics site-wide, plus /apps/whosthefirst)
+      # The Firebase web config (Analytics site-wide, plus the /apps/ mini apps)
       # comes from repository variables; it is public by design and inlined
       # into the bundle.
       - run: npm run build

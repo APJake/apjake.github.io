@@ -33,4 +33,13 @@ export const apps: MiniApp[] = [
     status: "beta",
     href: "/apps/whosthefirst/",
   },
+  {
+    slug: "kyauk-thin-bone",
+    title: "Kyauk Thin Bone",
+    description:
+      "A live scoreboard for 1–20 players. Keep score match by match or as a running total, and share it with a room code or a link.",
+    image: "/apps/kyauk-thin-bone/cover.svg",
+    status: "beta",
+    href: "/apps/kyauk-thin-bone/",
+  },
 ];
