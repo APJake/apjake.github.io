@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { track } from "@/lib/analytics";
 import { SESSION_KEY } from "@/components/whosthefirst/WhosTheFirst";
 import styles from "@/components/whosthefirst/WhosTheFirst.module.css";
 
@@ -18,9 +19,12 @@ export default function WhosTheFirstError({
 }) {
   useEffect(() => {
     console.error(error);
+    // Only the error type: messages can carry database paths with room credentials.
+    track("wtf_error_boundary", { app: "whosthefirst", action: "shown", error_name: error.name });
   }, [error]);
 
   const backToLobby = () => {
+    track("wtf_error_boundary", { app: "whosthefirst", action: "back_to_lobby" });
     try {
       sessionStorage.removeItem(SESSION_KEY);
     } catch {}
@@ -30,7 +34,13 @@ export default function WhosTheFirstError({
   return (
     <div className={styles.app}>
       <header className={styles.top}>
-        <a className={`monoLabel ${styles.back}`} href="/apps/">
+        <a
+          className={`monoLabel ${styles.back}`}
+          href="/apps/"
+          data-track="cta_click"
+          data-track-cta="back_to_apps"
+          data-track-app="whosthefirst"
+        >
           ← Apps
         </a>
         <p className={`display ${styles.brand}`}>WHO&apos;S THE FIRST</p>
@@ -42,7 +52,13 @@ export default function WhosTheFirstError({
             <button className={styles.primary} onClick={backToLobby}>
               Back to lobby
             </button>
-            <button className={styles.secondary} onClick={retry}>
+            <button
+              className={styles.secondary}
+              onClick={() => {
+                track("wtf_error_boundary", { app: "whosthefirst", action: "retry" });
+                retry();
+              }}
+            >
               Try again
             </button>
           </div>

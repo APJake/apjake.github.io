@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics";
 import { MAX_PLAYERS } from "@/lib/whosthefirst/room";
 import styles from "./WhosTheFirst.module.css";
 
@@ -14,6 +15,7 @@ export default function RoomHeader({ code, passcode, count, onLeave }: Props) {
     try {
       await navigator.clipboard.writeText(`Who's the first — room ${code}, passcode ${passcode}\n${link}`);
       setCopied(true);
+      track("wtf_invite_copy", { app: "whosthefirst" });
       setTimeout(() => setCopied(false), 1600);
     } catch {}
   };

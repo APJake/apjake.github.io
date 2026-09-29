@@ -10,7 +10,12 @@ export default function BlogDetail({ blog, post }: { blog: BlogIndexEntry; post:
   const proseClass = `${styles.prose} ${post.language === "mm" ? styles.mm : ""}`.trim();
 
   return (
-    <article className={styles.section} aria-labelledby="blog-title">
+    <article
+      className={styles.section}
+      aria-labelledby="blog-title"
+      data-track-read={blog.id}
+      data-track-language={post.language}
+    >
       <div className="shell">
         <header className={styles.head}>
           <p className={`monoLabel ${styles.kicker}`}>Blog</p>
@@ -39,7 +44,7 @@ export default function BlogDetail({ blog, post }: { blog: BlogIndexEntry; post:
         <div className={proseClass} dangerouslySetInnerHTML={{ __html: post.html }} />
 
         <p className={styles.back}>
-          <Link href="/blogs/" className={styles.backLink}>
+          <Link href="/blogs/" className={styles.backLink} data-track="cta_click" data-track-cta="all_posts">
             <svg
               width="18"
               height="18"

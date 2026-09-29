@@ -22,7 +22,13 @@ export default function AppsIndex() {
           {apps.map((app) => (
             <li key={app.slug}>
               <Reveal className={styles.card}>
-                <a className={styles.link} href={app.href}>
+                <a
+                  className={styles.link}
+                  href={app.href}
+                  data-track="select_content"
+                  data-track-content-type="app"
+                  data-track-content-id={app.slug}
+                >
                   <div className={styles.media}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={app.image} alt="" width={1200} height={750} loading="lazy" />

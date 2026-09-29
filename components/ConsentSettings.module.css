@@ -1,0 +1,9 @@
+.button {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color var(--dur-micro) var(--ease);
+}
+.button:hover { color: var(--amber); }

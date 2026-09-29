@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { isPasscode, isRoomCode, normalizeCode } from "@/lib/whosthefirst/codes";
+import { track } from "@/lib/analytics";
 import { createRoom, joinRoom, RoomError, type RoomErrorCode } from "@/lib/whosthefirst/room";
 import type { Session } from "@/lib/whosthefirst/types";
 import styles from "./WhosTheFirst.module.css";
@@ -34,9 +35,13 @@ export default function Lobby({ uid, initialCode, onEnter }: Props) {
   const cleanName = name.trim().slice(0, 20);
   const nameOk = cleanName.length > 0;
 
+  /** Whether the code came prefilled from an invite link (?room=). */
+  const joinVia = () => (initialCode && normalizeCode(code) === initialCode ? "invite_link" : "manual");
+
   const run = async (where: "create" | "join", fn: () => Promise<Omit<Session, "name">>) => {
     if (!nameOk) {
       setError({ where, text: "Enter your name first." });
+      track(`wtf_room_${where}_failed`, { app: "whosthefirst", reason: "no_name" });
       return;
     }
     setBusy(where);
@@ -46,11 +51,13 @@ export default function Lobby({ uid, initialCode, onEnter }: Props) {
     } catch {}
     try {
       const room = await fn();
+      track(`wtf_room_${where}`, { app: "whosthefirst", via: where === "join" ? joinVia() : undefined });
       onEnter({ ...room, name: cleanName });
     } catch (e) {
       const c = e instanceof RoomError ? e.code : where === "create" ? "busy" : "not-found";
       setError({ where, text: errorText[c] });
       setBusy(null);
+      track(`wtf_room_${where}_failed`, { app: "whosthefirst", reason: c });
     }
   };
 
@@ -64,6 +71,7 @@ export default function Lobby({ uid, initialCode, onEnter }: Props) {
     const c = normalizeCode(code);
     if (!isRoomCode(c) || !isPasscode(passcode)) {
       setError({ where: "join", text: "Room code is 6 characters, passcode is 4 digits." });
+      track("wtf_room_join_failed", { app: "whosthefirst", reason: "invalid_format" });
       return;
     }
     run("join", () => joinRoom(c, passcode, uid, cleanName));

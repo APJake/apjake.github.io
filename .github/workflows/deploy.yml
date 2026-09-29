@@ -29,8 +29,9 @@ jobs:
       - run: npm ci
 
       # next build runs the TypeScript check and writes the static site to out/.
-      # The Firebase web config for /apps/whosthefirst comes from repository
-      # variables; it is public by design and inlined into the bundle.
+      # The Firebase web config (Analytics site-wide, plus /apps/whosthefirst)
+      # comes from repository variables; it is public by design and inlined
+      # into the bundle.
       - run: npm run build
         env:
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
@@ -38,6 +39,7 @@ jobs:
           NEXT_PUBLIC_FIREBASE_DATABASE_URL: ${{ vars.NEXT_PUBLIC_FIREBASE_DATABASE_URL }}
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
 
       - uses: actions/configure-pages@v5
 

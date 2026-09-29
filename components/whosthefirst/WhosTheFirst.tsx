@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { track } from "@/lib/analytics";
 import { isConfigured, signIn } from "@/lib/whosthefirst/firebase";
 import { isRoomCode, normalizeCode } from "@/lib/whosthefirst/codes";
 import type { Session } from "@/lib/whosthefirst/types";
+import ConsentSettings from "../ConsentSettings";
 import Lobby from "./Lobby";
 import RoomView from "./RoomView";
 import styles from "./WhosTheFirst.module.css";
@@ -41,7 +43,10 @@ export default function WhosTheFirst() {
     if (isRoomCode(fromUrl)) setInitialCode(fromUrl);
     signIn()
       .then((u) => setUid(u.uid))
-      .catch(() => setAuthFailed(true));
+      .catch(() => {
+        setAuthFailed(true);
+        track("wtf_connect_failed", { app: "whosthefirst" });
+      });
   }, []);
 
   const enter = (s: Session | null) => {
@@ -70,7 +75,13 @@ export default function WhosTheFirst() {
   return (
     <div className={styles.app}>
       <header className={styles.top}>
-        <a className={`monoLabel ${styles.back}`} href="/apps/">
+        <a
+          className={`monoLabel ${styles.back}`}
+          href="/apps/"
+          data-track="cta_click"
+          data-track-cta="back_to_apps"
+          data-track-app="whosthefirst"
+        >
           ← Apps
         </a>
         <p className={`display ${styles.brand}`}>WHO&apos;S THE FIRST</p>
@@ -78,6 +89,9 @@ export default function WhosTheFirst() {
       <main id="main" className={styles.main}>
         {body}
       </main>
+      <footer className={styles.foot}>
+        <ConsentSettings />
+      </footer>
     </div>
   );
 }

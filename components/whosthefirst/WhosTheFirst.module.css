@@ -201,3 +201,11 @@
   .resultDiff { grid-column: 3; min-width: 0; }
   .resultTime { grid-column: 3; grid-row: 1; }
 }
+
+/* Footer: just the analytics settings link. */
+.foot {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--margin) 32px;
+}

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono, Noto_Sans_Myanmar } from "next/font/google";
 import { person, totals } from "@/lib/content";
 import Grain from "@/components/Grain";
+import Analytics from "@/components/Analytics";
+import ConsentBanner from "@/components/ConsentBanner";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -58,6 +60,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <Grain />
+        <Analytics />
+        <ConsentBanner />
       </body>
     </html>
   );

@@ -38,7 +38,15 @@ export default function BlogIndex({ blogs }: { blogs: BlogIndexEntry[] }) {
             {blogs.map((b) => (
               <li key={b.id} className={styles.item}>
                 <Reveal className={styles.entry}>
-                  <Link href={`/blogs/${b.id}/`} className={styles.coverWrap} aria-label={b.title}>
+                  <Link
+                    href={`/blogs/${b.id}/`}
+                    className={styles.coverWrap}
+                    aria-label={b.title}
+                    data-track="select_content"
+                    data-track-content-type="blog_post"
+                    data-track-content-id={b.id}
+                    data-track-placement="cover"
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={b.coverImageUrl} alt="" className={styles.cover} />
                   </Link>
@@ -51,13 +59,27 @@ export default function BlogIndex({ blogs }: { blogs: BlogIndexEntry[] }) {
                       </span>
                     </p>
                     <h2 className={`display ${styles.name}`}>
-                      <Link href={`/blogs/${b.id}/`} className={styles.nameLink}>
+                      <Link
+                        href={`/blogs/${b.id}/`}
+                        className={styles.nameLink}
+                        data-track="select_content"
+                        data-track-content-type="blog_post"
+                        data-track-content-id={b.id}
+                        data-track-placement="title"
+                      >
                         {b.title}
                       </Link>
                     </h2>
                     <p className={styles.desc}>{b.description}</p>
                     <p className={styles.cta}>
-                      <Link href={`/blogs/${b.id}/`} className={styles.ctaLink}>
+                      <Link
+                        href={`/blogs/${b.id}/`}
+                        className={styles.ctaLink}
+                        data-track="select_content"
+                        data-track-content-type="blog_post"
+                        data-track-content-id={b.id}
+                        data-track-placement="read_post"
+                      >
                         <span className={`monoLabel ${styles.ctaText}`}>Read post</span>
                         <svg
                           width="18"
