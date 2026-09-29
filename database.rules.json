@@ -1,0 +1,70 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "codes": {
+      "$code": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.child('expiresAt').isNumber() || data.child('expiresAt').val() < now || !newData.exists() || (newData.child('expiresAt').isNumber() && newData.child('expiresAt').val() >= data.child('expiresAt').val()))",
+        ".validate": "$code.matches(/^[A-Z0-9]{6}$/) && newData.child('expiresAt').isNumber()"
+      }
+    },
+
+    "rooms": {
+      "$room": {
+        ".read": "auth != null && data.child('meta/expiresAt').isNumber() && data.child('meta/expiresAt').val() > now",
+        ".validate": "$room.matches(/^[A-Z0-9]{6}-[0-9]{4}$/)",
+
+        "meta": {
+          ".write": "auth != null",
+          ".validate": "newData.hasChildren(['code', 'createdAt', 'expiresAt']) && newData.child('code').isString() && $room.beginsWith(newData.child('code').val() + '-')"
+        },
+
+        "game": {
+          ".write": "auth != null && ((root.child('rooms').child($room).child('meta/expiresAt').isNumber() && root.child('rooms').child($room).child('meta/expiresAt').val() > now) || (newData.parent().child('meta/expiresAt').isNumber() && newData.parent().child('meta/expiresAt').val() > now))",
+          ".validate": "newData.hasChildren(['phase', 'round'])",
+          "phase": { ".validate": "newData.val() == 'idle' || newData.val() == 'ready' || newData.val() == 'started' || newData.val() == 'result'" },
+          "round": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "readyAt": { ".validate": "newData.isNumber()" },
+          "startAt": { ".validate": "newData.isNumber()" },
+          "firstTapAt": { ".validate": "newData.isNumber()" },
+          "players": {
+            "$uid": {
+              ".validate": "newData.hasChildren(['name', 'ready', 'joinedAt']) && (data.exists() || newData.parent().parent().child('phase').val() == 'idle' || newData.parent().parent().child('phase').val() == 'result')",
+              "name": { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 20" },
+              "ready": { ".validate": "newData.isBoolean()" },
+              "joinedAt": { ".validate": "newData.isNumber()" },
+              "$other": { ".validate": false }
+            }
+          },
+          "$other": { ".validate": false }
+        },
+
+        "taps": {
+          ".write": "auth != null && !newData.exists() && (!newData.parent().child('game').exists() || !data.parent().child('meta/expiresAt').isNumber() || data.parent().child('meta/expiresAt').val() <= now)",
+          "$round": {
+            "$uid": {
+              ".write": "auth != null && auth.uid == $uid && !data.exists() && root.child('rooms').child($room).child('game/phase').val() == 'started' && root.child('rooms').child($room).child('game/round').val() + '' == $round",
+              ".validate": "newData.hasChildren(['ms', 'name', 'at'])",
+              "ms": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 60000" },
+              "name": { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 20" },
+              "at": { ".validate": "newData.val() == now" },
+              "$other": { ".validate": false }
+            }
+          }
+        },
+
+        "history": {
+          ".write": "auth != null && !newData.exists() && (!newData.parent().child('game').exists() || !data.parent().child('meta/expiresAt').isNumber() || data.parent().child('meta/expiresAt').val() <= now)",
+          "$round": {
+            ".write": "auth != null && !data.exists() && root.child('rooms').child($room).child('game/phase').val() == 'result' && root.child('rooms').child($room).child('game/round').val() + '' == $round",
+            ".validate": "newData.hasChildren(['endedAt', 'results'])"
+          }
+        },
+
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}
