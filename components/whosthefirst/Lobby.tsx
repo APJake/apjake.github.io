@@ -16,12 +16,12 @@ export const errorText: Record<RoomErrorCode, string> = {
   busy: "Couldn't create a room right now. Try again.",
 };
 
-type Props = { uid: string; initialCode: string; onEnter: (s: Session) => void };
+type Props = { uid: string; initialCode: string; initialPasscode: string; onEnter: (s: Session) => void };
 
-export default function Lobby({ uid, initialCode, onEnter }: Props) {
+export default function Lobby({ uid, initialCode, initialPasscode, onEnter }: Props) {
   const [name, setName] = useState("");
   const [code, setCode] = useState(initialCode);
-  const [passcode, setPasscode] = useState("");
+  const [passcode, setPasscode] = useState(initialPasscode);
   const [busy, setBusy] = useState<"create" | "join" | null>(null);
   const [error, setError] = useState<{ where: "create" | "join"; text: string } | null>(null);
 
@@ -31,6 +31,7 @@ export default function Lobby({ uid, initialCode, onEnter }: Props) {
     } catch {}
   }, []);
   useEffect(() => setCode(initialCode), [initialCode]);
+  useEffect(() => setPasscode(initialPasscode), [initialPasscode]);
 
   const cleanName = name.trim().slice(0, 20);
   const nameOk = cleanName.length > 0;

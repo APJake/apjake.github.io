@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { track } from "@/lib/analytics";
 import { isConfigured, signIn } from "@/lib/whosthefirst/firebase";
-import { isRoomCode, normalizeCode } from "@/lib/whosthefirst/codes";
+import { isPasscode, isRoomCode, normalizeCode } from "@/lib/whosthefirst/codes";
 import type { Session } from "@/lib/whosthefirst/types";
 import ConsentSettings from "../ConsentSettings";
 import Lobby from "./Lobby";
@@ -35,12 +35,18 @@ export default function WhosTheFirst() {
   const [authFailed, setAuthFailed] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [initialCode, setInitialCode] = useState("");
+  const [initialPasscode, setInitialPasscode] = useState("");
 
   useEffect(() => {
     if (!isConfigured) return;
     setSession(readSession());
-    const fromUrl = normalizeCode(new URLSearchParams(window.location.search).get("room") ?? "");
-    if (isRoomCode(fromUrl)) setInitialCode(fromUrl);
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = normalizeCode(params.get("room") ?? "");
+    const passFromUrl = params.get("pass") ?? "";
+    if (isRoomCode(fromUrl)) {
+      setInitialCode(fromUrl);
+      if (isPasscode(passFromUrl)) setInitialPasscode(passFromUrl);
+    }
     signIn()
       .then((u) => setUid(u.uid))
       .catch(() => {
@@ -69,7 +75,7 @@ export default function WhosTheFirst() {
   } else if (session) {
     body = <RoomView key={session.key} session={session} uid={uid} onExit={() => enter(null)} />;
   } else {
-    body = <Lobby uid={uid} initialCode={initialCode} onEnter={enter} />;
+    body = <Lobby uid={uid} initialCode={initialCode} initialPasscode={initialPasscode} onEnter={enter} />;
   }
 
   return (
