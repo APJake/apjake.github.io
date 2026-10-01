@@ -11,9 +11,10 @@ export default function RoomHeader({ code, passcode, count, onLeave }: Props) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    const link = `${window.location.origin}/apps/whosthefirst/?room=${code}`;
+    // The passcode rides in the link so invitees only need to enter their name.
+    const link = `${window.location.origin}/apps/whosthefirst/?room=${code}&pass=${passcode}`;
     try {
-      await navigator.clipboard.writeText(`Who's the first — room ${code}, passcode ${passcode}\n${link}`);
+      await navigator.clipboard.writeText(`Who's the first — join room ${code}\n${link}`);
       setCopied(true);
       track("wtf_invite_copy", { app: "whosthefirst" });
       setTimeout(() => setCopied(false), 1600);
