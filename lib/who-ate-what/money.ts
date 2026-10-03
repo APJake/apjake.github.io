@@ -4,6 +4,7 @@ export type Currency = { code: CurrencyCode; label: string; decimals: number };
 
 export const CURRENCIES: Currency[] = [
   { code: "MMK", label: "Ks", decimals: 0 },
+  { code: "VND", label: "₫", decimals: 0 },
   { code: "USD", label: "$", decimals: 2 },
   { code: "SGD", label: "S$", decimals: 2 },
   { code: "THB", label: "฿", decimals: 2 },
@@ -28,7 +29,7 @@ export function formatMoney(minor: number, code: CurrencyCode): string {
   const c = currencyOf(code);
   const sign = minor < 0 ? "−" : "";
   const n = formatAmount(Math.abs(minor), code);
-  return c.code === "MMK" ? `${sign}${n} ${c.label}` : `${sign}${c.label}${n}`;
+  return c.decimals === 0 ? `${sign}${n} ${c.label}` : `${sign}${c.label}${n}`;
 }
 
 /**
@@ -36,7 +37,12 @@ export function formatMoney(minor: number, code: CurrencyCode): string {
  * Returns null for empty or unreadable input.
  */
 export function parseAmount(text: string, code: CurrencyCode): number | null {
-  const cleaned = text.replace(/[,\s]/g, "");
+  const compact = text.replace(/\s/g, "");
+  // Kyat and dong have no decimals, so "45.000" is forty-five thousand.
+  if (currencyOf(code).decimals === 0 && /^\d{1,3}([.,]\d{3})+$/.test(compact)) {
+    return Number(compact.replace(/[.,]/g, ""));
+  }
+  const cleaned = compact.replace(/,/g, "");
   if (!cleaned || !/^\d*\.?\d*$/.test(cleaned) || cleaned === ".") return null;
   const { decimals } = currencyOf(code);
   const value = Math.round(Number(cleaned) * 10 ** decimals);

@@ -16,3 +16,6 @@ next-env.d.ts
 
 # firebase emulator
 *-debug.log
+
+# on-device OCR assets, copied from node_modules by scripts/copy-ocr-assets.mjs
+/public/ocr/

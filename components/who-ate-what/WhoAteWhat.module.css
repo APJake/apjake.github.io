@@ -316,6 +316,67 @@
 
 .printOnly { display: none; }
 
+/* --- Scan sheet ----------------------------------------------------------- */
+.scanBtn { display: flex; gap: 8px; }
+.scanBtn > * { flex: 1; }
+.sheetBackdrop {
+  position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, 0.6);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+@media (min-width: 720px) { .sheetBackdrop { align-items: center; padding: 32px; } }
+.sheet {
+  width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--bg-base); border: 1px solid var(--line-strong); border-radius: 18px 18px 0 0;
+  padding: 0 20px calc(20px + env(safe-area-inset-bottom));
+}
+.sheet:focus { outline: none; }
+@media (min-width: 720px) { .sheet { border-radius: 18px; } }
+.sheetHead {
+  position: sticky; top: 0; z-index: 1; background: var(--bg-base);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0 12px;
+  border-bottom: 1px solid var(--line-hair);
+}
+.sheetTitle { font-size: 1.6rem; }
+.sheetBody { display: flex; flex-direction: column; gap: 18px; padding-top: 18px; }
+.fileBtn { position: relative; text-align: center; cursor: pointer; padding-block: 16px; border-radius: 10px; }
+.fileInput { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.fileBtn:focus-within { outline: 2px solid var(--amber); outline-offset: 2px; }
+.progress { height: 8px; border-radius: 4px; background: var(--bg-raised); overflow: hidden; border: 1px solid var(--line-hair); }
+.progress > span { display: block; height: 100%; background: var(--amber); transition: width var(--dur-element) var(--ease); }
+.scanThumb {
+  max-height: 220px; width: auto; max-width: 100%; border-radius: 10px; border: 1px solid var(--line-hair);
+  object-fit: contain; background: var(--bg-inset); align-self: center;
+}
+.scanThumbLink { flex: none; }
+.reviewTop { display: flex; gap: 16px; align-items: flex-start; }
+.reviewTop .scanThumb { max-height: 160px; max-width: 110px; }
+.reviewNote { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.scanRows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.scanRow {
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px; border-radius: 12px;
+  background: var(--bg-raised); border: 1px solid var(--line-hair);
+}
+.scanOff { opacity: 0.55; }
+.scanOff:focus-within { opacity: 1; }
+.scanMain { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.scanNums { display: flex; align-items: center; gap: 8px; }
+.scanNums > :global(*):nth-child(3) { flex: 1; }
+.scanQty { width: 56px; flex: none; text-align: center; font-family: var(--font-mono), monospace; padding-inline: 6px; }
+.kindTag {
+  flex: none; font-family: var(--font-mono), monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-muted); border: 1px solid var(--line-strong); border-radius: 6px; padding: 3px 6px;
+}
+.check { width: 22px; height: 22px; margin: 10px 0 0; flex: none; accent-color: var(--amber); }
+.checkRow { display: flex; gap: 10px; align-items: flex-start; color: var(--ink-secondary); font-size: 0.92rem; cursor: pointer; }
+.checkRow .check { margin-top: 0; }
+.rawText summary { cursor: pointer; color: var(--ink-muted); font-size: 0.85rem; }
+.rawText pre {
+  margin: 8px 0 0; padding: 12px; border-radius: 10px; background: var(--bg-inset); border: 1px solid var(--line-hair);
+  font-family: var(--font-mono), monospace; font-size: 0.78rem; color: var(--ink-secondary);
+  white-space: pre-wrap; overflow-wrap: anywhere; max-height: 260px; overflow-y: auto;
+}
+.scanSummary { border-top: 1px solid var(--line-hair); padding-top: 8px; display: flex; flex-direction: column; gap: 2px; }
+
 /* --- Print: just the result, dark ink on white ---------------------------- */
 @media print {
   :global(body):has(.app) > :not(.app) { display: none !important; }

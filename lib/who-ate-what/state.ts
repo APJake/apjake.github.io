@@ -19,6 +19,15 @@ export type Action =
   | { type: "setCurrency"; currency: CurrencyCode }
   | { type: "setPct"; field: "servicePct" | "taxPct"; value: number }
   | { type: "setReceiptTotal"; value: number | null }
+  | {
+      type: "importItems";
+      items: { name: string; qty: number; price: number }[];
+      replace: boolean;
+      receiptTotal: number | null;
+      servicePct: number | null;
+      taxPct: number | null;
+      discounts: Discount[];
+    }
   | { type: "load"; bill: Bill }
   | { type: "reset" };
 
@@ -125,6 +134,22 @@ export function reducer(bill: Bill, a: Action): Bill {
       return { ...bill, [a.field]: a.value };
     case "setReceiptTotal":
       return { ...bill, receiptTotal: a.value };
+    case "importItems": {
+      const isBlank = (it: Item) => !it.name.trim() && it.price === 0;
+      const kept = a.replace ? [] : bill.items.filter((it) => !isBlank(it));
+      const added = a.items.map((it) => ({ ...emptyItem(newId()), name: it.name.slice(0, 60), qty: it.qty, price: it.price }));
+      return {
+        ...bill,
+        items: kept.length + added.length ? [...kept, ...added] : [emptyItem(newId())],
+        receiptTotal: a.receiptTotal ?? bill.receiptTotal,
+        servicePct: a.servicePct ?? bill.servicePct,
+        taxPct: a.taxPct ?? bill.taxPct,
+        billDiscounts: [
+          ...(a.replace ? [] : bill.billDiscounts),
+          ...a.discounts.map((d) => ({ ...d, id: newId(), label: "From slip" })),
+        ],
+      };
+    }
     case "load":
       return prune(a.bill);
     case "reset":

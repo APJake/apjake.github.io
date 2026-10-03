@@ -1,8 +1,8 @@
 // Who Ate What — bill state. Every amount is an integer in the currency's
-// minor unit (kyat for MMK, cents for USD), so shares can always be made to
+// minor unit (kyat for MMK, dong for VND, cents for USD), so shares can always be made to
 // add up to the bill exactly.
 
-export type CurrencyCode = "MMK" | "USD" | "SGD" | "THB" | "EUR";
+export type CurrencyCode = "MMK" | "VND" | "USD" | "SGD" | "THB" | "EUR";
 
 export type Person = { id: string; name: string };
 
