@@ -6,12 +6,14 @@ import type { Action } from "@/lib/who-ate-what/state";
 import { newId } from "@/lib/who-ate-what/state";
 import type { Bill, CurrencyCode, Item } from "@/lib/who-ate-what/types";
 import { MoneyInput } from "./inputs";
+import ScanSheet from "./ScanSheet";
 import styles from "./WhoAteWhat.module.css";
 
 const focusEl = (id: string) => document.getElementById(id)?.focus();
 
 export default function ItemsStep({ bill, dispatch }: { bill: Bill; dispatch: (a: Action) => void }) {
   const [focusNext, setFocusNext] = useState<string | null>(null);
+  const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
     if (!focusNext) return;
@@ -51,7 +53,9 @@ export default function ItemsStep({ bill, dispatch }: { bill: Bill; dispatch: (a
             ))}
           </select>
         </label>
-        <span className={styles.hint}>Tip: press Enter in a price box to add the next dish.</span>
+        <button type="button" className={`${styles.btnAccent} ${styles.btnSmall}`} onClick={() => setScanning(true)}>
+          Scan bill slip
+        </button>
       </div>
 
       <ul className={styles.items}>
@@ -67,9 +71,16 @@ export default function ItemsStep({ bill, dispatch }: { bill: Bill; dispatch: (a
         ))}
       </ul>
 
-      <button type="button" className={styles.addRow} onClick={addItem}>
-        + Add dish
-      </button>
+      <div className={styles.scanBtn}>
+        <button type="button" className={styles.addRow} onClick={addItem}>
+          + Add dish
+        </button>
+        <button type="button" className={styles.addRow} onClick={() => setScanning(true)}>
+          Scan bill slip
+        </button>
+      </div>
+
+      {scanning && <ScanSheet bill={bill} dispatch={dispatch} onClose={() => setScanning(false)} />}
     </div>
   );
 }
