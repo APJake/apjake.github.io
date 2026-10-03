@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750">
+  <rect width="1200" height="750" fill="#080809"/>
+  <rect x="330" y="110" width="540" height="530" rx="24" fill="#131315" stroke="#f2efe9" stroke-opacity="0.18" stroke-width="2"/>
+  <g font-family="ui-monospace, monospace" font-size="22" letter-spacing="3">
+    <text x="370" y="170" fill="#ffb020">WHO ATE WHAT</text>
+  </g>
+  <g stroke="#f2efe9" stroke-opacity="0.1">
+    <line x1="370" y1="200" x2="830" y2="200"/>
+    <line x1="370" y1="300" x2="830" y2="300"/>
+    <line x1="370" y1="400" x2="830" y2="400"/>
+    <line x1="370" y1="500" x2="830" y2="500"/>
+  </g>
+  <g font-family="Helvetica Neue, Arial, sans-serif" font-weight="800" letter-spacing="-1">
+    <text x="370" y="262" font-size="36" fill="#f2efe9">Person 1</text>
+    <text x="830" y="264" text-anchor="end" font-size="44" fill="#f2efe9">18,500</text>
+    <text x="370" y="362" font-size="36" fill="#a8a29a">Person 2</text>
+    <text x="830" y="364" text-anchor="end" font-size="44" fill="#a8a29a">12,250</text>
+    <text x="370" y="462" font-size="36" fill="#8b867d">Person 3</text>
+    <text x="830" y="464" text-anchor="end" font-size="44" fill="#8b867d">9,250</text>
+    <text x="370" y="585" font-size="30" fill="#a8a29a">Total</text>
+    <text x="830" y="590" text-anchor="end" font-size="56" fill="#ffb020">40,000</text>
+  </g>
+  <g font-family="ui-monospace, monospace" font-size="18" letter-spacing="1" fill="#8b867d">
+    <text x="370" y="286">HOTPOT 1/3 · STEAK</text>
+    <text x="370" y="386">HOTPOT 1/3 · NOODLES</text>
+    <text x="370" y="486">HOTPOT 1/3 · −10%</text>
+  </g>
+</svg>

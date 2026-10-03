@@ -42,4 +42,13 @@ export const apps: MiniApp[] = [
     status: "beta",
     href: "/apps/kyauk-thin-bone/",
   },
+  {
+    slug: "who-ate-what",
+    title: "Who Ate What",
+    description:
+      "A fair bill splitter for 2–50 people. Tap who shared each dish, add dish or bill discounts, service and tax, and get each person's share. It always adds up to the total. Save it as an image or print it.",
+    image: "/apps/who-ate-what/cover.svg",
+    status: "beta",
+    href: "/apps/who-ate-what/",
+  },
 ];
