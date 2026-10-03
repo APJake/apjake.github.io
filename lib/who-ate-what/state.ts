@@ -52,15 +52,19 @@ function makePeople(existing: Person[], count: number): Person[] {
   return out;
 }
 
-export function emptyItem(id: string): Item {
-  return { id, name: "", price: 0, qty: 1, eaters: [], discount: null };
+/** A new dish row. Shared by everyone unless told otherwise: untick who didn't have it. */
+export function emptyItem(id: string, eaters: string[] = []): Item {
+  return { id, name: "", price: 0, qty: 1, eaters, discount: null };
 }
 
+const everyone = (bill: Pick<Bill, "people">) => bill.people.map((p) => p.id);
+
 export function initialBill(): Bill {
+  const people = makePeople([], 4);
   return {
     currency: "MMK",
-    people: makePeople([], 4),
-    items: [emptyItem(newId())],
+    people,
+    items: [emptyItem(newId(), everyone({ people }))],
     billDiscounts: [],
     servicePct: 0,
     taxPct: 0,
@@ -82,15 +86,21 @@ function prune(bill: Bill): Bill {
 
 export function reducer(bill: Bill, a: Action): Bill {
   switch (a.type) {
-    case "setCount":
-      return prune({ ...bill, people: makePeople(bill.people, clampCount(a.count)) });
+    case "setCount": {
+      const people = makePeople(bill.people, clampCount(a.count));
+      // Dishes everyone shared stay shared by everyone, newcomers included.
+      const before = bill.people.length;
+      const all = everyone({ people });
+      const items = bill.items.map((it) => (before > 0 && it.eaters.length === before ? { ...it, eaters: all } : it));
+      return prune({ ...bill, people, items });
+    }
     case "renamePerson":
       return { ...bill, people: bill.people.map((p) => (p.id === a.id ? { ...p, name: a.name.slice(0, 40) } : p)) };
     case "removePerson":
       if (bill.people.length <= MIN_PEOPLE) return bill;
       return prune({ ...bill, people: bill.people.filter((p) => p.id !== a.id) });
     case "addItem":
-      return { ...bill, items: [...bill.items, emptyItem(a.id)] };
+      return { ...bill, items: [...bill.items, emptyItem(a.id, everyone(bill))] };
     case "updateItem":
       return mapItem(bill, a.id, (it) => ({ ...it, ...a.patch }));
     case "removeItem":
@@ -137,10 +147,10 @@ export function reducer(bill: Bill, a: Action): Bill {
     case "importItems": {
       const isBlank = (it: Item) => !it.name.trim() && it.price === 0;
       const kept = a.replace ? [] : bill.items.filter((it) => !isBlank(it));
-      const added = a.items.map((it) => ({ ...emptyItem(newId()), name: it.name.slice(0, 60), qty: it.qty, price: it.price }));
+      const added = a.items.map((it) => ({ ...emptyItem(newId(), everyone(bill)), name: it.name.slice(0, 60), qty: it.qty, price: it.price }));
       return {
         ...bill,
-        items: kept.length + added.length ? [...kept, ...added] : [emptyItem(newId())],
+        items: kept.length + added.length ? [...kept, ...added] : [emptyItem(newId(), everyone(bill))],
         receiptTotal: a.receiptTotal ?? bill.receiptTotal,
         servicePct: a.servicePct ?? bill.servicePct,
         taxPct: a.taxPct ?? bill.taxPct,
