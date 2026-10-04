@@ -1,0 +1,146 @@
+@import url('main.css');
+
+.profile-photo{
+    position: relative;
+    width: 260px;
+    height: 260px;
+    background-image: url('../img/my_pic_1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.profile-text-box{
+    max-width: 90%;
+}
+.profile-container{
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 500px;
+    width: 70%;
+    max-width: 750px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.inner-container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+section#contact{
+    position: relative;
+}
+section .container.contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    justify-content: center;
+    top: 0;
+}
+
+section .container.contact h2 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+section .container.contact form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+section .container.contact input,
+section .container.contact textarea {
+    max-width: 400px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 8px 14px;
+    border-radius: 5px;
+    border: solid 1px rgb(204, 204, 204);
+    /* border: none; */
+    /* -moz-box-shadow: inset 0 0 6px var(--primary-shadow-color);
+    -webkit-box-shadow: inset 0 0 6px var(--primary-shadow-color);
+    box-shadow: inset 0 0 6px var(--primary-shadow-color); */
+}
+
+section .container.contact label {
+    margin: 3px 0;
+    font-size: 14px;
+    color: var(--var-primary-font-color-pale);
+}
+
+section .container.contact input.submit {
+    margin-top: 10px;
+    border: none;
+}
+
+section .container.contact .social {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+section .container.contact .social a {
+    margin: 7px;
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    border-radius: 50%;
+    background-color: var(--var-primary-font-color-pale);
+    border: solid 1px var(--bg1-color);
+    cursor: pointer;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+section .container.contact .social a i {
+    color: var(--var-primary-color);
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 40px;
+    transition: all 0.6s;
+}
+
+section .container.contact .social a:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+section .container.contact .social a:hover i {
+    color: var(--bg1-color);
+    transform: rotate(360deg);
+}
+
+section#contact .go-up{
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+@media screen and (max-width: 780px){
+    .profile-photo{
+        width: 210px;
+        height: 210px;
+        left: 10px;
+    }
+    .profile-text-box{
+        max-width: 80%;
+        padding-bottom: 40px;
+    }
+    .profile-container{
+        width: 90%;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

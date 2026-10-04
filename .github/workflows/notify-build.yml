@@ -1,0 +1,22 @@
+name: Rebuild site
+
+# The site is built from a private repo (APJake/private-portfolio), which reads
+# the content in this repo. Tell it to rebuild when the content changes.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "contents/**"
+      - "public/blogs/**"
+      - "policies/**"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh api repos/APJake/private-portfolio/dispatches -f event_type=content-updated
+        env:
+          GH_TOKEN: ${{ secrets.PRIVATE_REPO_DISPATCH_TOKEN }}
