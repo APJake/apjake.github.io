@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url>
+<loc>https://aungminkhant.me/</loc>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/</loc>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/cdg-zig/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/gogoopo/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/shwe-nar-sin/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/jar-gyi/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/fwd-sg/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/better-hr/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/aio-esports/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/aio-partner/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/work/hiking/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/blogs/</loc>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/blogs/blog-2/</loc>
+<lastmod>2026-05-02</lastmod>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/blogs/blog-1/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://aungminkhant.me/blogs/blog-1/" />
+<xhtml:link rel="alternate" hreflang="my" href="https://aungminkhant.me/blogs/blog-1/mm/" />
+<xhtml:link rel="alternate" hreflang="th" href="https://aungminkhant.me/blogs/blog-1/th/" />
+<lastmod>2026-04-15</lastmod>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/blogs/blog-1/mm/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://aungminkhant.me/blogs/blog-1/" />
+<xhtml:link rel="alternate" hreflang="my" href="https://aungminkhant.me/blogs/blog-1/mm/" />
+<xhtml:link rel="alternate" hreflang="th" href="https://aungminkhant.me/blogs/blog-1/th/" />
+<lastmod>2026-04-15</lastmod>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/blogs/blog-1/th/</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://aungminkhant.me/blogs/blog-1/" />
+<xhtml:link rel="alternate" hreflang="my" href="https://aungminkhant.me/blogs/blog-1/mm/" />
+<xhtml:link rel="alternate" hreflang="th" href="https://aungminkhant.me/blogs/blog-1/th/" />
+<lastmod>2026-04-15</lastmod>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/blogs/blog-3/</loc>
+<lastmod>2026-01-10</lastmod>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/apps/</loc>
+<priority>0.5</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/apps/whosthefirst/</loc>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/apps/kyauk-thin-bone/</loc>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/apps/who-ate-what/</loc>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/now/</loc>
+<priority>0.3</priority>
+</url>
+<url>
+<loc>https://aungminkhant.me/updates/</loc>
+<priority>0.3</priority>
+</url>
+</urlset>

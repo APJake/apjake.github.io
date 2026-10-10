@@ -1,0 +1,90 @@
+1:"$Sreact.fragment"
+2:I[42724,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/1w1jua6y1a6xe.js"],"default"]
+3:T938,<h1>Notes from ICPC Yangon 2019</h1>
+<p>I competed in ICPC Yangon in 2019. Our team cleared the regional round
+and got to the world finals in Porto. Here is what I took from it that
+I did not expect to take from it, and that still shapes how I write
+production code.</p>
+<h2>The thing competitive programming is actually good at</h2>
+<p>It is not the algorithms. Those help. But the actual superpower ICPC
+builds is the discipline of reading a problem until you can state the
+constraint in one sentence, and then sitting with the hard part for
+twenty minutes before writing a single line of code.</p>
+<p>Most production bugs I have shipped share a shape: someone read the
+ticket until the obvious part made sense, then started writing. The
+hard part — the part that only became visible after you sat with it
+for fifteen minutes — never got a name, and the bug shipped inside
+the thing that handled the hard part.</p>
+<h2>What the regional round actually tests</h2>
+<ul>
+<li>Can you read a problem and split it into a part you understand and a
+part that is a known problem?</li>
+<li>Can you write a solution to the known part in twenty minutes that
+compiles first try?</li>
+<li>Can you debug a wrong answer on your own without a teammate
+explaining the bug to you?</li>
+</ul>
+<p>That last one is the one I think about most. In ICPC you have
+ninety seconds to debug. In a real on-call you have fifteen minutes
+and a debugger attached, but the muscle is the same: form a
+hypothesis, change one thing, run the test.</p>
+<h2>What I would tell my younger self</h2>
+<ul>
+<li>Spend a week on the easy problems until you cannot make them
+wrong. The first hour of every contest is deciding if you can trust
+your own templates, and if you cannot, the rest of the day is
+already lost.</li>
+<li>Type less. The teams that win are not the ones that solve the most
+hard problems. They are the ones that solve two medium problems
+with no wrong submissions.</li>
+<li>Read the problem twice. Then read the constraints. Then read the
+problem a third time. The constraint you missed is always the bug.</li>
+</ul>
+<h2>What I did not learn</h2>
+<p>Anything about teamwork. ICPC teaches you to debug on your own. It
+does not teach you to argue about design with someone who disagrees.
+That part I had to learn the hard way, on a real Android team, on a
+real PR review at 11pm.</p>a:X
+f:X
+f:C
+0:{"buildId":"2vyOPY4CfZw-l0uDw3OdV","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{}],["$","main",null,{"id":"main","children":[["$","article",null,{"className":"BlogDetail-module__U7Naga__section","aria-labelledby":"blog-title","data-track-read":"blog-3","data-track-language":"en","children":["$","div",null,{"className":"shell","children":[["$","header",null,{"className":"BlogDetail-module__U7Naga__head","children":[["$","p",null,{"className":"monoLabel BlogDetail-module__U7Naga__kicker","children":"Blog"}],["$","h1",null,{"id":"blog-title","className":"display BlogDetail-module__U7Naga__title","children":"Notes from ICPC Yangon 2019"}],["$","p",null,{"className":"monoLabel BlogDetail-module__U7Naga__meta","children":[["$","span",null,{"children":"2026-01-10"}],null]}],["$","p",null,{"className":"BlogDetail-module__U7Naga__desc","children":"What I learned competing in the regional round, and what competitive programming actually teaches you about shipping software."}],null]}],["$","hr",null,{"className":"rule"}],["$","div",null,{"className":"BlogDetail-module__U7Naga__prose","lang":"en","dangerouslySetInnerHTML":{"__html":"$3"}}],"$L4"]}]}],"$L5"]}]],["$L6","$L7"],"$L8"]}],"isPartial":"$@9","staleTime":"$a","varyParams":null},{"rsc":"$Lb","isPartial":"$@c","staleTime":"$a","varyParams":null},{"rsc":"$Ld","isPartial":"$@e","staleTime":"$a","varyParams":"$f"},{"rsc":"$L10","isPartial":"$@11","staleTime":"$a","varyParams":"$f"},{"rsc":"$L12","isPartial":"$@13","staleTime":"$a","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@14","rootVaryParams":null,"needsRuntimeRequest":"$@15"}
+16:I[22016,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/1w1jua6y1a6xe.js"],""]
+17:I[59095,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/1w1jua6y1a6xe.js"],"default"]
+18:I[7815,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/1w1jua6y1a6xe.js"],"default"]
+19:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"OutletBoundary"]
+1a:"$Sreact.suspense"
+1c:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"ViewportBoundary"]
+1d:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"MetadataBoundary"]
+1e:I[27201,["/_next/static/chunks/3fntmmi971322.js"],"IconMark"]
+1f:I[39756,["/_next/static/chunks/3fntmmi971322.js"],"default"]
+20:I[37457,["/_next/static/chunks/3fntmmi971322.js"],"default"]
+:HL["/_next/static/chunks/0qe0z5h2oag7f.css","style"]
+:HL["/_next/static/chunks/41io6m7gftpdv.css","style"]
+4:["$","p",null,{"className":"BlogDetail-module__U7Naga__back","children":["$","$L16",null,{"href":"/blogs/","className":"BlogDetail-module__U7Naga__backLink","data-track":"cta_click","data-track-cta":"all_posts","children":[["$","svg",null,{"width":"18","height":"18","viewBox":"0 0 20 20","fill":"none","aria-hidden":"true","className":"BlogDetail-module__U7Naga__backArrow","children":["$","path",null,{"d":"M17 10H4M9 5l-5 5 5 5","stroke":"currentColor","strokeWidth":"1.4","strokeLinecap":"square"}]}],["$","span",null,{"className":"monoLabel BlogDetail-module__U7Naga__backText","children":"All posts"}]]}]}]
+5:["$","footer",null,{"id":"contact","className":"Contact-module__OWeMSG__section","aria-labelledby":"contact-heading","data-track-section":"contact","children":[["$","div",null,{"className":"Contact-module__OWeMSG__glow","aria-hidden":"true"}],["$","div",null,{"className":"shell Contact-module__OWeMSG__inner","children":[["$","$L17",null,{"children":["$","h2",null,{"id":"contact-heading","className":"Contact-module__OWeMSG__headline","children":[["$","span","LET'S BUILD",{"className":"Contact-module__OWeMSG__line","children":"LET'S BUILD"}],["$","span","SOMETHING.",{"className":"Contact-module__OWeMSG__line","children":["SOMETHING",["$","span",null,{"className":"Contact-module__OWeMSG__dot","children":"."}]]}]]}]}],["$","$L17",null,{"delay":80,"children":["$","p",null,{"className":"Contact-module__OWeMSG__note","children":"Open to Android and Flutter roles in Vietnam, Thailand, or remote. The fastest way to reach me is email."}]}],["$","$L17",null,{"delay":160,"children":["$","ul",null,{"className":"Contact-module__OWeMSG__channels","children":[["$","li","Email",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Email"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"mailto:apjake.me@gmail.com","data-track":"contact_click","data-track-channel":"email","children":"apjake.me@gmail.com"}]]}],["$","li","GitHub",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"GitHub"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://github.com/apjake","data-track":"contact_click","data-track-channel":"github","target":"_blank","rel":"noreferrer","children":"github.com/apjake"}]]}],["$","li","LinkedIn",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"LinkedIn"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://linkedin.com/in/apjake","data-track":"contact_click","data-track-channel":"linkedin","target":"_blank","rel":"noreferrer","children":"linkedin.com/in/apjake"}]]}],["$","li","Telegram",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Telegram"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://t.me/AP_Jake","data-track":"contact_click","data-track-channel":"telegram","target":"_blank","rel":"noreferrer","children":"@AP_Jake"}]]}]]}]}],["$","div",null,{"className":"Contact-module__OWeMSG__colophon","children":[["$","hr",null,{"className":"rule"}],["$","div",null,{"className":"Contact-module__OWeMSG__colophonRow","children":[["$","span",null,{"className":"Contact-module__OWeMSG__wordmark","children":"JAKE"}],["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__colophonMeta","children":["Aung Min Khant"," · ","Da Nang, Vietnam"]}],["$","$L18",null,{}]]}]]}]]}]]}]
+6:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0qe0z5h2oag7f.css","precedence":"next"}]
+7:["$","script","script-0",{"src":"/_next/static/chunks/1w1jua6y1a6xe.js","async":true}]
+8:["$","$L19",null,{"children":["$","$1a",null,{"name":"Next.MetadataOutlet","children":"$@1b"}]}]
+b:["$","$1","h",{"children":[null,["$","$L1c",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#0b0b0c"}],["$","meta","3",{"name":"color-scheme","content":"dark"}]]}],["$","div",null,{"hidden":true,"children":["$","$L1d",null,{"children":["$","$1a",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Notes from ICPC Yangon 2019 — Aung Min Khant"}],["$","meta","1",{"name":"description","content":"What I learned competing in the regional round, and what competitive programming actually teaches you about shipping software."}],["$","link","2",{"rel":"canonical","href":"https://aungminkhant.me/blogs/blog-3/"}],["$","meta","3",{"property":"og:title","content":"Notes from ICPC Yangon 2019 — Aung Min Khant"}],["$","meta","4",{"property":"og:description","content":"What I learned competing in the regional round, and what competitive programming actually teaches you about shipping software."}],["$","meta","5",{"property":"og:url","content":"https://aungminkhant.me/blogs/blog-3/"}],["$","meta","6",{"property":"og:site_name","content":"Aung Min Khant"}],["$","meta","7",{"property":"og:image","content":"https://aungminkhant.me/blogs/blog-3/cover.jpg"}],["$","meta","8",{"property":"og:type","content":"article"}],["$","meta","9",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","10",{"name":"twitter:title","content":"Notes from ICPC Yangon 2019 — Aung Min Khant"}],["$","meta","11",{"name":"twitter:description","content":"What I learned competing in the regional round, and what competitive programming actually teaches you about shipping software."}],["$","meta","12",{"name":"twitter:image","content":"https://aungminkhant.me/blogs/blog-3/cover.jpg"}],["$","link","13",{"rel":"icon","href":"/icon.svg?icon.2hvl3iq0lvl40.svg","sizes":"any","type":"image/svg+xml"}],["$","$L1e","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+d:["$","$1","c",{"children":[null,["$","$L1f",null,{"parallelRouterKey":"children","template":["$","$L20",null,{}]}]]}]
+10:["$","$1","c",{"children":[null,["$","$L1f",null,{"parallelRouterKey":"children","template":["$","$L20",null,{}]}]]}]
+12:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/41io6m7gftpdv.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/0sa6li6--qap8.js","async":true}]],["$","html",null,{"lang":"en","className":"display_4ddd7166-module__STm40G__variable body_63eb81bb-module__2Jt0MG__variable mono_ff672ae2-module__CuSSqW__variable mm_757abdc3-module__v-h4pG__variable","children":["$","body",null,{"children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"Person\",\"name\":\"Aung Min Khant\",\"alternateName\":\"APJake\",\"url\":\"https://aungminkhant.me\",\"image\":\"https://aungminkhant.me/portrait.jpg\",\"jobTitle\":\"Android Developer\",\"description\":\"Freelance Android and Flutter developer from Myanmar. Kotlin, Jetpack Compose, apps with 2M+ downloads. Open for projects.\",\"email\":\"mailto:apjake.me@gmail.com\",\"nationality\":{\"@type\":\"Country\",\"name\":\"Myanmar\"},\"homeLocation\":{\"@type\":\"Place\",\"name\":\"Da Nang, Vietnam\"},\"knowsAbout\":[\"Android\",\"Kotlin\",\"Jetpack Compose\",\"Flutter\",\"Mobile app development\"],\"sameAs\":[\"https://github.com/apjake\",\"https://linkedin.com/in/apjake\",\"https://t.me/AP_Jake\"]}"}}],["$","$L1f",null,{"parallelRouterKey":"children","template":["$","$L20",null,{}],"notFound":[[["$","$L2",null,{}],["$","main",null,{"id":"main","children":[["$","section",null,{"className":"NotFoundView-module__W3lIka__section","aria-labelledby":"not-found-heading","children":["$","div",null,{"className":"shell","children":["$","div",null,{"className":"NotFoundView-module__W3lIka__head","children":[["$","p",null,{"className":"monoLabel NotFoundView-module__W3lIka__kicker","children":"404"}],["$","h1",null,{"id":"not-found-heading","className":"display NotFoundView-module__W3lIka__title","children":"PAGE NOT FOUND"}],["$","p",null,{"className":"NotFoundView-module__W3lIka__note","children":"That page doesn't exist, or it moved. Try the homepage or my work."}],["$","div",null,{"className":"NotFoundView-module__W3lIka__actions","children":[["$","$L16",null,{"className":"NotFoundView-module__W3lIka__primary","href":"/","children":"Back to home"}],["$","$L16",null,{"className":"NotFoundView-module__W3lIka__secondary","href":"/work/","children":"See my work"}]]}]]}]}]}],["$","footer",null,{"id":"contact","className":"Contact-module__OWeMSG__section","aria-labelledby":"contact-heading","data-track-section":"contact","children":[["$","div",null,{"className":"Contact-module__OWeMSG__glow","aria-hidden":"true"}],["$","div",null,{"className":"shell Contact-module__OWeMSG__inner","children":[["$","$L17",null,{"children":["$","h2",null,{"id":"contact-heading","className":"Contact-module__OWeMSG__headline","children":[["$","span","LET'S BUILD",{"className":"Contact-module__OWeMSG__line","children":"LET'S BUILD"}],["$","span","SOMETHING.",{"className":"Contact-module__OWeMSG__line","children":["SOMETHING",["$","span",null,{"className":"Contact-module__OWeMSG__dot","children":"."}]]}]]}]}],["$","$L17",null,{"delay":80,"children":["$","p",null,{"className":"Contact-module__OWeMSG__note","children":"Open to Android and Flutter roles in Vietnam, Thailand, or remote. The fastest way to reach me is email."}]}],["$","$L17",null,{"delay":160,"children":["$","ul",null,{"className":"Contact-module__OWeMSG__channels","children":[["$","li","Email",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Email"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"mailto:apjake.me@gmail.com","data-track":"contact_click","data-track-channel":"email","children":"apjake.me@gmail.com"}]]}],["$","li","GitHub",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"GitHub"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://github.com/apjake","data-track":"contact_click","data-track-channel":"github","target":"_blank","rel":"noreferrer","children":"github.com/apjake"}]]}],"$L21","$L22"]}]}],"$L23"]}]]}]]}]],["$L24"]]}],"$L25","$L26","$L27"]}]}]]}]
+28:I[28977,["/_next/static/chunks/0sa6li6--qap8.js"],"default"]
+29:I[63104,["/_next/static/chunks/0sa6li6--qap8.js"],"default"]
+1b:null
+21:["$","li","LinkedIn",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"LinkedIn"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://linkedin.com/in/apjake","data-track":"contact_click","data-track-channel":"linkedin","target":"_blank","rel":"noreferrer","children":"linkedin.com/in/apjake"}]]}]
+22:["$","li","Telegram",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Telegram"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://t.me/AP_Jake","data-track":"contact_click","data-track-channel":"telegram","target":"_blank","rel":"noreferrer","children":"@AP_Jake"}]]}]
+23:["$","div",null,{"className":"Contact-module__OWeMSG__colophon","children":[["$","hr",null,{"className":"rule"}],["$","div",null,{"className":"Contact-module__OWeMSG__colophonRow","children":[["$","span",null,{"className":"Contact-module__OWeMSG__wordmark","children":"JAKE"}],["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__colophonMeta","children":["Aung Min Khant"," · ","Da Nang, Vietnam"]}],["$","$L18",null,{}]]}]]}]
+24:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0qe0z5h2oag7f.css","precedence":"next"}]
+25:["$","div",null,{"className":"Grain-module__W5v_EW__grain","aria-hidden":"true"}]
+26:["$","$L28",null,{}]
+27:["$","$L29",null,{}]
+15:true
+a:300
+a:C
+14:0
+c:"$undefined"
+e:"$undefined"
+11:"$undefined"
+13:"$undefined"
+9:"$undefined"
