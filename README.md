@@ -1,7 +1,7 @@
 # apjake.github.io
 
 Content for the personal site of Aung Min Khant, an Android engineer:
-https://apjake.github.io
+https://aungminkhant.me (apjake.github.io redirects there)
 
 The site's source code is private. This repo holds:
 
