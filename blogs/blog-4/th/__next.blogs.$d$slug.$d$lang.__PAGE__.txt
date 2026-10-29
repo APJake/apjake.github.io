@@ -1,0 +1,111 @@
+1:"$Sreact.fragment"
+2:I[42724,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/3oe4x7od2ij-r.js"],"default"]
+3:I[22016,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/3oe4x7od2ij-r.js"],""]
+4:T1ca3,<h1>ทำแอป Android ตัวเดียวให้พูดได้ทั้งอังกฤษ พม่า และไทย</h1>
+<p>การแปลแอปฟังดูเหมือนงานแค่เรื่อง string: ก๊อป <code>strings.xml</code> ส่งให้คนที่
+พูดภาษานั้น จบ แต่พอเปิด build ภาษาพม่า ปุ่มครึ่งหนึ่งตัวอักษรโดนตัด build
+ภาษาไทยตัดบรรทัดกลางพยางค์ ส่วนภาษาอังกฤษก็โผล่ "1 items" ออกมา นี่คือ
+สิ่งที่ผมเช็กทุกครั้งเมื่อแอปต้องรองรับภาษาอังกฤษ พม่า และไทย</p>
+<h2>String: หนึ่งภาษาหนึ่งโฟลเดอร์ และห้ามต่อประโยค</h2>
+<ul>
+<li><code>values/</code> เก็บภาษาอังกฤษ ซึ่งเป็น fallback ของ string ที่ยังไม่ได้แปลด้วย
+<code>values-my/</code> คือภาษาพม่า และ <code>values-th/</code> คือภาษาไทย</li>
+<li>อย่าประกอบประโยคจากชิ้นส่วน "Paid " + name + " today" ใช้ได้แค่ใน
+ภาษาอังกฤษ ภาษาพม่าและไทยเรียงกริยากับชื่อต่างกัน ให้ใช้ string เดียว
+ที่มี placeholder: <code>&#x3C;string name="paid_today">จ่ายให้ %1$s แล้ววันนี้&#x3C;/string></code></li>
+<li>ใส่ comment เหนือแต่ละ string เพื่อให้บริบทกับคนแปล "Back" ที่เป็นปุ่ม
+กับ "back" ที่แปลว่าหลัง เป็นคนละคำกันในภาษาไทย</li>
+</ul>
+<h2>Plural ไม่เหมือนกันทุกภาษา</h2>
+<p>ภาษาอังกฤษต้องมี <code>one</code> และ <code>other</code> ส่วนภาษาพม่าและไทยไม่เปลี่ยนรูปคำนาม
+ตามจำนวน จึงใช้แค่ <code>other</code> แต่ก็ควรประกาศ plural ให้ถูกต้องอยู่ดี เพื่อให้
+แต่ละภาษาได้กฎของตัวเอง:</p>
+<pre><code class="language-xml">&#x3C;plurals name="items_count">
+    &#x3C;item quantity="one">%d item&#x3C;/item>
+    &#x3C;item quantity="other">%d items&#x3C;/item>
+&#x3C;/plurals>
+</code></pre>
+<p>ใน <code>values-my/</code> และ <code>values-th/</code> entry เดียวกันจะมีแค่ <code>other</code> ตัวเดียว
+พอเรียก <code>pluralStringResource(R.plurals.items_count, n, n)</code> ก็แสดงถูก
+ทั้งสามภาษา</p>
+<h2>ให้ผู้ใช้เลือกภาษาเอง</h2>
+<p>คนในพม่าและไทยหลายคนตั้งภาษาโทรศัพท์เป็นอังกฤษ แต่อยากอ่านแอปเป็น
+ภาษาของตัวเอง หรือกลับกัน Android 13 เพิ่มการตั้งค่าภาษารายแอป และ
+AppCompat ก็ทำให้ API เดียวกันใช้ได้บนเวอร์ชันเก่าด้วย:</p>
+<pre><code class="language-kotlin">AppCompatDelegate.setApplicationLocales(
+    LocaleListCompat.forLanguageTags("my")
+)
+</code></pre>
+<p>เพิ่ม <code>locales_config.xml</code> ที่มี <code>en</code>, <code>my</code> และ <code>th</code> แล้วแอปจะไปโผล่ในหน้า
+App languages ของระบบด้วย</p>
+<h2>ส่วนที่ยากจริงคือตัวอักษร</h2>
+<blockquote>
+<p>การแปลทำให้คำถูกต้อง แต่ typography เป็นตัวตัดสินว่าคนจะอ่านออก
+หรือเปล่า</p>
+</blockquote>
+<ul>
+<li><strong>ใช้ Unicode ไม่ใช่ Zawgyi</strong> เนื้อหาภาษาพม่ารุ่นเก่ามักเป็น Zawgyi ซึ่งเป็น
+ฟอนต์ที่เอา code point ของ Unicode มาใช้ซ้ำ ให้เก็บและส่งแต่ Unicode
+และแปลงข้อความที่ import เข้ามาก่อนลงฐานข้อมูล</li>
+<li><strong>ตัวอักษรสูงกว่า</strong> ภาษาพม่าและไทยมีเครื่องหมายซ้อนบนและล่าง ความสูง
+แบบ fix หรือ <code>lineHeight</code> ที่แน่นเกินไปจะทำให้โดนตัด ปล่อยให้ข้อความวัด
+ขนาดเอง และทดสอบด้วย string ที่ยาวที่สุด</li>
+<li><strong>ไม่มีเว้นวรรคระหว่างคำ</strong> ทั้งสองภาษาไม่เว้นวรรคระหว่างคำ การตัดบรรทัด
+จึงต้องใช้พจนานุกรม Android จัดการให้ ตราบใดที่ไม่บังคับ <code>maxLines = 1</code>
+พร้อม ellipsis กับเนื้อความ</li>
+<li><strong>ตัวเลขและวันที่</strong> format ด้วย locale ของผู้ใช้ (<code>NumberFormat</code>,
+<code>DateTimeFormatter</code>) แทนการเขียน pattern เอง เครื่องที่ตั้งเป็นไทยอาจใช้
+ปีพุทธศักราช</li>
+</ul>
+<h2>การทดสอบ</h2>
+<p>เปิด pseudo-locale เพื่อหาข้อความที่ hard-code และ layout ที่ขยายไม่ได้
+แคปหน้าจอหลักทุกหน้าในทั้งสามภาษา และก่อนปล่อยให้เจ้าของภาษาอ่านแอป
+บนโทรศัพท์จริง — ไม่ใช่แค่อ่าน spreadsheet ของ string</p>
+<h2>ถ้าทำใหม่จะทำอะไรต่างไป</h2>
+<p>ผมจะเพิ่มโฟลเดอร์ภาษาพม่าและไทยตั้งแต่วันแรก ถึงจะมีแค่ข้อความ
+placeholder ก็ตาม ทุก layout ที่สร้างโดยมีแค่ภาษาอังกฤษต้องกลับมาแก้ทีหลัง
+และนั่นช้ากว่าการสร้างให้ยืดได้ตั้งแต่แรกเสมอ</p>b:X
+10:X
+10:C
+0:{"buildId":"vXsgeRJoR4AfWsbs8ircn","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{}],["$","main",null,{"id":"main","children":[["$","article",null,{"className":"BlogDetail-module__U7Naga__section","aria-labelledby":"blog-title","data-track-read":"blog-4","data-track-language":"th","children":["$","div",null,{"className":"shell","children":[["$","header",null,{"className":"BlogDetail-module__U7Naga__head","children":[["$","p",null,{"className":"monoLabel BlogDetail-module__U7Naga__kicker","children":"Blog"}],["$","h1",null,{"id":"blog-title","className":"display BlogDetail-module__U7Naga__title","children":"Shipping one Android app in English, Myanmar and Thai"}],["$","p",null,{"className":"monoLabel BlogDetail-module__U7Naga__meta","children":[["$","span",null,{"children":"2026-10-19"}],null]}],["$","p",null,{"className":"BlogDetail-module__U7Naga__desc","children":"Practical notes on strings, plurals, per-app language switching, fonts and testing when one app has to speak three languages."}],["$","div",null,{"className":"BlogDetail-module__U7Naga__switcherWrap","children":["$","ul",null,{"className":"monoLabel LanguageSwitcher-module__gdGMiG__list","aria-label":"Language","children":[["$","li","en",{"children":["$","$L3",null,{"href":"/blogs/blog-4/","className":"LanguageSwitcher-module__gdGMiG__pill ","aria-label":"English","data-track":"blog_language_switch","data-track-blog-id":"blog-4","data-track-from":"th","data-track-to":"en","children":"EN"}]}],["$","li","mm",{"children":["$","$L3",null,{"href":"/blogs/blog-4/mm/","className":"LanguageSwitcher-module__gdGMiG__pill ","aria-label":"မြန်မာ","data-track":"blog_language_switch","data-track-blog-id":"blog-4","data-track-from":"th","data-track-to":"mm","children":"MM"}]}],["$","li","th",{"children":["$","$L3",null,{"href":"/blogs/blog-4/th/","className":"LanguageSwitcher-module__gdGMiG__pill LanguageSwitcher-module__gdGMiG__active","aria-current":"true","aria-label":"ไทย","children":"TH"}]}]]}]}]]}],["$","hr",null,{"className":"rule"}],["$","div",null,{"className":"BlogDetail-module__U7Naga__prose","lang":"th","dangerouslySetInnerHTML":{"__html":"$4"}}],"$L5"]}]}],"$L6"]}]],["$L7","$L8"],"$L9"]}],"isPartial":"$@a","staleTime":"$b","varyParams":null},{"rsc":"$Lc","isPartial":"$@d","staleTime":"$b","varyParams":null},{"rsc":"$Le","isPartial":"$@f","staleTime":"$b","varyParams":"$10"},{"rsc":"$L11","isPartial":"$@12","staleTime":"$b","varyParams":"$10"},{"rsc":"$L13","isPartial":"$@14","staleTime":"$b","varyParams":"$10"},{"rsc":"$L15","isPartial":"$@16","staleTime":"$b","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@17","rootVaryParams":null,"needsRuntimeRequest":"$@18"}
+19:I[59095,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/3oe4x7od2ij-r.js"],"default"]
+1a:I[7815,["/_next/static/chunks/0sa6li6--qap8.js","/_next/static/chunks/3oe4x7od2ij-r.js"],"default"]
+1b:I[97367,["/_next/static/chunks/280abr9-vs5lr.js"],"OutletBoundary"]
+1c:"$Sreact.suspense"
+1e:I[97367,["/_next/static/chunks/280abr9-vs5lr.js"],"ViewportBoundary"]
+1f:I[97367,["/_next/static/chunks/280abr9-vs5lr.js"],"MetadataBoundary"]
+20:I[27201,["/_next/static/chunks/280abr9-vs5lr.js"],"IconMark"]
+21:I[39756,["/_next/static/chunks/280abr9-vs5lr.js"],"default"]
+22:I[37457,["/_next/static/chunks/280abr9-vs5lr.js"],"default"]
+:HL["/_next/static/chunks/386zfdclys-dt.css","style"]
+:HL["/_next/static/chunks/41io6m7gftpdv.css","style"]
+5:["$","p",null,{"className":"BlogDetail-module__U7Naga__back","children":["$","$L3",null,{"href":"/blogs/","className":"BlogDetail-module__U7Naga__backLink","data-track":"cta_click","data-track-cta":"all_posts","children":[["$","svg",null,{"width":"18","height":"18","viewBox":"0 0 20 20","fill":"none","aria-hidden":"true","className":"BlogDetail-module__U7Naga__backArrow","children":["$","path",null,{"d":"M17 10H4M9 5l-5 5 5 5","stroke":"currentColor","strokeWidth":"1.4","strokeLinecap":"square"}]}],["$","span",null,{"className":"monoLabel BlogDetail-module__U7Naga__backText","children":"All posts"}]]}]}]
+6:["$","footer",null,{"id":"contact","className":"Contact-module__OWeMSG__section","aria-labelledby":"contact-heading","data-track-section":"contact","children":[["$","div",null,{"className":"Contact-module__OWeMSG__glow","aria-hidden":"true"}],["$","div",null,{"className":"shell Contact-module__OWeMSG__inner","children":[["$","$L19",null,{"children":["$","h2",null,{"id":"contact-heading","className":"Contact-module__OWeMSG__headline","children":[["$","span","LET'S BUILD",{"className":"Contact-module__OWeMSG__line","children":"LET'S BUILD"}],["$","span","SOMETHING.",{"className":"Contact-module__OWeMSG__line","children":["SOMETHING",["$","span",null,{"className":"Contact-module__OWeMSG__dot","children":"."}]]}]]}]}],["$","$L19",null,{"delay":80,"children":["$","p",null,{"className":"Contact-module__OWeMSG__note","children":"Open to Android and Flutter roles in Vietnam, Thailand, or remote. The fastest way to reach me is email."}]}],["$","$L19",null,{"delay":160,"children":["$","ul",null,{"className":"Contact-module__OWeMSG__channels","children":[["$","li","Email",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Email"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"mailto:apjake.me@gmail.com","data-track":"contact_click","data-track-channel":"email","children":"apjake.me@gmail.com"}]]}],["$","li","GitHub",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"GitHub"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://github.com/apjake","data-track":"contact_click","data-track-channel":"github","target":"_blank","rel":"noreferrer","children":"github.com/apjake"}]]}],["$","li","LinkedIn",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"LinkedIn"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://linkedin.com/in/apjake","data-track":"contact_click","data-track-channel":"linkedin","target":"_blank","rel":"noreferrer","children":"linkedin.com/in/apjake"}]]}],["$","li","Telegram",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Telegram"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://t.me/AP_Jake","data-track":"contact_click","data-track-channel":"telegram","target":"_blank","rel":"noreferrer","children":"@AP_Jake"}]]}]]}]}],["$","div",null,{"className":"Contact-module__OWeMSG__colophon","children":[["$","hr",null,{"className":"rule"}],["$","div",null,{"className":"Contact-module__OWeMSG__colophonRow","children":[["$","span",null,{"className":"Contact-module__OWeMSG__wordmark","children":"JAKE"}],["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__colophonMeta","children":["Aung Min Khant"," · ","Da Nang, Vietnam"]}],["$","$L1a",null,{}]]}]]}]]}]]}]
+7:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/386zfdclys-dt.css","precedence":"next"}]
+8:["$","script","script-0",{"src":"/_next/static/chunks/3oe4x7od2ij-r.js","async":true}]
+9:["$","$L1b",null,{"children":["$","$1c",null,{"name":"Next.MetadataOutlet","children":"$@1d"}]}]
+c:["$","$1","h",{"children":[null,["$","$L1e",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#0b0b0c"}],["$","meta","3",{"name":"color-scheme","content":"dark"}]]}],["$","div",null,{"hidden":true,"children":["$","$L1f",null,{"children":["$","$1c",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Shipping one Android app in English, Myanmar and Thai — Aung Min Khant"}],["$","meta","1",{"name":"description","content":"Practical notes on strings, plurals, per-app language switching, fonts and testing when one app has to speak three languages."}],["$","link","2",{"rel":"canonical","href":"https://aungminkhant.me/blogs/blog-4/th/"}],["$","link","3",{"rel":"alternate","hrefLang":"en","href":"https://aungminkhant.me/blogs/blog-4/"}],["$","link","4",{"rel":"alternate","hrefLang":"my","href":"https://aungminkhant.me/blogs/blog-4/mm/"}],["$","link","5",{"rel":"alternate","hrefLang":"th","href":"https://aungminkhant.me/blogs/blog-4/th/"}],["$","link","6",{"rel":"alternate","hrefLang":"x-default","href":"https://aungminkhant.me/blogs/blog-4/"}],["$","meta","7",{"property":"og:title","content":"Shipping one Android app in English, Myanmar and Thai — Aung Min Khant"}],["$","meta","8",{"property":"og:description","content":"Practical notes on strings, plurals, per-app language switching, fonts and testing when one app has to speak three languages."}],["$","meta","9",{"property":"og:url","content":"https://aungminkhant.me/blogs/blog-4/th/"}],["$","meta","10",{"property":"og:site_name","content":"Aung Min Khant"}],["$","meta","11",{"property":"og:image","content":"https://aungminkhant.me/blogs/blog-4/cover.jpg"}],["$","meta","12",{"property":"og:type","content":"article"}],["$","meta","13",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","14",{"name":"twitter:title","content":"Shipping one Android app in English, Myanmar and Thai — Aung Min Khant"}],["$","meta","15",{"name":"twitter:description","content":"Practical notes on strings, plurals, per-app language switching, fonts and testing when one app has to speak three languages."}],["$","meta","16",{"name":"twitter:image","content":"https://aungminkhant.me/blogs/blog-4/cover.jpg"}],["$","link","17",{"rel":"icon","href":"/icon.svg?icon.2hvl3iq0lvl40.svg","sizes":"any","type":"image/svg+xml"}],["$","$L20","18",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+e:["$","$1","c",{"children":[null,["$","$L21",null,{"parallelRouterKey":"children","template":["$","$L22",null,{}]}]]}]
+11:["$","$1","c",{"children":[null,["$","$L21",null,{"parallelRouterKey":"children","template":["$","$L22",null,{}]}]]}]
+13:["$","$1","c",{"children":[null,["$","$L21",null,{"parallelRouterKey":"children","template":["$","$L22",null,{}]}]]}]
+15:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/41io6m7gftpdv.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/0sa6li6--qap8.js","async":true}]],["$","html",null,{"lang":"en","className":"display_4ddd7166-module__STm40G__variable body_63eb81bb-module__2Jt0MG__variable mono_ff672ae2-module__CuSSqW__variable mm_757abdc3-module__v-h4pG__variable","children":["$","body",null,{"children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"Person\",\"name\":\"Aung Min Khant\",\"alternateName\":\"APJake\",\"url\":\"https://aungminkhant.me\",\"image\":\"https://aungminkhant.me/portrait.jpg\",\"jobTitle\":\"Android Developer\",\"description\":\"Freelance Android and Flutter developer from Myanmar. Kotlin, Jetpack Compose, apps with 2M+ downloads. Open for projects.\",\"email\":\"mailto:apjake.me@gmail.com\",\"nationality\":{\"@type\":\"Country\",\"name\":\"Myanmar\"},\"homeLocation\":{\"@type\":\"Place\",\"name\":\"Da Nang, Vietnam\"},\"knowsAbout\":[\"Android\",\"Kotlin\",\"Jetpack Compose\",\"Flutter\",\"Mobile app development\"],\"sameAs\":[\"https://github.com/apjake\",\"https://linkedin.com/in/apjake\",\"https://t.me/AP_Jake\"]}"}}],["$","$L21",null,{"parallelRouterKey":"children","template":["$","$L22",null,{}],"notFound":[[["$","$L2",null,{}],["$","main",null,{"id":"main","children":[["$","section",null,{"className":"NotFoundView-module__W3lIka__section","aria-labelledby":"not-found-heading","children":["$","div",null,{"className":"shell","children":["$","div",null,{"className":"NotFoundView-module__W3lIka__head","children":[["$","p",null,{"className":"monoLabel NotFoundView-module__W3lIka__kicker","children":"404"}],["$","h1",null,{"id":"not-found-heading","className":"display NotFoundView-module__W3lIka__title","children":"PAGE NOT FOUND"}],["$","p",null,{"className":"NotFoundView-module__W3lIka__note","children":"That page doesn't exist, or it moved. Try the homepage or my work."}],["$","div",null,{"className":"NotFoundView-module__W3lIka__actions","children":[["$","$L3",null,{"className":"NotFoundView-module__W3lIka__primary","href":"/","children":"Back to home"}],["$","$L3",null,{"className":"NotFoundView-module__W3lIka__secondary","href":"/work/","children":"See my work"}]]}]]}]}]}],["$","footer",null,{"id":"contact","className":"Contact-module__OWeMSG__section","aria-labelledby":"contact-heading","data-track-section":"contact","children":[["$","div",null,{"className":"Contact-module__OWeMSG__glow","aria-hidden":"true"}],["$","div",null,{"className":"shell Contact-module__OWeMSG__inner","children":[["$","$L19",null,{"children":["$","h2",null,{"id":"contact-heading","className":"Contact-module__OWeMSG__headline","children":[["$","span","LET'S BUILD",{"className":"Contact-module__OWeMSG__line","children":"LET'S BUILD"}],["$","span","SOMETHING.",{"className":"Contact-module__OWeMSG__line","children":["SOMETHING",["$","span",null,{"className":"Contact-module__OWeMSG__dot","children":"."}]]}]]}]}],["$","$L19",null,{"delay":80,"children":["$","p",null,{"className":"Contact-module__OWeMSG__note","children":"Open to Android and Flutter roles in Vietnam, Thailand, or remote. The fastest way to reach me is email."}]}],["$","$L19",null,{"delay":160,"children":["$","ul",null,{"className":"Contact-module__OWeMSG__channels","children":[["$","li","Email",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Email"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"mailto:apjake.me@gmail.com","data-track":"contact_click","data-track-channel":"email","children":"apjake.me@gmail.com"}]]}],["$","li","GitHub",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"GitHub"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://github.com/apjake","data-track":"contact_click","data-track-channel":"github","target":"_blank","rel":"noreferrer","children":"github.com/apjake"}]]}],"$L23","$L24"]}]}],"$L25"]}]]}]]}]],["$L26"]]}],"$L27","$L28","$L29"]}]}]]}]
+2a:I[28977,["/_next/static/chunks/0sa6li6--qap8.js"],"default"]
+2b:I[63104,["/_next/static/chunks/0sa6li6--qap8.js"],"default"]
+1d:null
+23:["$","li","LinkedIn",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"LinkedIn"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://linkedin.com/in/apjake","data-track":"contact_click","data-track-channel":"linkedin","target":"_blank","rel":"noreferrer","children":"linkedin.com/in/apjake"}]]}]
+24:["$","li","Telegram",{"className":"Contact-module__OWeMSG__channel","children":[["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__channelLabel","children":"Telegram"}],["$","a",null,{"className":"Contact-module__OWeMSG__channelLink","href":"https://t.me/AP_Jake","data-track":"contact_click","data-track-channel":"telegram","target":"_blank","rel":"noreferrer","children":"@AP_Jake"}]]}]
+25:["$","div",null,{"className":"Contact-module__OWeMSG__colophon","children":[["$","hr",null,{"className":"rule"}],["$","div",null,{"className":"Contact-module__OWeMSG__colophonRow","children":[["$","span",null,{"className":"Contact-module__OWeMSG__wordmark","children":"JAKE"}],["$","span",null,{"className":"monoLabel Contact-module__OWeMSG__colophonMeta","children":["Aung Min Khant"," · ","Da Nang, Vietnam"]}],["$","$L1a",null,{}]]}]]}]
+26:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/386zfdclys-dt.css","precedence":"next"}]
+27:["$","div",null,{"className":"Grain-module__W5v_EW__grain","aria-hidden":"true"}]
+28:["$","$L2a",null,{}]
+29:["$","$L2b",null,{}]
+18:true
+b:300
+b:C
+17:0
+d:"$undefined"
+f:"$undefined"
+12:"$undefined"
+14:"$undefined"
+16:"$undefined"
+a:"$undefined"
